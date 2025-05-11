@@ -26,7 +26,6 @@ const TagNav = () => {
   } = useUtilities();
   const isArchivedPage = path.includes("archive");
 
-
   const notesToUse = isArchivedPage
     ? allNotes.filter((note) => note.isArchived)
     : allNotes.filter((note) => !note.isArchived);
@@ -36,10 +35,9 @@ const TagNav = () => {
     setIsTagsPage(path.includes("/tags"));
   }, [path]);
 
-  console.log(selectedTags, "selectedTags form TAGSNAV");
-  console.log(filterAllByTag, "filterAllByTag form NOTE")
-  console.log(isTagsPage, "isTagsPage form NOTE")
-
+  // console.log(selectedTags, "selectedTags form TAGSNAV");
+  // console.log(filterAllByTag, "filterAllByTag form NOTE");
+  // console.log(isTagsPage, "isTagsPage form NOTE");
 
   useEffect(() => {
     if (accessToken) {
@@ -80,28 +78,17 @@ const TagNav = () => {
                 //   }
                 // }}
 
-
                 onClick={() => {
                   setSelectedTag(uniqTag);
-                  if (path.includes('tags')) {
-
+                  if (path.includes("tags")) {
                     setFilterAllByTag(true);
                     router.push(`/tags/${uniqTag}`);
                   }
                 }}
-
-
-
-
-
-
-
                 className={`${isTagsPage && "border-b border-b-[#E0E4EA]"} ${
                   selectedTags === uniqTag && !isTagsPage
                     ? "bg-[#F3F5F8]"
                     : "bg-transparent"
-
-
                 } w-full rounded-lg hover:bg-[#F3F5F8] pl-[15px] duration-300 easy-in-out text-[#0E121B] font-semibold text-sm  py-[11.5px] flex items-center justify-start gap-2`}
               >
                 <Tag width={"20px"} height={"20px"} />
@@ -115,11 +102,3 @@ const TagNav = () => {
 };
 
 export default TagNav;
-
-
-
-
-
-
-
-
