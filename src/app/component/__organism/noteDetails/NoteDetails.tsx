@@ -124,6 +124,11 @@ const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
             isNotePage={isNotePage}
             noteById={noteById}
             isArchivedPage={isArchivedPage}
+
+
+
+            isSubmitting={isSubmitting}
+            createNote={createNote}
           />
           <div className="w-ful flex flex-col gap-4">
             <TitleInput
@@ -152,14 +157,14 @@ const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
               </div>
 
             </div>
-            <div className="border-t border-t-[#E0E4EA] pt-4 flex-grow">
+            {/* <div className="border-t border-t-[#E0E4EA] pt-4 flex-grow">
               <Textarea
                 register={register}
                 errors={errors}
                 fieldName={"content"}
               />
 
-            </div>
+            </div> */}
             <div className="border-t border-t-[#E0E4EA] pt-4 flex-grow">
               <Textarea
                 register={register}
@@ -172,7 +177,7 @@ const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
       </div>
       <Footer
         isSubmitting={isSubmitting}
-        noteId={noteById?._id || null}
+        // noteId={noteById?._id || null}
         createNote={createNote}
       />
     </form>

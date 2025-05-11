@@ -8,3 +8,4 @@ export { default as DeleteButton } from "./deleteButton/DeleteButton";
 export { default as AnimateSpin } from "./animateSpin/AnimateSpin";
 export { default as ResetButton } from "./resetButton/ResetButton";
 export { default as ArchivesButton } from "./archivesButton/ArchivesButton";
+export { default as SubmitButton } from "./submitButton/SubmitButton";

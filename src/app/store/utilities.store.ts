@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { NewNoteType } from "./notes.store"; 
+import { NewNoteType } from "./notes.store";
 
 interface IUseUtilities {
   currentPath: string;
@@ -7,27 +7,14 @@ interface IUseUtilities {
   selectedTags: string | null;
   routeToTags: boolean;
 
-
-
-
-
-
-
   filterAllByTag: boolean;
   setFilterAllByTag: (val: boolean) => void;
-
 
   isAllNotesPage: boolean;
   setIsAllNotesPage: (val: boolean) => void;
 
-
-
   isTagsPage: boolean;
-setIsTagsPage: (val: boolean) => void;
-
-
-
-
+  setIsTagsPage: (val: boolean) => void;
 
   setSelectedTag: (tag: string | null) => void;
   setCurrentPath: (path: string) => void;
@@ -48,30 +35,17 @@ export const useUtilities = create<IUseUtilities>((set, get) => ({
 
 
 
-
-
-
   filterAllByTag: false,
   setFilterAllByTag: (val) => set({ filterAllByTag: val }),
 
-  
-  
+
   isAllNotesPage: false,
   setIsAllNotesPage: (val) => set({ isAllNotesPage: val }),
 
 
 
-
-isTagsPage: false,
-  setIsTagsPage: (val) => set({isTagsPage: val}),
-
-
-
-
-
-
-
-
+  isTagsPage: false,
+  setIsTagsPage: (val) => set({ isTagsPage: val }),
 
 
 
@@ -99,61 +73,27 @@ isTagsPage: false,
     notes.forEach((note) => {
       note.tags.forEach((tag) => tagSet.add(tag));
     });
-    return Array.from(tagSet);
+    return Array.from(tagSet).map(
+      (tag) => tag.charAt(0).toUpperCase() + tag.slice(1).toLowerCase()
+    );
   },
 
   handleRoutes: () => set({ routeToTags: true }),
-
-  // getFilteredNotes: (allNotes) => {
-  //   const { isArchivedPage, selectedTags } = get();
-  //   let notes = isArchivedPage
-  //     ? allNotes.filter((note) => note.isArchived)
-  //     : allNotes.filter((note) => !note.isArchived);
-
-  //   if (selectedTags) {
-  //     notes = notes.filter((note) => note.tags.includes(selectedTags));
-  //   }
-  //   return notes;
-  // },
-
-
-
-
-
-
-
 
   getFilteredNotes: (allNotes) => {
     const { isArchivedPage, selectedTags, filterAllByTag } = get();
     let notes = allNotes;
 
-    // if(filterAllByTag) {
-    //   notes = allNotes
-    // }
-
-  
     if (!filterAllByTag) {
       notes = isArchivedPage
         ? allNotes.filter((note) => note.isArchived)
         : allNotes.filter((note) => !note.isArchived);
     }
-  
+
     if (selectedTags) {
-      notes = notes.filter((note) => note.tags.includes(selectedTags));
+      notes = notes.filter((note) => note.tags.includes(selectedTags.toLowerCase()));
     }
-  
+
     return notes;
-  }
-  
-
-
-
-
-
-
+  },
 }));
-
-
-
-
-
