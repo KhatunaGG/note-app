@@ -3,34 +3,38 @@ import { useArchivedNotes } from "@/app/store/archives.store";
 import { Archives, Restore } from "../../__atoms";
 import useManageNotes from "@/app/store/notes.store";
 import { usePathname } from "next/navigation";
+import { useUtilities } from "@/app/store/utilities.store";
+import { useEffect } from "react";
 
 export type ArchiveButtonPropsType = {
   isOverlay?: boolean;
   isArchivedPage?: boolean;
 };
 
-const ArchivesButton = ({ isOverlay, isArchivedPage }: ArchiveButtonPropsType) => {
+const ArchivesButton = ({
+  isOverlay,
+  isArchivedPage,
+}: ArchiveButtonPropsType) => {
   const path = usePathname();
   // const isArchiePage = path === "/archive";
   const { noteById, updateNote } = useManageNotes();
   const { setArchiveModal } = useArchivedNotes();
+  const { isNotePage, setIsNotePage, setIsSearchPage, isSearchPage } =
+    useUtilities();
 
+  useEffect(() => {
+    setIsNotePage(path.includes("/note"));
+    setIsSearchPage(path.includes("/search"));
+  }, [path]);
 
   const handleNoteClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    // if (noteById) {
-    //   setArchiveModal(true);
-    // } else if (archiveModal && noteById) {
-    //   updateNote(noteById);
-    // }
-
     if (!isOverlay && noteById) {
       setArchiveModal(true);
     } else if (isOverlay && noteById) {
       await updateNote(noteById);
-    } else if(isArchivedPage && noteById) {
-      await updateNote(noteById)
-
+    } else if (isArchivedPage && noteById) {
+      await updateNote(noteById);
     }
   };
 
@@ -56,13 +60,16 @@ const ArchivesButton = ({ isOverlay, isArchivedPage }: ArchiveButtonPropsType) =
           isOverlay ? "block text-white" : "hidden lg:flex text-[#0E121B] "
         } text-sm font-medium `}
       >
-        {isArchivedPage ? "Restore Note" : "Archive Note"}
+        {/* {isArchivedPage ? "Restore Note" : "Archive Note"} */}
+
+        {isArchivedPage
+          ? "Restore Note"
+          : isNotePage
+          ? "Archive Note"
+          : "Restore Note"}
       </p>
     </button>
   );
 };
 
-
 export default ArchivesButton;
-
-

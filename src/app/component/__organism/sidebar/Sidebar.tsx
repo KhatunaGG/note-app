@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useUtilities } from "@/app/store/utilities.store";
 import { useEffect } from "react";
 import TagNav from "../tagNav/TagNav";
+import useManageNotes from "@/app/store/notes.store";
 
 const Sidebar = () => {
   const pathname = usePathname();
@@ -17,6 +18,7 @@ const Sidebar = () => {
   //   }, [pathname]);
     
     const { setCurrentPath, activeLink, setSelectedTag } = useUtilities();
+    const { setNoteById} = useManageNotes()
     useEffect(() => {
       setCurrentPath(pathname);
       setSelectedTag(null);
@@ -38,7 +40,11 @@ const Sidebar = () => {
           <Link href="/note">
             <button
 
-             onClick={() => setSelectedTag(null)}
+            //  onClick={() => setSelectedTag(null)}
+             onClick={() => {
+              setSelectedTag(null)
+               setNoteById(null)
+             }}
 
               className={`${activeLink(
                 "/note"
@@ -52,7 +58,11 @@ const Sidebar = () => {
           <Link href={"/archive"}>
             <button
 
-             onClick={() => setSelectedTag(null)}
+            //  onClick={() => setSelectedTag(null)}
+             onClick={() => {
+              setSelectedTag(null)
+              setNoteById(null)
+             }}
 
               className={`${activeLink(
                 "/archive"

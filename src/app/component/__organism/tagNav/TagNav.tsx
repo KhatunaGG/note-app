@@ -11,7 +11,7 @@ const TagNav = () => {
   const router = useRouter();
   const path = usePathname();
   const { accessToken, isLoading } = useSignInStore();
-  const { allNotes, getAllNotes } = useManageNotes();
+  const { allNotes, getAllNotes, setNoteById, setCreateNote } = useManageNotes();
   const {
     getUniqueTags,
     routeToTags,
@@ -80,6 +80,8 @@ const TagNav = () => {
 
                 onClick={() => {
                   setSelectedTag(uniqTag);
+                  setNoteById(null)
+                  // setCreateNote(false)
                   if (path.includes("tags")) {
                     setFilterAllByTag(true);
                     router.push(`/tags/${uniqTag}`);
