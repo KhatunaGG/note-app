@@ -24,20 +24,31 @@ export type NoteType = z.infer<typeof createNoteSchema>;
 
 const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
   const { accessToken } = useSignInStore();
-  const { formatDate } = useUtilities();
+  const {
+    formatDate,
+    selectedTags,
+    setIsTagsPage,
+    setIsNotePage,
+    isNotePage,
+    setIsArchivedPage,
+    isArchivedPage,
+    isNoteDetailsPage,
+    setIsNoteDetailsPage,
+  } = useUtilities();
   const path = usePathname();
-  const isNoteDetailsPage = path === "/noteDetails";
-  const isNotePage = path.includes("/note");
-  const isArchivedPage = path.includes("archive");
-
-  // const isNotePage = path === "/note";
-  // const isArchivedPage = path === "/archive";
-
-  //   const isNotePage = path.startsWith('/note');
-  // const isArchivedPage = path.startsWith('/archive');
-
   const { createNote, createNewNote, getAllNotes, getNoteById, noteById } =
     useManageNotes();
+  // const isNoteDetailsPage = path === "/noteDetails";
+  // const isNotePage = path.includes("/note");
+  // const isArchivedPage = path.includes("archive");
+
+  useEffect(() => {
+    setIsTagsPage(path.includes("/tags"));
+    setIsNotePage(path.includes("/note"));
+    setIsArchivedPage(path.includes("/archive"));
+    setIsNoteDetailsPage(path.includes("/noteDetails"));
+  }, [path]);
+
 
   useEffect(() => {
     if (noteParam) {
@@ -109,8 +120,6 @@ const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
       <div className="w-full px-6 pt-5 pb-4   h-full lg:flex flex-col gap-4  border-r border-r-[#CACFD8] min-h-screen">
         <div
           className={`${
-            // isNoteDetailsPage  || createNote || (!createNote && noteById)
-            // (isNoteDetailsPage && createNote)  || createNote || (!createNote && noteById)
             (isNotePage && createNote) ||
             createNote ||
             (!createNote && noteById) ||
@@ -124,11 +133,9 @@ const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
             isNotePage={isNotePage}
             noteById={noteById}
             isArchivedPage={isArchivedPage}
-
-
-
             isSubmitting={isSubmitting}
             createNote={createNote}
+            selectedTags={selectedTags}
           />
           <div className="w-ful flex flex-col gap-4">
             <TitleInput
@@ -155,16 +162,7 @@ const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
                   </p>
                 </div>
               </div>
-
             </div>
-            {/* <div className="border-t border-t-[#E0E4EA] pt-4 flex-grow">
-              <Textarea
-                register={register}
-                errors={errors}
-                fieldName={"content"}
-              />
-
-            </div> */}
             <div className="border-t border-t-[#E0E4EA] pt-4 flex-grow">
               <Textarea
                 register={register}
@@ -175,11 +173,7 @@ const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
           </div>
         </div>
       </div>
-      <Footer
-        isSubmitting={isSubmitting}
-        // noteId={noteById?._id || null}
-        createNote={createNote}
-      />
+      <Footer isSubmitting={isSubmitting} createNote={createNote} />
     </form>
   );
 };

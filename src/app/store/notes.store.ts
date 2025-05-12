@@ -46,7 +46,7 @@ export interface IUseManageNotes {
 
   setModal: (modal: boolean) => void;
   setActiveNote: (id: string) => void;
-  setNoteById: (noteById: NewNoteType) => void;
+  setNoteById: (noteById: NewNoteType | null) => void;
   setSuccess: (success: boolean) => void;
   setIsLoading: (isLoading: boolean) => void;
   setCreateNote: (createNote: boolean) => void;

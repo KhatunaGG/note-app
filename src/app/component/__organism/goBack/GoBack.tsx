@@ -9,6 +9,8 @@ import {
 } from "../../__molecules";
 import useManageNotes, { NewNoteType } from "@/app/store/notes.store";
 import { usePathname } from "next/navigation";
+import { useUtilities } from "@/app/store/utilities.store";
+import { useEffect } from "react";
 
 export type GoBackPropsType = {
   isNoteDetailsPage?: boolean;
@@ -16,9 +18,9 @@ export type GoBackPropsType = {
   noteById?: NewNoteType | null;
   isArchivedPage?: boolean;
   isTagsPage?: boolean;
-
   isSubmitting?: boolean;
   createNote?: boolean;
+  selectedTags?: string | null;
 };
 
 const GoBack = ({
@@ -26,23 +28,39 @@ const GoBack = ({
   noteById,
   isNotePage,
   isArchivedPage,
-  isTagsPage,
-
   isSubmitting,
   createNote,
+  selectedTags,
 }: GoBackPropsType) => {
   const { resetNewNote } = useManageNotes();
   const path = usePathname();
+  const { setIsTagsPage, isTagsPage } = useUtilities();
+
+  useEffect(() => {
+    setIsTagsPage(path.includes("/tags"));
+  }, [path]);
 
   return (
     // <div className="w-full pb-3 md:pb-4 flex lg:hidden items-center justify-between border-b border-b-[#E0E4EA] pt-[54px] md:pt-0    ">
     <div
-      className={`${isNoteDetailsPage || isTagsPage ? "pt-0" : "pt-[54px]"} ${
-        isTagsPage && "px-6 mb-4"
-      } w-full pb-3 md:pb-4 flex lg:hidden items-center justify-between border-b border-b-[#E0E4EA] md:pt-0`}
+      className={`${isNoteDetailsPage || isTagsPage ? "pt-0" : "pt-[54px]"} 
+      ${isTagsPage && selectedTags && "px-6 mb-4"}
+      ${isTagsPage && noteById && "px-0"}
+      
+      w-full pb-3 md:pb-4 flex lg:hidden items-center justify-between border-b border-b-[#E0E4EA] md:pt-0`}
     >
-      {/* <Link href={`${isNotePage ? `/note` : `/archive`}`}> */}
-      <Link href={isNotePage ? "/note" : isTagsPage ? "/tags" : "/archive"}>
+      {/* <Link href={isNotePage ? "/note" : isTagsPage ? "/tags" : "/archive"}> */}
+      <Link
+        href={
+          isNotePage
+            ? "/note"
+            : isTagsPage
+            ? noteById && selectedTags
+              ? `/tags/${selectedTags}`
+              : "/tags"
+            : "/archive"
+        }
+      >
         <div onClick={resetNewNote} className="flex items-center gap-1">
           <ArrowLeft />
           <p className="text-sm text-[#525866]">Go Back</p>
