@@ -109,7 +109,6 @@ export const useSignInStore = create<ISignInStore>((set) => ({
 
   getCurrentUser: async (accessToken: string | undefined) => {
     if (!accessToken) return;
-    if (!accessToken) return;
     try {
       const res = await axiosInstance.get("/auth/current-user", {
         headers: { Authorization: `Bearer ${accessToken}` },

@@ -38,7 +38,7 @@ const Note = ({
 
 
 
-    console.log(selectedTags, "selectedTags");
+    // console.log(selectedTags, "selectedTags");
 
 
 
@@ -51,6 +51,8 @@ const Note = ({
   useEffect(() => {
     setIsTagsPage(path.includes("/tags"));
   }, [path]);
+
+     console.log(selectedTags, "selectedTags")
 
   return (
     <div

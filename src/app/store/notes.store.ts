@@ -7,8 +7,6 @@ import { axiosInstance } from "../libs/axiosInstance";
 import { useSignInStore } from "./sign-in.store";
 import { useArchivedNotes } from "./archives.store";
 
-
-
 export type NewNoteType = {
   title: string;
   content: string;
@@ -39,7 +37,7 @@ export interface IUseManageNotes {
   tags: string[];
   isArchived: boolean;
   lastEdited: Date;
-  allNotes: NewNoteType[];
+  allNotes: NewNoteType[] | [];
   noteById: NewNoteType | null;
   activeNote: string | null;
   modal: boolean;
@@ -61,7 +59,7 @@ export interface IUseManageNotes {
   // createNewNote: (formData: NoteType) => void;
   createNewNote: (formData: NoteType) => Promise<boolean>;
   getAllNotes: () => void;
-  setAllNotes: (allNotes: NewNoteType[]) => void;
+  setAllNotes: (allNotes: NewNoteType[] | []) => void;
   getNoteById: (id: string) => Promise<void>;
   toggleCreateNote: () => void;
   deleteNote: (id: string) => void;
@@ -69,6 +67,7 @@ export interface IUseManageNotes {
   closeModal: () => void;
   resetNewNote: () => void;
   updateNote: (noteById: NewNoteType) => void;
+  getAllNotesIsArchived: () => void;
 }
 
 const useManageNotes = create<IUseManageNotes>((set, get) => ({
@@ -148,6 +147,27 @@ const useManageNotes = create<IUseManageNotes>((set, get) => ({
       const res = await axiosInstance.get("/note", {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
+   console.log("FIlter by NOT Archived:", res.data);
+      if (res.status >= 200 && res.status <= 204) {
+        set({ allNotes: res.data, success: true });
+      }
+    } catch (e) {
+      const errorMessage = handleApiError(e as AxiosError<ErrorResponse>);
+      set({ axiosError: errorMessage });
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  getAllNotesIsArchived: async () => {
+    const accessToken = useSignInStore.getState().accessToken;
+     
+    set({ isLoading: true, axiosError: "" });
+    try {
+      const res = await axiosInstance.get("/note/all-archived-notes", {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+   console.log("FIlter by IS Archived:", res.data);
       if (res.status >= 200 && res.status <= 204) {
         set({ allNotes: res.data, success: true });
       }
@@ -167,6 +187,7 @@ const useManageNotes = create<IUseManageNotes>((set, get) => ({
       const res = await axiosInstance.get(`/note/${id}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
+    
       if (res.status >= 200 && res.status <= 204) {
         set({ noteById: res.data, success: true });
       }
@@ -246,7 +267,7 @@ const useManageNotes = create<IUseManageNotes>((set, get) => ({
         await get().getAllNotes();
         useArchivedNotes.getState().setArchiveModal(false);
         set({ success: true, noteById: null });
-  
+
         // toast.success("Note archived.")
         return true;
       }

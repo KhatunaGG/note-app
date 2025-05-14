@@ -23,33 +23,38 @@ const TagNav = () => {
     filterAllByTag,
     isTagsPage,
     setIsTagsPage,
+    getFilteredNotesByTag
   } = useUtilities();
   const isArchivedPage = path.includes("archive");
 
-  const notesToUse = isArchivedPage
-    ? allNotes.filter((note) => note.isArchived)
-    : allNotes.filter((note) => !note.isArchived);
-  const uniqTags = getUniqueTags(notesToUse);
+  //   useEffect(() => {
+  //   if (accessToken) {
+  //     getAllNotes();
+  //   }
+  // }, [accessToken, router]);
+
+
+  // const notesToUse = isArchivedPage
+  //   ? allNotes.filter((note) => note.isArchived)
+  //   : allNotes.filter((note) => !note.isArchived);
+ const uniqTags = getUniqueTags(allNotes || []);
 
   useEffect(() => {
     setIsTagsPage(path.includes("/tags"));
   }, [path]);
 
-  // console.log(selectedTags, "selectedTags form TAGSNAV");
-  // console.log(filterAllByTag, "filterAllByTag form NOTE");
-  // console.log(isTagsPage, "isTagsPage form NOTE");
 
-  useEffect(() => {
-    if (accessToken) {
-      getAllNotes();
-    }
-  }, [accessToken, router]);
+ 
+
 
   if (isLoading) {
     return <AnimateSpin />;
   }
 
   if (!accessToken) return null;
+
+
+  
   return (
     <section
       className={`${
@@ -79,8 +84,8 @@ const TagNav = () => {
                 // }}
 
                 onClick={() => {
-                  setSelectedTag(uniqTag);
-                  setNoteById(null)
+                  getFilteredNotesByTag(uniqTag.toLowerCase());
+                  // setNoteById(null)
                   // setCreateNote(false)
                   if (path.includes("tags")) {
                     setFilterAllByTag(true);
@@ -88,7 +93,7 @@ const TagNav = () => {
                   }
                 }}
                 className={`${isTagsPage && "border-b border-b-[#E0E4EA]"} ${
-                  selectedTags === uniqTag && !isTagsPage
+                  selectedTags === uniqTag.toLowerCase() && !isTagsPage
                     ? "bg-[#F3F5F8]"
                     : "bg-transparent"
                 } w-full rounded-lg hover:bg-[#F3F5F8] pl-[15px] duration-300 easy-in-out text-[#0E121B] font-semibold text-sm  py-[11.5px] flex items-center justify-start gap-2`}
