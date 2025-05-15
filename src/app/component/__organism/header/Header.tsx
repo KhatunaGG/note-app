@@ -70,6 +70,7 @@ import Search from "../../__atoms/search/Search";
 import { useSignInStore } from "@/app/store/sign-in.store";
 import { useUtilities } from "@/app/store/utilities.store";
 import { usePathname } from "next/navigation";
+import useManageNotes from "@/app/store/notes.store";
 
 const Header = () => {
   const { accessToken } = useSignInStore();
@@ -83,6 +84,7 @@ const Header = () => {
   } = useUtilities();
   const path = usePathname();
   const isArchivedPage = path.includes("archive");
+  console.log(selectedTags, "selectedTags from header");
 
   useEffect(() => {
     setIsSearchPage(path.includes("/search"));
@@ -115,7 +117,7 @@ const Header = () => {
           {isArchivedPage
             ? "Archived Notes"
             : selectedTags
-            ? `Notes Tagged: ${selectedTags}`
+            ? `Notes Tagged: ${capitalize(selectedTags)}`
             : searchValue
             ? `Showing results for: ${capitalize(searchValue)}`
             : "All Notes"}
@@ -138,9 +140,7 @@ const Header = () => {
         } `}
       >
         <div
-          className={`${
-            isSearchPage && "flex-col"
-          } w-full flex  items-center `}
+          className={`${isSearchPage && "flex-col"} w-full flex  items-center `}
         >
           {isSearchPage && (
             <h2 className="w-full text-left font-bold text-[24px] text-[#0E121B] ">

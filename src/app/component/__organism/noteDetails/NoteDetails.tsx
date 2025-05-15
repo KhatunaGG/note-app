@@ -38,9 +38,6 @@ const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
   const path = usePathname();
   const { createNote, createNewNote, getAllNotes, getNoteById, noteById } =
     useManageNotes();
-  // const isNoteDetailsPage = path === "/noteDetails";
-  // const isNotePage = path.includes("/note");
-  // const isArchivedPage = path.includes("archive");
 
   useEffect(() => {
     setIsTagsPage(path.includes("/tags"));
@@ -48,7 +45,6 @@ const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
     setIsArchivedPage(path.includes("/archive"));
     setIsNoteDetailsPage(path.includes("/noteDetails"));
   }, [path]);
-
 
   useEffect(() => {
     if (noteParam) {

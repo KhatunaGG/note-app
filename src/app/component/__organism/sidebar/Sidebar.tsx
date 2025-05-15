@@ -11,40 +11,52 @@ import { useSignInStore } from "@/app/store/sign-in.store";
 
 const Sidebar = () => {
   const path = usePathname();
-  const {accessToken} = useSignInStore()
+  const { accessToken } = useSignInStore();
   const {
     activeLink,
     isNotePage,
     isArchivedPage,
     setIsArchivedPage,
     setIsNotePage,
-    setSelectedTag
+    setSelectedTag,
+    filterAllByTag,
+    setCurrentPath,
+    handleRoutes,
+    currentPath,
   } = useUtilities();
-  const { setNoteById, getAllNotes, getAllNotesIsArchived, noteById } = useManageNotes();
+  const { setNoteById, getAllNotes, noteById } = useManageNotes();
   // useEffect(() => {
   //   setCurrentPath(pathname);
   //   setSelectedTag(null);
   // }, [pathname]);
 
+  // useEffect(() => {
+  //   const isArchive = path.includes("/archive");
+  //   const isNote = path.includes("/note");
 
+  //   setIsArchivedPage(isArchive);
+  //   setIsNotePage(isNote);
+
+  //   if (isNote && accessToken && !filterAllByTag) {
+  //     getAllNotes();
+  //   } else if (isArchive) {
+  //     getAllNotesIsArchived();
+  //   }
+  //   setNoteById(null);
+  // }, [path, accessToken]);
 
   useEffect(() => {
-    const isArchive = path.includes("/archive");
-    const isNote = path.includes("/note");
-
-    setIsArchivedPage(isArchive);
-    setIsNotePage(isNote);
-
-    if (isNote && accessToken) {
+    setCurrentPath(path);
+    handleRoutes();
+    if (accessToken) {
       getAllNotes();
-    } else if (isArchive) {
-      getAllNotesIsArchived();
+    } else {
+      console.log("No accessToken available, skipping note fetch");
     }
     setNoteById(null);
   }, [path, accessToken]);
 
-
-   if (!accessToken) return null;
+  if (!accessToken) return null;
 
   return (
     <div className="hidden w-full min-h-screen py-3 px-4 lg:flex flex-col gap-4 bg-white">
@@ -56,12 +68,15 @@ const Sidebar = () => {
         <div className="flex flex-col      ">
           <Link href="/note">
             <button
-              // onClick={getAllNotes}
               onClick={() => {
-                if (isNotePage) {
-                  getAllNotes();
-                }
+                getAllNotes();
+                setSelectedTag(null);
               }}
+              // onClick={() => {
+              //   if (isNotePage) {
+              //     getAllNotes();
+              //   }
+              // }}
               className={`${activeLink(
                 "/note"
               )} w-full rounded-lg duration-300 ease-in-out text-[#0E121B] font-semibold text-sm px-[15px] py-[11.5px] flex items-center justify-start gap-2`}
@@ -73,12 +88,15 @@ const Sidebar = () => {
 
           <Link href={"/archive"}>
             <button
-              // onClick={getAllNotesIsArchived}
               onClick={() => {
-                if (isArchivedPage) {
-                  getAllNotesIsArchived();
-                }
+                getAllNotes();
+                setSelectedTag(null);
               }}
+              // onClick={() => {
+              //   if (isArchivedPage) {
+              //     getAllNotesIsArchived();
+              //   }
+              // }}
               className={`${activeLink(
                 "/archive"
               )} w-full rounded-lg hover:bg-[#f8f3f7] duration-300 easy-in-out text-[#0E121B] font-semibold text-sm px-[15px] py-[11.5px] flex items-center justify-start gap-2`}

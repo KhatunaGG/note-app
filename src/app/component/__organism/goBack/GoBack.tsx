@@ -8,7 +8,7 @@ import {
   SubmitButton,
 } from "../../__molecules";
 import useManageNotes, { NewNoteType } from "@/app/store/notes.store";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useUtilities } from "@/app/store/utilities.store";
 import { useEffect } from "react";
 
@@ -34,22 +34,30 @@ const GoBack = ({
 }: GoBackPropsType) => {
   const { resetNewNote } = useManageNotes();
   const path = usePathname();
+  const router = useRouter();
   const { setIsTagsPage, isTagsPage } = useUtilities();
 
   useEffect(() => {
     setIsTagsPage(path.includes("/tags"));
   }, [path]);
 
+  const { previousPath } = useUtilities();
+  const handleBackClick = () => {
+    if (previousPath) {
+      router.push(previousPath);
+    } else {
+      router.back();
+    }
+  };
+
   return (
-    // <div className="w-full pb-3 md:pb-4 flex lg:hidden items-center justify-between border-b border-b-[#E0E4EA] pt-[54px] md:pt-0    ">
     <div
-      className={`${isNoteDetailsPage || isTagsPage ? "pt-0" : "pt-[54px]"} 
+      className={`${isNoteDetailsPage || isTagsPage ? "pt-0" : "pt-[54px]"}
       ${isTagsPage && selectedTags && "px-6 mb-4"}
       ${isTagsPage && noteById && "px-0"}
-      
+
       w-full pb-3 md:pb-4 flex lg:hidden items-center justify-between border-b border-b-[#E0E4EA] md:pt-0`}
     >
-      {/* <Link href={isNotePage ? "/note" : isTagsPage ? "/tags" : "/archive"}> */}
       <Link
         href={
           isNotePage
@@ -61,7 +69,14 @@ const GoBack = ({
             : "/archive"
         }
       >
-        <div onClick={resetNewNote} className="flex items-center gap-1">
+        <div
+          // onClick={resetNewNote}
+          onClick={() => {
+            resetNewNote();
+            handleBackClick();
+          }}
+          className="flex items-center gap-1"
+        >
           <ArrowLeft />
           <p className="text-sm text-[#525866]">Go Back</p>
         </div>
@@ -77,7 +92,6 @@ const GoBack = ({
           isNoteDetailsPage={isNoteDetailsPage}
           noteById={noteById}
         />
-        {/* <p className="text-sm  text-[#335CFF]">Save Note</p> */}
         <SubmitButton
           isSubmitting={isSubmitting ?? false}
           createNote={createNote ?? false}

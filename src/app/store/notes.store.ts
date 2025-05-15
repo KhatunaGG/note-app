@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { axiosInstance } from "../libs/axiosInstance";
 import { useSignInStore } from "./sign-in.store";
 import { useArchivedNotes } from "./archives.store";
+import { useUtilities } from "./utilities.store";
 
 export type NewNoteType = {
   title: string;
@@ -67,7 +68,8 @@ export interface IUseManageNotes {
   closeModal: () => void;
   resetNewNote: () => void;
   updateNote: (noteById: NewNoteType) => void;
-  getAllNotesIsArchived: () => void;
+  // getAllNotesIsArchived: () => void;
+  getSearchedNotes: () => NewNoteType[];
 }
 
 const useManageNotes = create<IUseManageNotes>((set, get) => ({
@@ -143,31 +145,25 @@ const useManageNotes = create<IUseManageNotes>((set, get) => ({
   getAllNotes: async () => {
     set({ isLoading: true, axiosError: "" });
     const accessToken = useSignInStore.getState().accessToken;
-    try {
-      const res = await axiosInstance.get("/note", {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
-   console.log("FIlter by NOT Archived:", res.data);
-      if (res.status >= 200 && res.status <= 204) {
-        set({ allNotes: res.data, success: true });
-      }
-    } catch (e) {
-      const errorMessage = handleApiError(e as AxiosError<ErrorResponse>);
-      set({ axiosError: errorMessage });
-    } finally {
+    if (!accessToken) {
       set({ isLoading: false });
+      return;
     }
-  },
+    const path = useUtilities.getState().currentPath;
+    const endpoint = path.includes("/archive")
+      ? "/note?isArchived=true"
+      : path.includes("/note")
+      ? "/note?isArchived=false"
+      : "/note";
 
-  getAllNotesIsArchived: async () => {
-    const accessToken = useSignInStore.getState().accessToken;
-     
-    set({ isLoading: true, axiosError: "" });
     try {
-      const res = await axiosInstance.get("/note/all-archived-notes", {
+      if (!axiosInstance || typeof axiosInstance.get !== "function") {
+        set({ isLoading: false });
+        return;
+      }
+      const res = await axiosInstance.get(endpoint, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
-   console.log("FIlter by IS Archived:", res.data);
       if (res.status >= 200 && res.status <= 204) {
         set({ allNotes: res.data, success: true });
       }
@@ -187,7 +183,7 @@ const useManageNotes = create<IUseManageNotes>((set, get) => ({
       const res = await axiosInstance.get(`/note/${id}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
-    
+
       if (res.status >= 200 && res.status <= 204) {
         set({ noteById: res.data, success: true });
       }
@@ -277,12 +273,56 @@ const useManageNotes = create<IUseManageNotes>((set, get) => ({
     } finally {
       set({ isLoading: false });
     }
-
     return false;
   },
 
   showModal: () => {
     set({ modal: true });
+  },
+
+  // getSearchedNotes: () => {
+  //   const { allNotes } = get();
+  //   const { searchValue } = useUtilities.getState();
+
+  //   if (!searchValue || searchValue.trim() === "") {
+  //     return allNotes;
+  //   }
+
+  //   const lowerSearch = searchValue.toLowerCase();
+
+  //   return allNotes.filter(
+  //     (note) =>
+  //       note.title.toLowerCase().includes(lowerSearch) ||
+  //       note.content.toLowerCase().includes(lowerSearch) ||
+  //       note.tags.some((tag) => tag.toLowerCase().includes(lowerSearch))
+  //   );
+  // },
+
+  getSearchedNotes: () => {
+    const { allNotes } = get();
+    const { searchValue, isArchivedPage, selectedTags } =
+      useUtilities.getState();
+    let filtered = allNotes || [];
+    if (typeof isArchivedPage === "boolean") {
+      filtered = filtered.filter((note) => note.isArchived === isArchivedPage);
+    }
+    if (selectedTags) {
+      filtered = filtered.filter((note) =>
+        note.tags?.some(
+          (tag) => tag.toLowerCase() === selectedTags.toLowerCase()
+        )
+      );
+    }
+    if (searchValue?.trim()) {
+      const lowerSearch = searchValue.toLowerCase();
+      filtered = filtered.filter(
+        (note) =>
+          note.title.toLowerCase().includes(lowerSearch) ||
+          note.content.toLowerCase().includes(lowerSearch) ||
+          note.tags.some((tag) => tag.toLowerCase().includes(lowerSearch))
+      );
+    }
+    return filtered;
   },
 }));
 
