@@ -97,7 +97,7 @@
 //       <div
 //         className={`${
 //           routeToTags && "hidden"
-//         }  px-8  lg:pl-8 md:pt-6 lg:pt-[20px] lg:pr-4 flex flex-col 
+//         }  px-8  lg:pl-8 md:pt-6 lg:pt-[20px] lg:pr-4 flex flex-col
 //     lg:border lg:border-[#E0E4EA] rounded-t-xl overflow-hidden lg:rounded-t-[0px]  relative min-h-screen `}
 //       >
 //         <h1
@@ -126,9 +126,9 @@
 //             <button
 //               // onClick={resetNewNote}
 //               type="button"
-//               className=" bg-green-600 text-white text-sm font-normal  
+//               className=" bg-green-600 text-white text-sm font-normal
 //         fixed right-8 bottom-[90px] h-[48px] w-[48px]
-//        md:h-[64px] md:w-[64px] rounded-full 
+//        md:h-[64px] md:w-[64px] rounded-full
 //        items-center justify-center lg:hidden  "
 //             >
 //               <div className="w-full flex items-center justify-center gap-1">
@@ -234,10 +234,6 @@
 
 // export default Notes;
 
-
-
-
-
 "use client";
 import Note from "../note/Note";
 import { Plus } from "../../__atoms";
@@ -251,35 +247,36 @@ import GoBack from "../goBack/GoBack";
 
 const Notes = () => {
   const { accessToken } = useSignInStore();
-  const { allNotes, getNoteById, getAllNotes, toggleCreateNote, noteById, getAllNotesIsArchived } =
-    useManageNotes();
+  const {
+    allNotes,
+    getNoteById,
+    getAllNotes,
+    toggleCreateNote,
+    noteById,
+    getSearchedNotes,
+  } = useManageNotes();
   const { isArchivedPage, setIsNotePage, isNotePage } = useUtilities();
   const path = usePathname();
-  // const isArchivedPage = path.includes("archive");
+  const filteredNotes = getSearchedNotes();
 
   useEffect(() => {
     setIsArchivedPage(path.includes("/archive"));
     setIsNotePage(path.includes("/note"));
   }, [path]);
 
-
-
   const {
     routeToTags,
     setFilterAllByTag,
     selectedTags,
-    getFilteredNotes,
+    // getFilteredNotes,
     setSelectedTag,
     setIsArchivedPage,
     isTagsPage,
     searchValue,
     isSearchPage,
     setIsTagsPage,
-    
+    setCurrentPath,
   } = useUtilities();
-
-
-
 
   // console.log(noteById, "noteById");
   // console.log(path, "PATH");
@@ -318,23 +315,14 @@ const Notes = () => {
   //   getAllNotes();
   // }, []);
 
-
-
-  
-  // useEffect(() => {
-  //   const isArchive = path.includes("/archive");
-  //   const isNote = path.includes("/note");
-
-  //   setIsArchivedPage(isArchive);
-  //   setIsNotePage(isNote);
-
-  //   if (isNote && accessToken) {
-  //     getAllNotes();
-  //   } else if (isArchive && accessToken) {
-  //     getAllNotesIsArchived();
-  //   }
-  //   // setNoteById(null);
-  // }, [path, accessToken]);
+  useEffect(() => {
+    setCurrentPath(path);
+    setIsArchivedPage(path.includes("/archive"));
+    setIsNotePage(path.includes("/note"));
+    if (accessToken) {
+      getAllNotes();
+    }
+  }, [path, accessToken]);
 
   const handleCreate = () => {
     toggleCreateNote();
@@ -344,25 +332,29 @@ const Notes = () => {
     await getNoteById(id);
   };
 
+  // const shouldRenderNotes =
+  //   Array.isArray(allNotes) &&
+  //   allNotes.length > 0 &&
+  //   ((!searchValue && !isSearchPage && !isTagsPage) ||
+  //     (searchValue && isSearchPage) ||
+  //     isTagsPage ||
+  //     selectedTags);
 
-const shouldRenderNotes =
-  Array.isArray(allNotes) &&
-  allNotes.length > 0 &&
-  (
-    (!searchValue && !isSearchPage && !isTagsPage) ||
-    (searchValue && isSearchPage) ||
-    (isTagsPage || selectedTags)
-  );
-
-
+  const shouldRenderNotes =
+    Array.isArray(allNotes) &&
+    allNotes.length > 0 &&
+    ((!isSearchPage && !isTagsPage) ||
+      (isTagsPage && selectedTags) ||
+      (isSearchPage && searchValue.trim().length > 0));
 
   if (!accessToken) return null;
 
   return (
-    // <div className="w-full min-h-[calc(100vh-54px)] md:min-h-[calc(100vh-74px)] lg:min-h-[calc(100vh-81px)] pt-4 lg:pt-0">
     <div
       className={`${
-        isSearchPage && "min-h-[calc(100vh-99px)] md:min-h-[calc(100vh-119px)]"
+        isSearchPage &&
+        allNotes.length > 0 &&
+        "min-h-[calc(100vh-99px)] md:min-h-[calc(100vh-119px)]"
       }  w-full min-h-[calc(100vh-54px)] md:min-h-[calc(100vh-74px)] lg:min-h-[calc(100vh-81px)] pt-4 lg:pt-0`}
     >
       {isTagsPage && selectedTags && <GoBack isTagsPage={isTagsPage} />}
@@ -424,7 +416,7 @@ const shouldRenderNotes =
             } w-full flex flex-col md:pb-[114px] lg:pb-[37px] `}
           >
             {shouldRenderNotes ? (
-              allNotes.map((note, i) => {
+              filteredNotes.map((note, i) => {
                 const isFirstNote = i === 0;
                 const isLastNote = i === allNotes.length - 1;
                 return (

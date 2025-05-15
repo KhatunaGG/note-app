@@ -52,7 +52,7 @@ const Note = ({
     setIsTagsPage(path.includes("/tags"));
   }, [path]);
 
-     console.log(selectedTags, "selectedTags")
+
 
   return (
     <div

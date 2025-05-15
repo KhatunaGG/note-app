@@ -11,41 +11,24 @@ const TagNav = () => {
   const router = useRouter();
   const path = usePathname();
   const { accessToken, isLoading } = useSignInStore();
-  const { allNotes, getAllNotes, setNoteById, setCreateNote } = useManageNotes();
+  const { allNotes, getAllNotes, setNoteById} = useManageNotes();
+  const { setIsArchivedPage, setIsNotePage} = useUtilities()
   const {
     getUniqueTags,
-    routeToTags,
-    setSelectedTag,
-    setRouteToTags,
     selectedTags,
     setFilterAllByTag,
-
-    filterAllByTag,
     isTagsPage,
     setIsTagsPage,
-    getFilteredNotesByTag
+    getFilteredNotesByTag,
   } = useUtilities();
   const isArchivedPage = path.includes("archive");
 
-  //   useEffect(() => {
-  //   if (accessToken) {
-  //     getAllNotes();
-  //   }
-  // }, [accessToken, router]);
 
-
-  // const notesToUse = isArchivedPage
-  //   ? allNotes.filter((note) => note.isArchived)
-  //   : allNotes.filter((note) => !note.isArchived);
- const uniqTags = getUniqueTags(allNotes || []);
+  const uniqTags = getUniqueTags(allNotes || []);
 
   useEffect(() => {
     setIsTagsPage(path.includes("/tags"));
   }, [path]);
-
-
- 
-
 
   if (isLoading) {
     return <AnimateSpin />;
@@ -53,8 +36,6 @@ const TagNav = () => {
 
   if (!accessToken) return null;
 
-
-  
   return (
     <section
       className={`${
@@ -85,7 +66,7 @@ const TagNav = () => {
 
                 onClick={() => {
                   getFilteredNotesByTag(uniqTag.toLowerCase());
-                  // setNoteById(null)
+                  setNoteById(null)
                   // setCreateNote(false)
                   if (path.includes("tags")) {
                     setFilterAllByTag(true);
