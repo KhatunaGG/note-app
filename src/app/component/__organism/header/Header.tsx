@@ -71,6 +71,7 @@ import { useSignInStore } from "@/app/store/sign-in.store";
 import { useUtilities } from "@/app/store/utilities.store";
 import { usePathname } from "next/navigation";
 import useManageNotes from "@/app/store/notes.store";
+import Link from "next/link";
 
 const Header = () => {
   const { accessToken } = useSignInStore();
@@ -160,13 +161,19 @@ const Header = () => {
             </div>
           </div>
 
+
+          <Link href={"/settings"} className="w-[11.73%] ">
+          
           <div
             className={`${
               isSearchPage && "hidden"
-            } w-[11.73%] flex items-center justify-center`}
+            } flex items-center justify-center w-full`}
           >
             <Setting width={"24px"} height={"24px"} />
           </div>
+          </Link>
+
+
         </div>
       </div>
     </div>
