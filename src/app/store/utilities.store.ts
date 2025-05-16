@@ -46,6 +46,9 @@ interface IUseUtilities {
   isNoteDetailsPage: boolean;
   setIsNoteDetailsPage: (val: boolean) => void;
 
+  isSettingsPage: boolean;
+setIsSettingsPage: (val: boolean) => void;
+
   setIsLoading: (isLoading: boolean) => void;
   setAxiosError: (axiosError: string) => void;
   setSelectedTag: (tag: string | null) => void;
@@ -99,6 +102,9 @@ export const useUtilities = create<IUseUtilities>((set, get) => ({
   previousPath: "",
   setPreviousPath: (path: string) => set({ previousPath: path }),
 
+  isSettingsPage: false,
+  setIsSettingsPage: (val) => set({isSettingsPage: val}),
+
   setIsLoading: (isLoading: boolean) => set({ isLoading }),
   setAxiosError: (axiosError) => set({ axiosError }),
   setCurrentPath: (path) => set({ currentPath: path }),
@@ -141,6 +147,9 @@ export const useUtilities = create<IUseUtilities>((set, get) => ({
     const path = get().currentPath;
     const isTags = path.includes("/tags");
     const isArchive = path.includes("/archive");
+
+
+    // const isSettings = path.includes("/settings");
 
     set({
       isTagsPage: isTags,

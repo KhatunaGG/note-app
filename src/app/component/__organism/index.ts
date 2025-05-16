@@ -15,3 +15,7 @@ export { default as Note } from "./note/Note"
 export { default as Footer } from "./footer/Footer"
 export { default as Nav } from "./nav/Nav"
 export { default as TagNav } from "./tagNav/TagNav"
+export { default as SettingList } from "./settingList/SettingList"
+export { default as SettingDetails } from "./settingDetails/SettingDetails"
+export { default as Settings } from "./settings/Settings"
+

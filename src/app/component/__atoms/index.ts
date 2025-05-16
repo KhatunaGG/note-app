@@ -13,4 +13,9 @@ export { default as Plus } from "./plus/Plus";
 export { default as ArrowLeft } from "./arrowLeft/ArrowLeft";
 export { default as Restore } from "./restore/Restore";
 export { default as Status } from "./status/Status";
-
+export { default as Logout } from "./logout/Logout";
+export { default as Type } from "./type/Type";
+export { default as Pass } from "./pass/Pass";
+export { default as Sun } from "./sun/Sun";
+export { default as ArrowRight } from "./arrowRight/ArrowRight";
+export { default as Radio } from "./radio/Radio";
