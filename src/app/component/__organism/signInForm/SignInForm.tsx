@@ -112,7 +112,7 @@ import { EmailInput, PasswordInput } from "../../__molecules";
 import { GoogleIcon, GoogleText } from "../../__atoms";
 import { useSignInStore } from "@/app/store/sign-in.store";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect } from "react";
+import {  useEffect } from "react";
 import { setCookie } from "cookies-next";
 
 export const signInSchema = z.object({

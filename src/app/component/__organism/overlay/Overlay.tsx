@@ -1,13 +1,13 @@
 "use client";
 import useManageNotes from "@/app/store/notes.store";
 import { Archives, Delete } from "../../__atoms";
-import { usePathname } from "next/navigation";
 import { ArchivesButton, DeleteButton, ResetButton } from "../../__molecules";
 import { useArchivedNotes } from "@/app/store/archives.store";
+import { usePathname } from "next/navigation";
 
 const Overlay = () => {
   const path = usePathname();
-  // const isOverlay = path === "/overlay";
+  const isOverlay = path === "/overlay";
   const { modal } = useManageNotes();
   const { archiveModal } = useArchivedNotes();
 

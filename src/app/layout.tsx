@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter, Lora } from "next/font/google";
+import { Geist_Mono, Inter, Lora } from "next/font/google";
 import "./globals.css";
-import Sidebar from "./component/__organism/sidebar/Sidebar";
+
 
 const lora = Lora({
   variable: "--font-lora",

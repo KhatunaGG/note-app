@@ -13,46 +13,26 @@ export type NotePropsType = {
   isFirstNote: boolean;
   isLastNote: boolean;
 
-
   selectedTags: string | null;
 };
 
 const Note = ({
   title,
-  content,
   tags,
-  _id,
   isArchived,
   lastEdited,
   isFirstNote,
   isLastNote,
-
-
-  selectedTags
 }: NotePropsType) => {
-  const { formatDate, filterAllByTag, isTagsPage, setIsTagsPage } =
-    useUtilities();
+  const { formatDate, isTagsPage, setIsTagsPage } = useUtilities();
   const formatted = formatDate(lastEdited);
   const path = usePathname();
 
-
-
-
-    // console.log(selectedTags, "selectedTags");
-
-
-
-
-
-
-
-    
+  // console.log(selectedTags, "selectedTags");
 
   useEffect(() => {
     setIsTagsPage(path.includes("/tags"));
   }, [path]);
-
-
 
   return (
     <div

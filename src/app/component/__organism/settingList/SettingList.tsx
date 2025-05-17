@@ -1,12 +1,110 @@
+// "use client";
+// import { settingsData } from "@/app/data/data";
+// import { ArrowRight } from "../../__atoms";
+// import * as Icons from "../../__atoms";
+// import { useSettingsStore } from "@/app/store/settings.store";
+
+// export type SettingDataType = {
+//   text: string;
+//   logoName: string;
+// };
+
+// const Icon = ({ name }: { name: string }) => {
+//   const Icon = Icons[name as keyof typeof Icons];
+//   return Icon ? <Icon width={"20px"} height={"20px"} /> : null;
+// };
+
+// const SettingList = () => {
+//   const { activeSetting, setActiveSetting } = useSettingsStore();
+//   return (
+//     <div className="py-[20px] pl-8 pr-4 w-full min-h-[calc(100vh-54px)] md:min-h-[calc(100vh-74px)] lg:min-h-[calc(100vh-81px)] flex flex-col gap-2">
+//       {settingsData.map((item, i) => {
+//         const isActive = activeSetting === item.text;
+//         return (
+//           <button
+//             onClick={() => setActiveSetting(item.text)}
+//             key={item.text}
+//             className={`w-full flex items-center justify-between py-[9.5px] px-2 rounded-md transition-colors ${
+//               isActive ? "bg-[#F3F5F8]" : "hover:bg-[#F3F5F8]"
+//             }`}
+//           >
+//             <div className="flex items-center gap-2 text-sm text-[#0E121B] font-medium">
+//               <Icon name={item.logoName} />
+//               <p>{item.text}</p>
+//             </div>
+//             {isActive && <ArrowRight />}
+//           </button>
+//         );
+//       })}
+//     </div>
+//   );
+// };
+
+// export default SettingList;
+
+// "use client";
+// import { settingsData } from "@/app/data/data";
+// import { ArrowRight } from "../../__atoms";
+// import * as Icons from "../../__atoms";
+// import { useSettingsStore } from "@/app/store/settings.store";
+// import Link from "next/link";
+
+// export type SettingDataType = {
+//   text: string;
+//   logoName: string;
+// };
+
+// const Icon = ({ name }: { name: string }) => {
+//   const Icon = Icons[name as keyof typeof Icons];
+//   return Icon ? <Icon width={"20px"} height={"20px"} /> : null;
+// };
+
+// const SettingList = () => {
+//   const { activeSetting, setActiveSetting } = useSettingsStore();
+//   return (
+//     <div className="py-[20px] pl-8 pr-4 w-full min-h-[calc(100vh-54px)] md:min-h-[calc(100vh-74px)] lg:min-h-[calc(100vh-81px)] flex flex-col gap-2">
+//       {settingsData.map((item, i) => {
+//         const isActive = activeSetting === item.text;
+//         return (
+//           // <Link href={`/settings/${}`}>
+
+//           <button
+//             onClick={() => setActiveSetting(item.text)}
+//             key={item.text}
+//             className={`w-full flex items-center justify-between py-[9.5px] px-2 rounded-md transition-colors ${
+//               isActive ? "bg-[#F3F5F8]" : "hover:bg-[#F3F5F8]"
+//             }`}
+//           >
+//             <div className="flex items-center gap-2 text-sm text-[#0E121B] font-medium">
+//               <Icon name={item.logoName} />
+//               <p>{item.text}</p>
+//             </div>
+//             {isActive && <ArrowRight />}
+//           </button>
+//           // </Link>
+//         );
+//       })}
+//     </div>
+//   );
+// };
+
+// export default SettingList;
+
 "use client";
 import { settingsData } from "@/app/data/data";
 import { ArrowRight } from "../../__atoms";
 import * as Icons from "../../__atoms";
 import { useSettingsStore } from "@/app/store/settings.store";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export type SettingDataType = {
   text: string;
   logoName: string;
+};
+
+export type SettingListPropsType = {
+  settingParams?: string | undefined;
 };
 
 const Icon = ({ name }: { name: string }) => {
@@ -14,26 +112,46 @@ const Icon = ({ name }: { name: string }) => {
   return Icon ? <Icon width={"20px"} height={"20px"} /> : null;
 };
 
-const SettingList = () => {
+const SettingList = ({ settingParams }: SettingListPropsType) => {
   const { activeSetting, setActiveSetting } = useSettingsStore();
+  const pathname = usePathname();
+
+  // More robust URL pattern matching
+  let currentSetting = "";
+  if (pathname) {
+    const match = pathname.match(/\/settings\/([^/]+)/);
+    if (match && match[1]) {
+      currentSetting = match[1];
+    }
+  }
+
+    // console.log(activeSetting, "activeSetting from settings") 
+
   return (
-    <div className="py-[20px] pl-8 pr-4 w-full min-h-[calc(100vh-54px)] md:min-h-[calc(100vh-74px)] lg:min-h-[calc(100vh-81px)] flex flex-col gap-2">
+    // <div className="py-[20px] pl-8 pr-4 w-full min-h-[calc(100vh-54px)] md:min-h-[calc(100vh-74px)] lg:min-h-[calc(100vh-81px)] flex flex-col gap-2 border-l border-l-[#CACFD8]">
+    <div className="py-[20px] pl-8 pr-4 w-full min-h-[calc(100vh-54px)] md:min-h-[calc(100vh-74px)] lg:min-h-[calc(100vh-81px)] flex flex-col gap-2 border-l border-l-[#CACFD8]">
       {settingsData.map((item, i) => {
-        const isActive = activeSetting === item.text;
+        const settingSlug = item.text.toLowerCase().replace(/\s+/g, "-");
+        const isActive =
+          (currentSetting && currentSetting === settingSlug) ||
+          activeSetting === item.text;
+           const isLastItem = i === settingsData.length - 1;
         return (
-          <button
-            onClick={() => setActiveSetting(item.text)}
+          <Link
+            // href={`/settings/${settingSlug}`}
+            href={`/settings/${settingSlug}`}
             key={item.text}
-            className={`w-full flex items-center justify-between py-[9.5px] px-2 rounded-md transition-colors ${
-              isActive ? "bg-[#F3F5F8]" : "hover:bg-[#F3F5F8]"
+            onClick={() => setActiveSetting(item.text)}
+            className={`w-full flex items-center justify-between  px-2 rounded-md transition-colors ${
+              isActive ? "bg-[#F3F5F8]" : "hover:bg-[#F3F5F8] "
             }`}
           >
-            <div className="flex items-center gap-2 text-sm text-[#0E121B] font-medium">
+            <div className={`${isLastItem && " border-t border-t-[#e8eaec]"} ${isLastItem ? "pt-[17.5px] pb-[9.5px]" : "pt-[9.5px] pb-[9.5px]"}  w-full flex items-center gap-2 text-sm text-[#0E121B] font-medium`}>
               <Icon name={item.logoName} />
               <p>{item.text}</p>
             </div>
             {isActive && <ArrowRight />}
-          </button>
+          </Link>
         );
       })}
     </div>

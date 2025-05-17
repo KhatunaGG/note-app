@@ -1,11 +1,10 @@
 "use client";
-import { usePathname } from "next/navigation";
 import { Title } from "../../__molecules";
 import ForgotPasswordForm from "../ForgotPasswordForm/ForgotPasswordForm";
 
 const ForgotPassword = () => {
-  const path = usePathname();
-  const isForgotPassword = path === "/forgot-password";
+  // const path = usePathname();
+  // const isForgotPassword = path === "/forgot-password";
 
   return (
     <section className="w-full min-h-screen flex items-center justify-center">

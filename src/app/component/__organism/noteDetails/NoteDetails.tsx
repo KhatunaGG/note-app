@@ -103,8 +103,8 @@ const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
     }
   }, [noteById, setValue, createNote, reset]);
 
-  const formTitle = watch("title");
-  const formContent = watch("content");
+  // const formTitle = watch("title");
+  // const formContent = watch("content");
   const lastEditedText = noteById?.lastEdited
     ? formatDate(noteById.lastEdited)
     : "Not yet saved";

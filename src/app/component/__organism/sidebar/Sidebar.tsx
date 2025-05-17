@@ -1,12 +1,11 @@
 "use client";
 import { usePathname } from "next/navigation";
-import { Archives, Home, Logo, Tag } from "../../__atoms";
+import { Archives, Home, Logo} from "../../__atoms";
 import Link from "next/link";
 import { useUtilities } from "@/app/store/utilities.store";
 import { useEffect } from "react";
 import TagNav from "../tagNav/TagNav";
 import useManageNotes from "@/app/store/notes.store";
-import { collectSegmentData } from "next/dist/server/app-render/collect-segment-data";
 import { useSignInStore } from "@/app/store/sign-in.store";
 
 const Sidebar = () => {
@@ -14,17 +13,11 @@ const Sidebar = () => {
   const { accessToken } = useSignInStore();
   const {
     activeLink,
-    isNotePage,
-    isArchivedPage,
-    setIsArchivedPage,
-    setIsNotePage,
     setSelectedTag,
-    filterAllByTag,
     setCurrentPath,
     handleRoutes,
-    currentPath,
   } = useUtilities();
-  const { setNoteById, getAllNotes, noteById } = useManageNotes();
+  const { setNoteById, getAllNotes } = useManageNotes();
   // useEffect(() => {
   //   setCurrentPath(pathname);
   //   setSelectedTag(null);

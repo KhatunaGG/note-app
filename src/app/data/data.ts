@@ -2,10 +2,46 @@ export const settingsData = [
   {
     text: "Color Theme",
     logoName: "Sun",
+    pText: "Choose your color theme:",
+    settingTheme: [
+      {
+        icon: "Sun",
+        mode: "Light Mode",
+        pText: "Pick a clean and classic light theme",
+      },
+      {
+        icon: "Moon",
+        mode: "Dark Mode",
+        pText: "Select a sleek and modern dark theme",
+      },
+      {
+        icon: "System",
+        mode: "System",
+        pText: "Adapts to your device’s theme",
+      },
+    ],
   },
   {
     text: "Font Theme",
     logoName: "Type",
+    pText: "Choose your font theme:",
+    settingTheme: [
+      {
+        icon: "SansSerif",
+        mode: "Sans-serif",
+        pText: "Clean and modern, easy to read.",
+      },
+      {
+        icon: "Serif",
+        mode: "Serif",
+        pText: "Classic and elegant for a timeless feel.",
+      },
+      {
+        icon: "Mono",
+        mode: "Monospace",
+        pText: "Code-like, great for a technical vibe.",
+      },
+    ],
   },
   {
     text: "Change Password",

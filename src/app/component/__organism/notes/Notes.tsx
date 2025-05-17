@@ -253,7 +253,6 @@ const Notes = () => {
     getNoteById,
     getAllNotes,
     toggleCreateNote,
-    noteById,
     getSearchedNotes,
   } = useManageNotes();
 
@@ -271,7 +270,6 @@ const Notes = () => {
     isSettingsPage,
     isArchivedPage,
     setIsNotePage,
-    isNotePage,
     setIsSettingsPage,
   } = useUtilities();
 
@@ -331,7 +329,7 @@ const Notes = () => {
     toggleCreateNote();
   };
 
-  console.log(isSettingsPage, "isSettingsPage");
+  // console.log(isSettingsPage, "isSettingsPage");
 
   const handleNoteClick = async (id: string) => {
     await getNoteById(id);

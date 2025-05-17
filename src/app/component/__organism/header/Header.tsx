@@ -70,7 +70,6 @@ import Search from "../../__atoms/search/Search";
 import { useSignInStore } from "@/app/store/sign-in.store";
 import { useUtilities } from "@/app/store/utilities.store";
 import { usePathname } from "next/navigation";
-import useManageNotes from "@/app/store/notes.store";
 import Link from "next/link";
 
 const Header = () => {
@@ -85,7 +84,7 @@ const Header = () => {
   } = useUtilities();
   const path = usePathname();
   const isArchivedPage = path.includes("archive");
-  console.log(selectedTags, "selectedTags from header");
+
 
   useEffect(() => {
     setIsSearchPage(path.includes("/search"));
