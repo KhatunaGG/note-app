@@ -19,3 +19,8 @@ export { default as Pass } from "./pass/Pass";
 export { default as Sun } from "./sun/Sun";
 export { default as ArrowRight } from "./arrowRight/ArrowRight";
 export { default as Radio } from "./radio/Radio";
+export { default as System } from "./system/System";
+export { default as Moon } from "./moon/Moon";
+export { default as SansSerif } from "./sansSerif/SansSerif";
+export { default as Serif } from "./serif/Serif";
+export { default as Mono} from "./mono/Mono";

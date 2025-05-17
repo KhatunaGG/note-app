@@ -46,6 +46,11 @@ interface IUseUtilities {
   isNoteDetailsPage: boolean;
   setIsNoteDetailsPage: (val: boolean) => void;
 
+
+
+  isSettingsDetailsPage: boolean;
+  setIsSettingsDetailsPage: (val: boolean) => void;
+
   isSettingsPage: boolean;
 setIsSettingsPage: (val: boolean) => void;
 
@@ -104,6 +109,10 @@ export const useUtilities = create<IUseUtilities>((set, get) => ({
 
   isSettingsPage: false,
   setIsSettingsPage: (val) => set({isSettingsPage: val}),
+
+
+  isSettingsDetailsPage: false,
+  setIsSettingsDetailsPage: (val) => ({isSettingsDetailsPage: val}),
 
   setIsLoading: (isLoading: boolean) => set({ isLoading }),
   setAxiosError: (axiosError) => set({ axiosError }),

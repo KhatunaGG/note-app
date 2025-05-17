@@ -17,5 +17,6 @@ export { default as Nav } from "./nav/Nav"
 export { default as TagNav } from "./tagNav/TagNav"
 export { default as SettingList } from "./settingList/SettingList"
 export { default as SettingDetails } from "./settingDetails/SettingDetails"
-export { default as Settings } from "./settings/Settings"
+export { default as ChangePassword } from "./changePassword/ChangePassword"
+
 

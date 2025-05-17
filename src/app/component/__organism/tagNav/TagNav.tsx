@@ -11,8 +11,8 @@ const TagNav = () => {
   const router = useRouter();
   const path = usePathname();
   const { accessToken, isLoading } = useSignInStore();
-  const { allNotes, getAllNotes, setNoteById} = useManageNotes();
-  const { setIsArchivedPage, setIsNotePage} = useUtilities()
+  const { allNotes,  setNoteById} = useManageNotes();
+
   const {
     getUniqueTags,
     selectedTags,
@@ -73,7 +73,7 @@ const TagNav = () => {
                     router.push(`/tags/${uniqTag}`);
                   }
                 }}
-                className={`${isTagsPage && "border-b border-b-[#E0E4EA]"} ${
+                className={`${isTagsPage && "border-b border-b-[#E0E4EA] "} ${
                   selectedTags === uniqTag.toLowerCase() && !isTagsPage
                     ? "bg-[#F3F5F8]"
                     : "bg-transparent"

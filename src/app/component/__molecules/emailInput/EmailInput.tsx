@@ -1,7 +1,5 @@
 "use client";
-import { SignUpType } from "../../__organism/form/Form";
 import {
-  FieldError,
   FieldErrors,
   FieldValues,
   Path,

@@ -27,7 +27,7 @@
 
 
 import { Aside, Header, Nav, NoteDetails, Notes } from "@/app/component/__organism";
-import React from "react";
+
 
 export default function NotePage() {
   return (

@@ -19,7 +19,7 @@ const ArchivesButton = ({
   // const isArchiePage = path === "/archive";
   const { noteById, updateNote } = useManageNotes();
   const { setArchiveModal } = useArchivedNotes();
-  const { isNotePage, setIsNotePage, setIsSearchPage, isSearchPage } =
+  const { isNotePage, setIsNotePage, setIsSearchPage } =
     useUtilities();
 
   useEffect(() => {

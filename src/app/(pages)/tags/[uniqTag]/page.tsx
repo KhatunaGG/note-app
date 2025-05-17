@@ -1,4 +1,4 @@
-import { Header, Nav, Notes, TagNav } from "@/app/component/__organism";
+import { Header, Nav, Notes } from "@/app/component/__organism";
 import React from "react";
 
 export default function page() {

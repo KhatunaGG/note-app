@@ -15,9 +15,9 @@ const ResetButton = ({
   isOverlay,
   isNoteDetailsPage,
 }: ResetButtonPropsType) => {
-  const { showModal, closeModal, resetNewNote, createNote, noteById } =
+  const {  closeModal, resetNewNote, createNote, noteById } =
     useManageNotes();
-  const { archiveModal, setArchiveModal } = useArchivedNotes();
+  const {  setArchiveModal } = useArchivedNotes();
   const { isArchivedPage } = useUtilities();
   const router = useRouter();
 
