@@ -1,8 +1,14 @@
-import React from 'react'
+"use client"
 
-const ChangePassword = () => {
+export type changePasswordPropsType = {
+  settingsParam: string
+}
+
+const ChangePassword = ({settingsParam}: changePasswordPropsType) => {
+
+  console.log(settingsParam, "settingParams from Change password page")
   return (
-    <div>ChangePassword</div>
+    <div className='w-full bg-green-200'>ChangePassword</div>
   )
 }
 

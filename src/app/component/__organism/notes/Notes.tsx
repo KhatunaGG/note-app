@@ -360,7 +360,7 @@ const Notes = () => {
             isSearchPage &&
             allNotes.length > 0 &&
             "min-h-[calc(100vh-99px)] md:min-h-[calc(100vh-119px)]"
-          }  w-full min-h-[calc(100vh-54px)] md:min-h-[calc(100vh-74px)] lg:min-h-[calc(100vh-81px)] pt-4 lg:pt-0`}
+          }  w-full min-h-[calc(100vh-54px)] md:min-h-[calc(100vh-74px)] lg:min-h-[calc(100vh-81px)] pt-4 lg:pt-0  `}
         >
           {isTagsPage && selectedTags && <GoBack isTagsPage={isTagsPage} />}
 
