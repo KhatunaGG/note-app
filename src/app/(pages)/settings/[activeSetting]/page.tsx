@@ -77,7 +77,6 @@
 //   );
 // }
 
-
 // "use client";
 // import { useEffect } from "react";
 // import { usePathname } from "next/navigation";
@@ -97,7 +96,7 @@
 
 //   useEffect(() => {
 //     setCurrentPath(path);
-    
+
 //     if (activeSetting) {
 //       // Decode the URL parameter since it might contain special characters
 //       const decodedSetting = decodeURIComponent(activeSetting);
@@ -108,16 +107,7 @@
 //   return <SettingDetails title={decodeURIComponent(activeSetting)} />;
 // }
 
-
-
-
-import {
-  Aside,
-  Header,
-  Nav,
-  Notes,
-  SettingDetails,
-} from "@/app/component/__organism";
+import { Header, Nav, Notes, SettingDetails } from "@/app/component/__organism";
 import React from "react";
 
 export default async function ParamPage({
@@ -132,18 +122,13 @@ export default async function ParamPage({
       <div className="h-[54px] md:h-[74px] lg:h-[81px] w-full absolute inset-0 z-10">
         <Header />
       </div>
-
-      <div className="w-full t-[54px] md:pt-[74px] lg:pt-[81px] min-h-screen flex">
+      <div className="w-full pt-[54px] md:pt-[74px] lg:pt-[81px] min-h-screen flex">
         <div className="w-full lg:w-[24.82%] hidden lg:block border-r border-r-[#CACFD8] ">
           <Notes />
         </div>
-        <div className="w-full lg:w-[50.34%]  lg:flex py-8 px-8">
+        <div className="w-full lg:w-[50.34%]  lg:flex py-8 px-4 md:px-8">
           {activeSetting && <SettingDetails settingsParam={activeSetting} />}
         </div>
-
-        {/* <div className="w-full lg:w-[22.07%] hidden lg:flex">
-          <Aside />
-        </div> */}
       </div>
       <Nav />
     </div>

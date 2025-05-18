@@ -52,7 +52,7 @@ const Sidebar = () => {
   if (!accessToken) return null;
 
   return (
-    <div className="hidden w-full min-h-screen py-3 px-4 lg:flex flex-col gap-4 bg-white">
+    <div className="hidden w-full min-h-screen py-3 px-4 lg:flex flex-col gap-4 bg-transparent">
       <div className="w-full py-4">
         <Logo />
       </div>

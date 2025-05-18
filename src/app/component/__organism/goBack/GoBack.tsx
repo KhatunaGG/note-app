@@ -58,7 +58,7 @@ const GoBack = ({
   return (
     <div
       className={`${
-        isNoteDetailsPage || isTagsPage || (isSettingsPage && settingsParam)
+        isNoteDetailsPage || isTagsPage || (isSettingsPage && settingsParam) || isArchivedPage
           ? "pt-0"
           : "pt-[54px]"
       }
