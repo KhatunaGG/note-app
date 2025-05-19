@@ -35,10 +35,10 @@ const SettingList = ({ settingParams }: SettingListPropsType) => {
     }
   }
 
-
+//bg-white dark:bg-['#232530'] transition-colors duration-700 ease-in-out     
 
   return (
-    <div className=" bg-white dark:bg-['#232530'] transition-colors duration-700 ease-in-out       py-[20px] pl-8 pr-4 w-full min-h-[calc(100vh-54px)] md:min-h-[calc(100vh-74px)] lg:min-h-[calc(100vh-81px)] flex flex-col gap-2 border-l border-l-[#CACFD8]">
+    <div className="   py-[20px] pl-8 pr-4 w-full min-h-[calc(100vh-54px)] md:min-h-[calc(100vh-74px)] lg:min-h-[calc(100vh-81px)] flex flex-col gap-2 border-l border-l-[#CACFD8]">
       {isSettingsPage && (
         <h1 className="flex lg:hidden text-2xl font-bold text-[#0E121B]   ">
           Settings

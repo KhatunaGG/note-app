@@ -2,6 +2,17 @@
 
 
 
-/* body {
-  @apply bg-white dark:bg-gray-800 text-black dark:text-white;
+
+/* 
+body {
+  @apply bg-white dark:bg-dark;
 } */
+
+
+body {
+  background-color: #ffffff;
+}
+
+.dark body {
+  background-color: #232530;
+}

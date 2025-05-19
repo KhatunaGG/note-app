@@ -1,5 +1,4 @@
 // import { create } from "zustand";
-// import { persist } from "zustand/middleware";
 // import { settingsData } from "../data/data";
 
 // export interface SettingThemeItem {
@@ -19,15 +18,90 @@
 //   activeSetting: string | null;
 //   filteredSettings: SettingThemeItem[];
 //   selectedTheme: string;
+//   // filteredData: SettingItem[];
 //   filteredData: SettingItem | null;
-//   mode: string | null;
 
-//   setMode: (mode: string | null) => void;
+//   // setFilteredData: (filteredData: SettingItem[] | []) => void;
 //   setFilteredData: (filteredData: SettingItem | null) => void;
 //   setSelectedTheme: (selectedTheme: string) => void;
 //   setActiveSetting: (val: string | null) => void;
 //   setFilteredSettings: (title: string) => void;
-//   applyTheme: (theme: string) => void;
+//   // applyTheme: (val: string) => void;
+// }
+
+// export const useSettingsStore = create<IUseSettingsStore>((set, get) => ({
+//   activeSetting: null,
+//   filteredSettings: [],
+//   selectedTheme: "",
+//   filteredData: null,
+
+//   setFilteredData: (filteredData) => set({ filteredData }),
+//   setSelectedTheme: (selectedTheme) => set({ selectedTheme }),
+//   setActiveSetting: (val) => set({ activeSetting: val }),
+//   setFilteredSettings: (title) => {
+//     const match = settingsData.find((item) => item.text === title);
+//     const filtered = match?.settingTheme || [];
+//     set({ filteredSettings: filtered });
+//   },
+//   // applyTheme: (theme: string) => {
+//   //   set({ selectedTheme: theme });
+//   //   if (typeof window !== 'undefined')  {
+
+//   //     localStorage.setItem("selectedTheme", get().selectedTheme);
+
+//   //     console.log(theme, "THEME form Store")
+//   //    if (theme === "Dark Mode") {
+//   //     document.documentElement.classList.add("dark");
+//   //      localStorage.setItem("theme", "dark");
+//   //   } else if(theme === "Light Mode") {
+//   //     document.documentElement.classList.remove("dark");
+//   //       localStorage.setItem("theme", "light");
+//   //   }
+//   //   }
+//   // },
+// }));
+
+// "use client";
+
+// import { create } from "zustand";
+// import { persist, createJSONStorage } from "zustand/middleware";
+// import { settingsData } from "../data/data";
+
+// // Add default theme detection based on system preference
+// const getDefaultTheme = () => {
+//   // This only works client-side
+//   if (typeof window !== 'undefined') {
+//     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+//       return "dark mode";
+//     }
+//     return "light mode";
+//   }
+//   return "system"; // Default fallback for server-side
+// };
+
+// export interface SettingThemeItem {
+//   icon: string;
+//   mode: string;
+//   pText: string;
+// }
+
+// export interface SettingItem {
+//   text: string;
+//   logoName: string;
+//   pText?: string;
+//   settingTheme?: SettingThemeItem[];
+// }
+
+// export interface IUseSettingsStore {
+//   activeSetting: string | null;
+//   filteredSettings: SettingThemeItem[];
+//   selectedTheme: string;
+//   filteredData: SettingItem | null;
+
+//   setFilteredData: (filteredData: SettingItem | null) => void;
+//   setSelectedTheme: (selectedTheme: string) => void;
+//   setActiveSetting: (val: string | null) => void;
+//   setFilteredSettings: (title: string) => void;
 // }
 
 // export const useSettingsStore = create<IUseSettingsStore>()(
@@ -35,67 +109,67 @@
 //     (set, get) => ({
 //       activeSetting: null,
 //       filteredSettings: [],
-//       selectedTheme: "Light Mode",
+//       // Initialize with default theme if none set
+//       selectedTheme: getDefaultTheme(),
 //       filteredData: null,
-//       mode: "",
 
-//       setMode: (mode) => set({ mode }),
 //       setFilteredData: (filteredData) => set({ filteredData }),
-//       // setSelectedTheme: (selectedTheme) => set({ selectedTheme }),
+//       setSelectedTheme: (selectedTheme) => set({ selectedTheme }),
 //       setActiveSetting: (val) => set({ activeSetting: val }),
 //       setFilteredSettings: (title) => {
 //         const match = settingsData.find((item) => item.text === title);
 //         const filtered = match?.settingTheme || [];
 //         set({ filteredSettings: filtered });
 //       },
-
-//       setSelectedTheme: (theme: string) => {
-//         set({ selectedTheme: theme });
-//         get().applyTheme(theme); // <-- apply the theme right after set
-//       },
-
-//       applyTheme: (theme?: string) => {
-//         if (typeof window === "undefined") return;
-//         const currentTheme = theme || get().selectedTheme;
-
-//         const root = document.documentElement;
-//         if (currentTheme === "Dark Mode") {
-//           root.classList.add("dark");
-//           localStorage.setItem("theme", "dark");
-//         } else if (currentTheme === "Light Mode") {
-//           root.classList.remove("dark");
-//           localStorage.setItem("theme", "light");
-//         } else if (currentTheme === "System") {
-//           const prefersDark = window.matchMedia(
-//             "(prefers-color-scheme: dark)"
-//           ).matches;
-//           prefersDark
-//             ? root.classList.add("dark")
-//             : root.classList.remove("dark");
-//           localStorage.setItem("theme", "system");
-//         }
-//       },
 //     }),
-//     // {
-//     //   name: "settings-storage",
-//     //   partialize: (state) => ({ selectedTheme: state.selectedTheme }),
-//     // }
-
 //     {
 //       name: "settings-storage",
-//       partialize: (state) => ({ selectedTheme: state.selectedTheme }),
-//       onRehydrateStorage: () => (state) => {
-//         if (state) {
-//           // Automatically apply theme on hydration
-//           state.applyTheme(state.selectedTheme);
-//         }
-//       },
+//       // Only store specific keys we want to persist - not the methods
+//       partialize: (state) => ({
+//         activeSetting: state.activeSetting,
+//         selectedTheme: state.selectedTheme,
+//         filteredData: state.filteredData,
+//         filteredSettings: state.filteredSettings,
+//       }),
+//       // Correctly use createJSONStorage for type safety
+//       storage: typeof window !== 'undefined'
+//         ? createJSONStorage(() => localStorage)
+//         : undefined
 //     }
 //   )
 // );
 
+
+
+
+
+
+
+
+
+
+
+
+"use client";
+
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 import { settingsData } from "../data/data";
+
+// Add default theme detection based on system preference
+const getDefaultTheme = () => {
+  // This only works client-side
+  if (typeof window !== "undefined") {
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+      return "dark mode";
+    }
+    return "light mode";
+  }
+  return "system"; // Default fallback for server-side
+};
 
 export interface SettingThemeItem {
   icon: string;
@@ -113,46 +187,72 @@ export interface SettingItem {
 export interface IUseSettingsStore {
   activeSetting: string | null;
   filteredSettings: SettingThemeItem[];
+  
+  // Currently applied theme (persisted)
+  currentTheme: string;
+  
+  // Temporarily selected theme (not applied yet)
   selectedTheme: string;
-  // filteredData: SettingItem[];
+  
   filteredData: SettingItem | null;
 
-  // setFilteredData: (filteredData: SettingItem[] | []) => void;
+  // Apply the selected theme (update currentTheme to match selectedTheme)
+  applySelectedTheme: () => void;
+  
+  // Reset selectedTheme to match currentTheme (cancel selection)
+  resetSelectedTheme: () => void;
+
   setFilteredData: (filteredData: SettingItem | null) => void;
   setSelectedTheme: (selectedTheme: string) => void;
   setActiveSetting: (val: string | null) => void;
   setFilteredSettings: (title: string) => void;
-  // applyTheme: (val: string) => void;
 }
 
-export const useSettingsStore = create<IUseSettingsStore>((set, get) => ({
-  activeSetting: null,
-  filteredSettings: [],
-  selectedTheme: "",
-  filteredData: null,
+export const useSettingsStore = create<IUseSettingsStore>()(
+  persist(
+    (set, get) => ({
+      activeSetting: null,
+      filteredSettings: [],
+      currentTheme: getDefaultTheme(), // The actually applied theme (persisted)
+      selectedTheme: getDefaultTheme(), // Initialize selected theme to match current theme
+      filteredData: null,
+      
+      // Apply the selected theme (save it as current)
+      applySelectedTheme: () => {
+        const state = get();
+        if (state.selectedTheme) {
+          set({ currentTheme: state.selectedTheme });
+        }
+      },
+      
+      // Reset selected theme to match current (cancel selection)
+      resetSelectedTheme: () => {
+        const state = get();
+        set({ selectedTheme: state.currentTheme });
+      },
 
-  setFilteredData: (filteredData) => set({ filteredData }),
-  setSelectedTheme: (selectedTheme) => set({ selectedTheme }),
-  setActiveSetting: (val) => set({ activeSetting: val }),
-  setFilteredSettings: (title) => {
-    const match = settingsData.find((item) => item.text === title);
-    const filtered = match?.settingTheme || [];
-    set({ filteredSettings: filtered });
-  },
-  // applyTheme: (theme: string) => {
-  //   set({ selectedTheme: theme });
-  //   if (typeof window !== 'undefined')  {
-
-  //     localStorage.setItem("selectedTheme", get().selectedTheme);
-  
-  //     console.log(theme, "THEME form Store")
-  //    if (theme === "Dark Mode") {
-  //     document.documentElement.classList.add("dark");
-  //      localStorage.setItem("theme", "dark");
-  //   } else if(theme === "Light Mode") {
-  //     document.documentElement.classList.remove("dark");
-  //       localStorage.setItem("theme", "light");
-  //   }
-  //   }
-  // },
-}));
+      setSelectedTheme: (theme) => set({ selectedTheme: theme }),
+      setFilteredData: (filteredData) => set({ filteredData }),
+      setActiveSetting: (val) => set({ activeSetting: val }),
+      setFilteredSettings: (title) => {
+        const match = settingsData.find((item) => item.text === title);
+        const filtered = match?.settingTheme || [];
+        set({ filteredSettings: filtered });
+      },
+    }),
+    {
+      name: "settings-storage",
+      partialize: (state) => ({
+        activeSetting: state.activeSetting,
+        currentTheme: state.currentTheme, // Persist the applied theme
+        selectedTheme: state.currentTheme, // Initialize selectedTheme from currentTheme
+        filteredData: state.filteredData,
+        filteredSettings: state.filteredSettings,
+      }),
+      storage:
+        typeof window !== "undefined"
+          ? createJSONStorage(() => localStorage)
+          : undefined,
+    }
+  )
+);
