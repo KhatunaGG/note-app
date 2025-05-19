@@ -26,7 +26,7 @@ const PasswordInput = <T extends FieldValues>({
   return (
     <div className="w-full flex flex-col gap-[6px]">
       <div className="w-full flex items-center justify-between">
-        <label className="text-sm font-medium text-darkest">Password</label>
+        <label className="text-sm font-medium text-[#0E121B]">Password</label>
         {isSignInPage && (
           <Link href={"/forgot-password"}>
             <button

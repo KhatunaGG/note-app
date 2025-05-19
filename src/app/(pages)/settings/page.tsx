@@ -1,4 +1,5 @@
-import { Aside, Header, Nav,  Notes } from "@/app/component/__organism";
+import { Header, Nav, Notes } from "@/app/component/__organism";
+import ThemeSwitch from "@/app/component/__organism/themeSwitch/ThemeSwitch";
 import React from "react";
 
 export default function NotePage() {
@@ -10,20 +11,14 @@ export default function NotePage() {
       </div>
 
       <div className="w-full t-[54px] md:pt-[74px] lg:pt-[81px] min-h-screen flex">
-        <div className="w-full lg:w-[24.82%] border-r border-r-[#CACFD8] pt-[54px] md:pt-0 ">
+        <div className="w-full lg:w-[24.82%] border-r border-r-[#CACFD8] pt-[54px] md:pt-0   ">
           <Notes />
         </div>
-        {/* <div className="w-full lg:w-[50.34%] lg:flex hidden border-r border-r-[#CACFD8]"> */}
         <div className="w-full lg:w-[50.34%] lg:flex hidden">
           {/* <NoteDetails /> */}
         </div>
-        {/* <div className="w-full lg:w-[22.07%] hidden lg:flex ">
-          <Aside />
-        </div> */}
       </div>
       <Nav />
-
-      
     </div>
   );
 }

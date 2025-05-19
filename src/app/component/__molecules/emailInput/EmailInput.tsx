@@ -20,10 +20,10 @@ const EmailInput = <T extends FieldValues>({
 }: EmailInputPropsType<T>) => {
   return (
     <div className="w-full flex flex-col gap-[6px]">
-      <label className="text-sm font-medium text-darkest">Email Address</label>
+      <label className="text-sm font-medium text-[#0E121B]">Email Address</label>
       <input
         type="text"
-        className="border border-[#CACFD8] rounded-lg p-3 outline-none text-neutral"
+        className="border border-[#CACFD8] rounded-lg p-3 outline-none text-[#717784]"
         placeholder="email@example.com"
         {...register(fieldName)}
       />

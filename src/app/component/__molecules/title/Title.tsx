@@ -22,7 +22,7 @@ const Title = ({
       </div>
 
       <div className="flex flex-col items-center justify-center gap-2">
-        <h1 className="text-darkest font-bold text-2xl">
+        <h1 className="text-[#0E121B] font-bold text-2xl">
           {isSignInPage
             ? "Welcome to Note"
             : isForgotPassword

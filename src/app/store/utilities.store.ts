@@ -73,6 +73,10 @@ setIsSettingsPage: (val: boolean) => void;
 
   previousPath: string;
   setPreviousPath: (path: string) => void;
+
+
+
+
 }
 
 export const useUtilities = create<IUseUtilities>((set, get) => ({
@@ -121,10 +125,33 @@ export const useUtilities = create<IUseUtilities>((set, get) => ({
   setSelectedTag: (tag) => set({ selectedTags: tag }),
   setIsArchivedPage: (isArchived) => set({ isArchivedPage: isArchived }),
 
-  activeLink: (path) => {
+  // activeLink: (path) => {
+  //   const currentPath = get().currentPath;
+  //   return currentPath.includes(path) ? "bg-[#F3F5F8]" : "hover:bg-[#F3F5F8]";
+  // },
+
+
+activeLink: (path) => {
     const currentPath = get().currentPath;
-    return currentPath.includes(path) ? "bg-[#F3F5F8]" : "hover:bg-[#F3F5F8]";
+    const isDarkMode = document.documentElement.classList.contains('dark');
+    
+    if (currentPath.includes(path)) {
+      return isDarkMode 
+        ? "bg-selectedForDark" 
+        : "bg-selectedForLight";
+    } else {
+      return isDarkMode 
+        ? "hover:bg-selectedForDark" 
+        : "hover:bg-selectedForLight";
+    }
   },
+
+
+
+
+
+
+
 
   formatDate: (dateString) => {
     const date = new Date(dateString);
