@@ -28,7 +28,8 @@ const Textarea = <T extends FieldValues>({
       /> */}
       <textarea
         {...register(fieldName)}
-        className="w-full min-h-[calc(100vh/2)] resize-none overflow-auto outline-none text-sm text-[#232530] p-2"
+        // className="w-full min-h-[calc(100vh/2)] resize-none overflow-auto outline-none text-sm text-[#232530] p-2"
+        className="w-full min-h-[calc(100vh/2)] resize-none overflow-auto outline-none text-sm text-primary-light dark:text-primary-dark p-2"
         placeholder="Write your note here..."
       />
       {error && <p className="text-red-500 text-sm">{error}</p>}

@@ -11,7 +11,7 @@ const Aside = () => {
   if (!accessToken) return null;
 
   return (
-    <div className="w-full  pl-4 py-[20px] flex flex-col gap-3">
+    <div className="w-full  pl-4 py-[20px] flex flex-col gap-3 ">
       <ArchivesButton isArchivedPage={isArchivedPage} />
       <DeleteButton />
     </div>

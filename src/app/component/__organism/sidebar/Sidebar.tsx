@@ -151,7 +151,7 @@ const Sidebar = () => {
   if (!accessToken) return null;
 
   return (
-    <div className="hidden w-full min-h-screen py-3 px-4 lg:flex flex-col gap-4 bg-primary-light dark:bg-primary-dark border-r border-lines-light dark:border-lines-dark">
+    <div className="hidden w-full min-h-screen py-3 px-4 lg:flex flex-col gap-4 bg-primary-light dark:bg-primary-dark                sidebar-border">
       <div className="w-full py-4">
         <Logo />
       </div>

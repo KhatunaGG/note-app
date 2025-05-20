@@ -160,7 +160,8 @@ const Header = () => {
     <div
       className={`${
         !isSearchPage
-          ? "bg-[#F3F5F8] lg:bg-white  w-full"
+          // ? "bg-[#F3F5F8] lg:bg-white  w-full"
+          ? "     bg-primary-light lg:bg-secondary-light dark:bg-primary-dark   w-full"
           : "bg-transparent relative"
       } h-[54px] md:h-[74px] lg:h-[81px] lg:px-[2.78%]  px-8 w-full  flex items-center justify-between  lg:border-b lg:border-l lg:border-[#E0E4EA]  ${
         isSearchPage ? "flex-col gap-[20px] md:gap-6  " : "flex-row lg:gap-0 "
@@ -170,7 +171,8 @@ const Header = () => {
         <h1
           className={`${
             isSearchPage ? "hidden lg:block" : "hidden lg:block"
-          }  font-bold text-[24px] text-[#0E121B] `}
+          // }  font-bold text-[24px] text-[#0E121B] `}
+          }  font-bold text-[24px] text-primary-light dark:text-primary-dark `}
         >
           {/* {isArchivedPage
             ? "Archived Notes"
@@ -213,7 +215,8 @@ const Header = () => {
           className={`${isSearchPage && "flex-col"} w-full flex  items-center `}
         >
           {isSearchPage && (
-            <h2 className="w-full text-left font-bold text-[24px] text-[#0E121B] ">
+            // <h2 className="w-full text-left font-bold text-[24px] text-[#0E121B] ">
+            <h2 className="w-full text-left font-bold text-[24px] text-primary-light dark:text-primary-dark">
               Search
             </h2>
           )}

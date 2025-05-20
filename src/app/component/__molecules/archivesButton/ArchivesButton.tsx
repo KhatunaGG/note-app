@@ -46,6 +46,7 @@ const ArchivesButton = ({
         isOverlay
           ? "bg-[#335CFF] py-3 px-4  rounded-lg text-white"
           : "bg-transparent text-[#0E121B]"
+   
       }  lg:rounded-lg lg:border lg:border-[#CACFD8] lg:px-4  lg:py-[11.5px] lg:flex lg:items-center lg:justify-start lg:gap-2 cursor-pointer`}
     >
       <div className={`${isOverlay && "hidden"}`}>
@@ -58,6 +59,7 @@ const ArchivesButton = ({
       <p
         className={`${
           isOverlay ? "block text-white" : "hidden lg:flex text-[#0E121B] "
+
         } text-sm font-medium `}
       >
         {/* {isArchivedPage ? "Restore Note" : "Archive Note"} */}

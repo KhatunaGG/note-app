@@ -93,6 +93,14 @@
 // export default TagNav;
 
 
+
+
+
+
+
+
+
+
 "use client";
 import { useSignInStore } from "@/app/store/sign-in.store";
 import { Tag } from "../../__atoms";
@@ -135,7 +143,8 @@ const TagNav = () => {
     <section
       className={`${
         isTagsPage ? "gap-4" : "gap-2"
-      } w-full flex flex-col border-t border-lines-light dark:border-lines-dark`}
+
+      } w-full flex flex-col border-t  border-t-[#E0E4EA] dark:border-[#52586699]`}
     >
       <h2
         className={`${
@@ -166,7 +175,7 @@ const TagNav = () => {
                 } w-full rounded-lg hover:bg-primary-light dark:hover:bg-secondary-dark pl-[15px] duration-300 ease-in-out text-primary-light dark:text-primary-dark font-semibold text-sm py-[11.5px] flex items-center justify-start gap-2`}
               >
                 <Tag width={"20px"} height={"20px"} />
-                <p className="text-sm text-primary-light dark:text-primary-dark">{uniqTag}</p>
+                <p className="text-sm text-primary-light dark:text-primary-dark font-normal">{uniqTag}</p>
               </button>
             </div>
           ))

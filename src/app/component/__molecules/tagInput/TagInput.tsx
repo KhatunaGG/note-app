@@ -25,7 +25,8 @@ const TagInput = <T extends FieldValues>({
       <div className="flex items-center">
         <div className="w-[28%] md:w-[19.55%] flex gap-[6px] items-center ">
           <Tag width={"16px"} height={"16px"} />
-          <p className="text-xs md:text-sm text-[#2B303B]">Tags</p>
+          {/* <p className="text-xs md:text-sm text-[#2B303B]">Tags</p> */}
+          <p className="text-xs md:text-sm text-primary-light dark:text-primary-dark">Tags</p>
         </div>
         <div className={`w-[72%] md:w-[80.45%] flex gap-[6px] items-center`}>
           <input
