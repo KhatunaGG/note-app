@@ -122,7 +122,8 @@ const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
             isNoteDetailsPage
               ? "flex"
               : "hidden"
-          } flex-grow w-full bg-white flex-col gap-4`}
+          // } flex-grow w-full bg-white flex-col gap-4`}
+          } flex-grow w-full bg-primary-light dark:bg-primary-dark   flex-col gap-4`}
         >
           <GoBack
             isNoteDetailsPage={isNoteDetailsPage}
@@ -148,12 +149,14 @@ const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
               <div className="w-full flex items-center ">
                 <div className="flex gap-[6px] items-center w-[28%] md:w-[19.55%] ">
                   <Clock />
-                  <p className=" text-xs md:text-sm text-[#2B303B] whitespace-nowrap">
+                  {/* <p className=" text-xs md:text-sm text-[#2B303B] whitespace-nowrap"> */}
+                  <p className=" text-xs md:text-sm text-primary-light dark:text-primary-dark whitespace-nowrap">
                     Last edited
                   </p>
                 </div>
                 <div className="w-[72%] md:w-[80.45%]  flex gap-[6px] items-center ">
                   <p className="text-xs md:text-sm text-[#99A0AE]">
+                  {/* <p className="text-xs md:text-sm text-subtle dark:text-primary-dark"> */}
                     {lastEditedText}
                   </p>
                 </div>

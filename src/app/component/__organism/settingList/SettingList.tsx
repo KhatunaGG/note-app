@@ -40,7 +40,8 @@ const SettingList = ({ settingParams }: SettingListPropsType) => {
   return (
     <div className="   py-[20px] pl-8 pr-4 w-full min-h-[calc(100vh-54px)] md:min-h-[calc(100vh-74px)] lg:min-h-[calc(100vh-81px)] flex flex-col gap-2 border-l border-l-[#CACFD8]">
       {isSettingsPage && (
-        <h1 className="flex lg:hidden text-2xl font-bold text-[#0E121B]   ">
+        // <h1 className="flex lg:hidden text-2xl font-bold text-[#0E121B]   ">
+        <h1 className="flex lg:hidden text-2xl font-bold text-primary-light dark:text-primary-dark  ">
           Settings
         </h1>
       )}
@@ -63,7 +64,8 @@ const SettingList = ({ settingParams }: SettingListPropsType) => {
             <div
               className={`${isLastItem && " border-t border-t-[#e8eaec]"} ${
                 isLastItem ? "pt-[17.5px] pb-[9.5px]" : "pt-[9.5px] pb-[9.5px]"
-              }  w-full flex items-center gap-2 text-sm text-[#0E121B] font-medium`}
+              // }  w-full flex items-center gap-2 text-sm text-[#0E121B] font-medium`}
+              }  w-full flex items-center gap-2 text-sm text-primary-light dark:text-primary-dark font-medium`}
             >
               <Icon name={item.logoName} />
               <p>{item.text}</p>

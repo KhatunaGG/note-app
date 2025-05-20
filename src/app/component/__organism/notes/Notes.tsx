@@ -373,8 +373,10 @@ const Notes = () => {
             <h1
               className={`${
                 isTagsPage
-                  ? "text-sm font-medium text-[#717784] pt-2"
-                  : "font-bold text-[24px] text-[#0E121B]"
+                  // ? "text-sm font-medium text-[#717784] pt-2"
+                  ? "text-sm font-medium text-muted dark:text-primary-dark pt-2"
+                  // : "font-bold text-[24px] text-[#0E121B]"
+                  : "font-bold text-[24px] text-primary-light"
               } ${isSearchPage && "hidden"} block  lg:hidden`}
             >
               {isArchivedPage
@@ -387,7 +389,8 @@ const Notes = () => {
             <div className="w-full flex-flex-col gap-4">
               <button
                 onClick={handleCreate}
-                className="hidden   transition-transform duration-300 ease-in-out hover:scale-105 w-full bg-[#335CFF] rounded-lg text-white text-sm font-normal py-3 lg:flex items-center justify-center"
+                // className="hidden   transition-transform duration-300 ease-in-out hover:scale-105 w-full bg-[#335CFF] rounded-lg text-white text-sm font-normal py-3 lg:flex items-center justify-center"
+                className="hidden   transition-transform duration-300 ease-in-out hover:scale-105 w-full bg-[#335CFF] rounded-lg text-primary-light dark:text-primary-dark text-sm font-normal py-3 lg:flex items-center justify-center"
               >
                 + Create New Note
               </button>
@@ -396,7 +399,7 @@ const Notes = () => {
                 <button
                   // onClick={resetNewNote}
                   type="button"
-                  className=" bg-green-600 text-white text-sm font-normal  
+                  className=" bg-green-600 text-primary-light dark:text-primary-dark text-sm font-normal  
         fixed right-8 bottom-[90px] h-[48px] w-[48px]
        md:h-[64px] md:w-[64px] rounded-full 
        items-center justify-center lg:hidden  "
@@ -464,7 +467,8 @@ const Notes = () => {
                   <div className="w-full ">
                     {!isSearchPage ? (
                       <div className="w-full flex flex-col gap-4">
-                        <p className="text-sm font-medium text-[#0E121B]">
+                        {/* <p className="text-sm font-medium text-[#0E121B]"> */}
+                        <p className="text-sm font-medium text-primary-light dark:text-primary-dark">
                           {isArchivedPage
                             ? "All your archived notes are stored here. You can restore or delete them anytime."
                             : "You don’t have any notes yet. Start a new note to capture your thoughts and ideas."}

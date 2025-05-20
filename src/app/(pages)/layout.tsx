@@ -43,8 +43,8 @@ export default function MainLayout({
   return (
     <Providers>
       <ThemeSwitch />
-      <div className="w-full min-h-screen flex bg-secondary-light dark:bg-secondary-dark text-primary-light dark:text-primary-dark transition-colors duration-300">
-      {/* <div className="w-full min-h-screen flex bg-light dark:bg-dark transition-colors duration-300"> */}
+      <div className="w-full min-h-screen flex bg-secondary-light dark:bg-secondary-dark text-primary-light dark:text-primary-dark transition-colors duration-300 ">
+      {/* <div className="w-full min-h-screen flex bg-white dark:bg-[#232530] transition-colors duration-300"> */}
         <Overlay />
 
         <div className="lg:w-[18.88%] h-full overflow-y-auto ">

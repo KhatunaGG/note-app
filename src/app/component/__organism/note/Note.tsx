@@ -41,7 +41,8 @@ const Note = ({
         !isFirstNote ? "border-t border-t-[#E0E4EA]" : "border-none"
       } ${!isLastNote ? "border-b border-b-[#E0E4EA]" : "border-none"}`}
     >
-      <h2 className="text-base font-semibold text-[#0E121B]">{title}</h2>
+      {/* <h2 className="text-base font-semibold text-[#0E121B]">{title}</h2> */}
+      <h2 className="text-base font-semibold text-primary-light dark:text-primary-dark">{title}</h2>
       <div className="w-full flex flex-wrap gap-1">
         {tags.map((tag, i) => (
           <div
@@ -53,7 +54,8 @@ const Note = ({
         ))}
       </div>
       <div className="w-full flex items-center justify-between">
-        <p className="text-[#2B303B] text-xs ">{formatted}</p>
+        {/* <p className="text-[#2B303B] text-xs ">{formatted}</p> */}
+        <p className="text-primary-light dark:text-primary-dark text-xs ">{formatted}</p>
         {isTagsPage && isArchived === true && (
           <p className="text-[#335CFF] text-xs">Archived</p>
         )}
