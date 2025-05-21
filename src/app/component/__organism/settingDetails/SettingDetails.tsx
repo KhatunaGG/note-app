@@ -152,16 +152,6 @@
 
 // export default SettingDetails;
 
-
-
-
-
-
-
-
-
-
-
 "use client";
 import { useSettingsStore } from "@/app/store/settings.store";
 import {
@@ -205,12 +195,13 @@ const SettingDetails = ({ settingsParam }: SettingDetailsPropsType) => {
     currentTheme,
     applySelectedTheme,
     setFilteredData,
-    filteredData
+    filteredData,
   } = useSettingsStore();
   const { setCurrentPath, setIsSettingsDetailsPage, isSettingsPage } =
     useUtilities();
   const { getAllNotes } = useManageNotes();
   const { theme, setTheme } = useTheme();
+  console.log(theme, "theme");
 
   const mapThemeValue = (themeValue: string): string => {
     const value = themeValue.toLowerCase();
@@ -229,7 +220,7 @@ const SettingDetails = ({ settingsParam }: SettingDetailsPropsType) => {
     if (!selectedTheme && currentTheme) {
       setSelectedTheme(currentTheme);
     }
-    
+
     // Apply any persisted theme from the store
     if (currentTheme) {
       setTheme(mapThemeValue(currentTheme));
@@ -268,15 +259,15 @@ const SettingDetails = ({ settingsParam }: SettingDetailsPropsType) => {
     // Apply the theme in the UI
     const mappedTheme = mapThemeValue(selectedTheme);
     setTheme(mappedTheme);
-    
+
     // Save the selection to persistent store
     applySelectedTheme();
   };
 
   if (!accessToken) return null;
-  
+
   return (
-    <section className="w-full pt-[54px] md:pt-0 bg-light dark:bg-dark text-primary-light dark:text-primary-dark transition-colors duration-300">
+    <section className="w-full  md:pt-0 bg-light dark:bg-dark text-primary-light dark:text-primary-dark transition-colors duration-300">
       {isSettingsPage && settingsParam && (
         <GoBack settingsParam={settingsParam} />
       )}
@@ -293,27 +284,39 @@ const SettingDetails = ({ settingsParam }: SettingDetailsPropsType) => {
           {filteredData?.settingTheme &&
             filteredData?.settingTheme?.length > 0 &&
             filteredData.settingTheme.map((item, i) => {
-              const isSelected = selectedTheme.toLowerCase() === item.mode.toLowerCase();
+              const isSelected =
+                selectedTheme.toLowerCase() === item.mode.toLowerCase();
               return (
                 <button
                   onClick={() => setSelectedTheme(item.mode)}
                   key={i}
                   className={`
-                    ${isSelected
-                      ? "bg-primary-light dark:bg-secondary-dark"
-                      : "hover:bg-primary-light dark:hover:bg-secondary-dark"
-                    }
+                    ${
+                      isSelected
+                        ? theme === "dark"
+                          ? "bg-[#2B303BB3]"
+                          : "border-t-[#E0E4EA]"
+                        : ""
+                    } ${
+                    theme === "dark" ? "border-[#52586699]" : "border-[#E0E4EA]"
+                  }
                     w-full p-4 rounded-xl flex flex-row justify-between items-center
-                    border border-[#E0E4EA] dark:border-[#4a4a4a] transition-colors
+                    border               transition-colors
                   `}
                 >
                   <div className="flex flex-row gap-4">
                     <div
                       className={`${
                         isSelected
-                          ? "bg-white dark:bg-dark"
-                          : "bg-primary-light dark:bg-secondary-dark"
-                      } w-10 h-10 rounded-xl border border-[#E0E4EA] dark:border-[#4a4a4a] flex items-center justify-center`}
+                          ? theme === "dark"
+                            ? "bg-[#0E121B]"
+                            : "border-t-[#E0E4EA]"
+                          : ""
+                      } w-10 h-10 rounded-xl border  ${
+                        theme === "dark"
+                          ? "border-[#52586699]"
+                          : "border-[#E0E4EA]"
+                      } flex items-center justify-center`}
                     >
                       {Icons[item.icon] ?? <Sun />}
                     </div>

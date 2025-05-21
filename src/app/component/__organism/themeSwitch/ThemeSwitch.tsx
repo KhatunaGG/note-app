@@ -8,8 +8,8 @@ const ThemeSwitch = () => {
   const { theme, setTheme } = useTheme();
   const { selectedTheme } = useSettingsStore();
   
+  
   useEffect(() => {
-    // Map the store theme to next-themes format
     const mapThemeValue = (themeValue: string): string => {
       const value = themeValue.toLowerCase();
       if (value === "dark mode" || value === "dark") {
@@ -20,12 +20,11 @@ const ThemeSwitch = () => {
         return "system";
       }
     };
-    
-    // Apply the theme from store
+
     setTheme(mapThemeValue(selectedTheme));
   }, [selectedTheme, setTheme]);
 
-  return null; // This component doesn't render anything
+  return null;
 };
 
 export default ThemeSwitch;

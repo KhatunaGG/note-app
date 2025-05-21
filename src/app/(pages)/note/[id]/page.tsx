@@ -24,7 +24,7 @@ export default async function ParamPage({
         <div className="w-full lg:w-[24.82%] hidden lg:block">
           <Notes />
         </div>
-        <div className="w-full lg:w-[50.34%]  lg:flex border-r border-r-[#CACFD8]">
+        <div className="w-full lg:w-[50.34%]  lg:flex ">
           {id && <NoteDetails noteParam={id} />}
         </div>
 

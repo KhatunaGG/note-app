@@ -157,13 +157,14 @@ module.exports = {
         // Define custom colors for both light and dark themes
         dark: '#232530',
         light: '#F3F5F8',
+    
         lines: {
           light: '#E0E4EA',
           dark: '#525866', // Solid color without alpha
         }
       },
       backgroundColor: {
-        // Define background colors consistently
+               overlayDark: '#525866',
         primary: {
           light: '#F3F5F8',
           dark: '#232530',

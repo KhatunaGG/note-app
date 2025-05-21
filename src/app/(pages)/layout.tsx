@@ -35,11 +35,13 @@ import ThemeSwitch from "../component/__organism/themeSwitch/ThemeSwitch";
 
 
 
+
 export default function MainLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  
   return (
     <Providers>
       <ThemeSwitch />
@@ -54,6 +56,7 @@ export default function MainLayout({
         <div className="w-full lg:w-[81.12%]">
           <div className="w-full lg:flex">{children}</div>
         </div>
+   
 
         <ToastContainer />
       </div>

@@ -6,11 +6,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import useManageNotes from "@/app/store/notes.store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSignInStore } from "@/app/store/sign-in.store";
 import { useUtilities } from "@/app/store/utilities.store";
 import GoBack from "../goBack/GoBack";
 import { usePathname } from "next/navigation";
+import { useTheme } from "next-themes";
 
 const createNoteSchema = z.object({
   title: z.string().min(1, "Title cannot be empty"),
@@ -38,6 +39,12 @@ const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
   const path = usePathname();
   const { createNote, createNewNote, getAllNotes, getNoteById, noteById } =
     useManageNotes();
+  const { theme, systemTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     setIsTagsPage(path.includes("/tags"));
@@ -113,7 +120,11 @@ const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full relative ">
-      <div className="w-full px-6 pt-5 pb-4   h-full lg:flex flex-col gap-4  border-r border-r-[#CACFD8] min-h-screen">
+      <div
+        className={`${
+          theme === "dark" ? "border-r-[#52586699]" : "border-r-[#E0E4EA]"
+        } w-full px-6 pt-5 pb-4 h-full lg:flex flex-col gap-4 border-r min-h-screen`}
+      >
         <div
           className={`${
             (isNotePage && createNote) ||
@@ -122,7 +133,7 @@ const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
             isNoteDetailsPage
               ? "flex"
               : "hidden"
-          // } flex-grow w-full bg-white flex-col gap-4`}
+            // } flex-grow w-full bg-white flex-col gap-4`}
           } flex-grow w-full bg-primary-light dark:bg-primary-dark   flex-col gap-4`}
         >
           <GoBack
@@ -156,13 +167,17 @@ const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
                 </div>
                 <div className="w-[72%] md:w-[80.45%]  flex gap-[6px] items-center ">
                   <p className="text-xs md:text-sm text-[#99A0AE]">
-                  {/* <p className="text-xs md:text-sm text-subtle dark:text-primary-dark"> */}
+                    {/* <p className="text-xs md:text-sm text-subtle dark:text-primary-dark"> */}
                     {lastEditedText}
                   </p>
                 </div>
               </div>
             </div>
-            <div className="border-t border-t-[#E0E4EA] pt-4 flex-grow">
+            <div
+              className={`${
+                theme === "dark" ? "border-t-[#52586699]" : "border-t-[#E0E4EA]"
+              } border-t pt-4 flex-grow`}
+            >
               <Textarea
                 register={register}
                 errors={errors}

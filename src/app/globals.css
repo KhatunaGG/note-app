@@ -3,7 +3,7 @@
 
 
 
-body {
+/* body {
   background-color: #ffffff;
   border-color: #E0E4EA;
 }
@@ -13,11 +13,11 @@ body {
   border-color: rgba(82, 88, 102, 0.6);
 }
 
-/* Sidebar specific border style */
+
 .sidebar-border {
   border-right: 1px solid #E0E4EA;
 }
 
 .dark .sidebar-border {
   border-right: 1px solid rgba(82, 88, 102, 0.6);
-}
+} */

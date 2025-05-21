@@ -105,32 +105,30 @@
 
 // export default Sidebar;
 
-
-
-
-
-
 "use client";
 import { usePathname } from "next/navigation";
-import { Archives, Home, Logo} from "../../__atoms";
+import { Archives, Home, Logo } from "../../__atoms";
 import Link from "next/link";
 import { useUtilities } from "@/app/store/utilities.store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import TagNav from "../tagNav/TagNav";
 import useManageNotes from "@/app/store/notes.store";
 import { useSignInStore } from "@/app/store/sign-in.store";
 import { AnimateSpin } from "../../__molecules";
+import { useTheme } from "next-themes";
 
 const Sidebar = () => {
   const path = usePathname();
-  const { accessToken, isLoading} = useSignInStore();
-  const {
-    activeLink,
-    setSelectedTag,
-    setCurrentPath,
-    handleRoutes,
-  } = useUtilities();
+  const { accessToken, isLoading } = useSignInStore();
+  const { activeLink, setSelectedTag, setCurrentPath, handleRoutes } =
+    useUtilities();
   const { setNoteById, getAllNotes } = useManageNotes();
+  const { theme, systemTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     setCurrentPath(path);
@@ -144,14 +142,18 @@ const Sidebar = () => {
     }
   }, [accessToken, isLoading]);
 
-  if(isLoading) {
-    return <AnimateSpin />
+  if (isLoading) {
+    return <AnimateSpin />;
   }
 
   if (!accessToken) return null;
 
   return (
-    <div className="hidden w-full min-h-screen py-3 px-4 lg:flex flex-col gap-4 bg-primary-light dark:bg-primary-dark                sidebar-border">
+    <div
+      className={`${
+        theme === "dark" ? "border-t-[#52586699]" : "border-t-[#E0E4EA]"
+      } hidden w-full min-h-screen py-3 px-4 lg:flex flex-col gap-4 bg-primary-light dark:bg-primary-dark `}
+    >
       <div className="w-full py-4">
         <Logo />
       </div>
@@ -169,7 +171,9 @@ const Sidebar = () => {
               )} w-full rounded-lg duration-300 ease-in-out text-primary-light dark:text-primary-dark font-semibold text-sm px-[15px] py-[11.5px] flex items-center justify-start gap-2`}
             >
               <Home width="20px" height="20px" />
-              <p className="text-sm text-primary-light dark:text-primary-dark">All Notes</p>
+              <p className="text-sm text-primary-light dark:text-primary-dark">
+                All Notes
+              </p>
             </button>
           </Link>
 
@@ -184,7 +188,9 @@ const Sidebar = () => {
               )} w-full rounded-lg hover:bg-secondary-light dark:hover:bg-secondary-dark duration-300 ease-in-out text-primary-light dark:text-primary-dark font-semibold text-sm px-[15px] py-[11.5px] flex items-center justify-start gap-2`}
             >
               <Archives width={"20px"} height={"20px"} />
-              <p className="text-sm text-primary-light dark:text-primary-dark">Archived Notes</p>
+              <p className="text-sm text-primary-light dark:text-primary-dark">
+                Archived Notes
+              </p>
             </button>
           </Link>
         </div>

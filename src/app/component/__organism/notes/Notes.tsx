@@ -240,17 +240,19 @@ import { Plus } from "../../__atoms";
 import Link from "next/link";
 import useManageNotes from "../../../store/notes.store";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSignInStore } from "@/app/store/sign-in.store";
 import { useUtilities } from "@/app/store/utilities.store";
 import GoBack from "../goBack/GoBack";
 import SettingList from "../settingList/SettingList";
+import { useTheme } from "next-themes";
 
 const Notes = () => {
   const { accessToken } = useSignInStore();
   const {
     allNotes,
     getNoteById,
+    noteById,
     getAllNotes,
     toggleCreateNote,
     getSearchedNotes,
@@ -272,6 +274,12 @@ const Notes = () => {
     setIsNotePage,
     setIsSettingsPage,
   } = useUtilities();
+  const { theme, systemTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     setIsArchivedPage(path.includes("/archive"));
@@ -352,6 +360,8 @@ const Notes = () => {
 
   if (!accessToken) return null;
 
+  console.log(routeToTags, "routeToTags");
+
   return (
     <>
       {!isSettingsPage ? (
@@ -367,16 +377,22 @@ const Notes = () => {
           <div
             className={`${
               routeToTags && "hidden"
-            }  px-8  lg:pl-8 md:pt-6 lg:pt-[20px] lg:pr-4 flex flex-col 
-    lg:border lg:border-[#E0E4EA] rounded-t-xl overflow-hidden lg:rounded-t-[0px]  relative min-h-screen `}
+            }  px-8  lg:pl-8 md:pt-6 lg:pt-[20px] lg:pr-4 flex flex-col border-r border-l border-b
+            
+            ${
+              theme === "dark"
+                ? "border-r-[#52586699] border-l-[#52586699] border-b-[#52586699]"
+                : "border-r-[#E0E4EA] border-l-[#E0E4EA] border-b-[#E0E4EA]"
+            }
+     rounded-t-xl overflow-hidden lg:rounded-t-[0px]  relative min-h-screen `}
           >
             <h1
               className={`${
                 isTagsPage
-                  // ? "text-sm font-medium text-[#717784] pt-2"
-                  ? "text-sm font-medium text-muted dark:text-primary-dark pt-2"
-                  // : "font-bold text-[24px] text-[#0E121B]"
-                  : "font-bold text-[24px] text-primary-light"
+                  ? // ? "text-sm font-medium text-[#717784] pt-2"
+                    "text-sm font-medium text-muted dark:text-primary-dark pt-2"
+                  : // : "font-bold text-[24px] text-[#0E121B]"
+                    "font-bold text-[24px] text-primary-light"
               } ${isSearchPage && "hidden"} block  lg:hidden`}
             >
               {isArchivedPage
@@ -421,12 +437,13 @@ const Notes = () => {
               <div
                 className={`${
                   isSearchPage && "mt-[99px] md:mt-[119px]"
-                } w-full flex flex-col md:pb-[114px] lg:pb-[37px] `}
+                } w-full flex flex-col md:pb-[114px] lg:pb-[37px]  lg:mt-4 `}
               >
                 {shouldRenderNotes ? (
                   filteredNotes.map((note, i) => {
                     const isFirstNote = i === 0;
                     const isLastNote = i === allNotes.length - 1;
+                    const isSelected = noteById?._id === note._id;
                     return (
                       <div
                         key={note._id}
@@ -439,14 +456,6 @@ const Notes = () => {
                               ? `/archive/${note._id}`
                               : `/note/${note._id}`
                           }`}
-
-                          // href={`${
-                          //   isArchivedPage
-                          //     ? `/archive/${note._id}`
-                          //     : isTagsPage
-                          //     ? `/tags/${selectedTags}/${note._id}`
-                          //     : `/note/${note._id}`
-                          // }`}
                         >
                           <Note
                             title={note.title}
@@ -457,7 +466,8 @@ const Notes = () => {
                             lastEdited={note.lastEdited}
                             isFirstNote={isFirstNote}
                             isLastNote={isLastNote}
-                            selectedTags={selectedTags}
+                            // selectedTags={selectedTags}
+                            isSelected={isSelected}
                           />
                         </Link>
                       </div>
