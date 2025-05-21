@@ -117,13 +117,14 @@
 // export default Header;
 
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Logo, Setting } from "../../__atoms";
 import Search from "../../__atoms/search/Search";
 import { useSignInStore } from "@/app/store/sign-in.store";
 import { useUtilities } from "@/app/store/utilities.store";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { useTheme } from "next-themes";
 
 const Header = () => {
   const { accessToken } = useSignInStore();
@@ -139,6 +140,12 @@ const Header = () => {
     setSelectedTag,
   } = useUtilities();
   const path = usePathname();
+  const { theme, systemTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   const isArchivedPage = path.includes("archive");
 
   useEffect(() => {
@@ -159,19 +166,26 @@ const Header = () => {
   return (
     <div
       className={`${
-        !isSearchPage
-          // ? "bg-[#F3F5F8] lg:bg-white  w-full"
-          ? "     bg-primary-light lg:bg-secondary-light dark:bg-primary-dark   w-full"
-          : "bg-transparent relative"
-      } h-[54px] md:h-[74px] lg:h-[81px] lg:px-[2.78%]  px-8 w-full  flex items-center justify-between  lg:border-b lg:border-l lg:border-[#E0E4EA]  ${
-        isSearchPage ? "flex-col gap-[20px] md:gap-6  " : "flex-row lg:gap-0 "
+        // !isSearchPage
+        //   ? "bg-[#F3F5F81A] lg:bg-secondary-light dark:bg-primary-dark   w-full"
+        //   : "bg-transparent relative "
+      !isSearchPage
+    ? (theme === "dark" ? "bg-[#232530CC] lg:bg-transparent" : "bg-[#F3F5F81A] lg:bg-transparent")
+    : (theme === "dark" ? "bg-[#232530CC] relative lg:bg-transparent" : "bg-[#F3F5F81A] relative lg:bg-transparent")
+      }
+      ${
+        theme === "dark"
+          ? "lg:border-b-[#52586699] lg:border-l-[#52586699]"
+          : "lg:border-b-[#E0E4EA] lg:border-l-[#E0E4EA]"
+      }
+      h-[54px] md:h-[74px] lg:h-[81px] lg:px-[2.78%] px-8 w-full flex items-center justify-between lg:border-b lg:border-l ${
+        isSearchPage ? "flex-col gap-[20px] md:gap-6" : "flex-row lg:gap-0 "
       }`}
     >
       <div className={` w-full flex lg:flex-1`}>
         <h1
           className={`${
             isSearchPage ? "hidden lg:block" : "hidden lg:block"
-          // }  font-bold text-[24px] text-[#0E121B] `}
           }  font-bold text-[24px] text-primary-light dark:text-primary-dark `}
         >
           {/* {isArchivedPage
@@ -216,7 +230,7 @@ const Header = () => {
         >
           {isSearchPage && (
             // <h2 className="w-full text-left font-bold text-[24px] text-[#0E121B] ">
-            <h2 className="w-full text-left font-bold text-[24px] text-primary-light dark:text-primary-dark">
+            <h2 className="w-full text-left font-bold text-[24px] text-primary-light dark:text-primary-dark pt-6">
               Search
             </h2>
           )}
@@ -225,9 +239,13 @@ const Header = () => {
             <input
               onChange={(e) => setSearchValue(e.target.value)}
               type="text"
-                readOnly={isSettingsPage} 
+              readOnly={isSettingsPage}
               placeholder="Search by title, content, or tags…"
-              className="py-3 border border-[#CACFD8] rounded-lg  w-full outline-none pl-10 pr-2 text-[#717784] text-sm font-normal"
+              className={`
+                ${
+        theme === "dark" ? "border-[#52586699]" : "border-[#E0E4EA]"
+      }
+                py-3 border rounded-lg  w-full outline-none pl-10 pr-2 text-[#717784] text-sm font-normal`}
             />
             <div className="absolute left-4 top-1/2 transform -translate-y-1/2 w-[20px] h-[21px] ">
               <Search width={"20px"} height={"21px"} />

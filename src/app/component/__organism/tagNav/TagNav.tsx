@@ -92,29 +92,27 @@
 
 // export default TagNav;
 
-
-
-
-
-
-
-
-
-
 "use client";
 import { useSignInStore } from "@/app/store/sign-in.store";
 import { Tag } from "../../__atoms";
 import useManageNotes from "@/app/store/notes.store";
 import { useUtilities } from "@/app/store/utilities.store";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AnimateSpin } from "../../__molecules";
+import { useTheme } from "next-themes";
 
 const TagNav = () => {
   const router = useRouter();
   const path = usePathname();
   const { accessToken, isLoading } = useSignInStore();
   const { allNotes, setNoteById } = useManageNotes();
+  const [mounted, setMounted] = useState(false);
+  const { theme, systemTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const {
     getUniqueTags,
@@ -142,9 +140,10 @@ const TagNav = () => {
   return (
     <section
       className={`${
-        isTagsPage ? "gap-4" : "gap-2"
-
-      } w-full flex flex-col border-t  border-t-[#E0E4EA] dark:border-[#52586699]`}
+        isTagsPage ? "gap-4 md:px-8" : "gap-2 px-0"
+      } w-full flex flex-col border-t ${
+        theme === "dark" ? "border-t-[#52586699]" : "border-t-[#E0E4EA]"
+      }  `}
     >
       <h2
         className={`${
@@ -168,14 +167,25 @@ const TagNav = () => {
                   }
                 }}
                 disabled={isSettingsPage}
-                className={`${isTagsPage && "border-b border-lines-light dark:border-lines-dark"} ${
+                // className={`${isTagsPage && "border-b border-lines-light dark:border-lines-dark"} ${
+                className={`${
+                  theme === "dark"
+                    ? isTagsPage
+                      ? "border-b border-b-[#52586699]"
+                      : ""
+                    : isTagsPage
+                    ? "border-b border-b-[#E0E4EA]"
+                    : ""
+                } ${
                   selectedTags === uniqTag.toLowerCase() && !isTagsPage
                     ? "bg-primary-light dark:bg-secondary-dark"
                     : "bg-transparent"
                 } w-full rounded-lg hover:bg-primary-light dark:hover:bg-secondary-dark pl-[15px] duration-300 ease-in-out text-primary-light dark:text-primary-dark font-semibold text-sm py-[11.5px] flex items-center justify-start gap-2`}
               >
                 <Tag width={"20px"} height={"20px"} />
-                <p className="text-sm text-primary-light dark:text-primary-dark font-normal">{uniqTag}</p>
+                <p className="text-sm text-primary-light dark:text-primary-dark font-normal">
+                  {uniqTag}
+                </p>
               </button>
             </div>
           ))

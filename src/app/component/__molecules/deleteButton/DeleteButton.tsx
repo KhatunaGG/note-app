@@ -49,9 +49,12 @@
 
 // export default DeleteButton;
 
+
+"use client"
 import useManageNotes from "@/app/store/notes.store";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Delete } from "../../__atoms";
+import { useTheme } from "next-themes";
 
 export type DeleteButtonPropsType = {
   isOverlay?: boolean;
@@ -59,6 +62,12 @@ export type DeleteButtonPropsType = {
 
 const DeleteButton = ({ isOverlay }: DeleteButtonPropsType) => {
   const { showModal, noteById, deleteNote, modal } = useManageNotes();
+  const { theme, systemTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleNoteClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -78,7 +87,10 @@ const DeleteButton = ({ isOverlay }: DeleteButtonPropsType) => {
         isOverlay && modal
           ? "bg-[#FB3748] py-3 px-4  rounded-lg text-white"
           : "bg-transparent text-[#0E121B]"
-      }  lg:rounded-lg lg:border lg:border-[#CACFD8] lg:px-4  lg:py-[11.5px] lg:flex lg:items-center lg:justify-start lg:gap-2 cursor-pointer`}
+      }  
+       ${theme === "dark" ? "lg:border-[#52586699]" : "lg:border-[#E0E4EA]"}
+      
+      lg:rounded-lg lg:border lg:px-4  lg:py-[11.5px] lg:flex lg:items-center lg:justify-start lg:gap-2 cursor-pointer`}
     >
       <div className={`${isOverlay && "hidden"}`}>
         <Delete width={"20px"} height={"20px"} />

@@ -10,11 +10,11 @@ export default function page() {
     </div>
 
     <div className="w-full t-[54px] md:pt-[74px] lg:pt-[81px] min-h-screen flex ">
-      <div className="w-full lg:w-[24.82%]  ">
+      <div className="w-full lg:w-[24.82%]  pt-[54px] md:pt-0">
         <Notes />
       </div>
       {/* <div className="w-full lg:w-[50.34%] lg:flex hidden border-r border-r-[#CACFD8]"> */}
-      <div className="w-full lg:w-[50.34%] lg:flex hidden border-r border-r-[#CACFD8]">
+      <div className="w-full lg:w-[50.34%] lg:flex hidden  ">
         <NoteDetails />
       </div>
       <div className="w-full lg:w-[22.07%] hidden lg:flex ">

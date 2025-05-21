@@ -4,7 +4,8 @@ import { Archives, Restore } from "../../__atoms";
 import useManageNotes from "@/app/store/notes.store";
 import { usePathname } from "next/navigation";
 import { useUtilities } from "@/app/store/utilities.store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 
 export type ArchiveButtonPropsType = {
   isOverlay?: boolean;
@@ -19,8 +20,13 @@ const ArchivesButton = ({
   // const isArchiePage = path === "/archive";
   const { noteById, updateNote } = useManageNotes();
   const { setArchiveModal } = useArchivedNotes();
-  const { isNotePage, setIsNotePage, setIsSearchPage } =
-    useUtilities();
+  const { isNotePage, setIsNotePage, setIsSearchPage } = useUtilities();
+  const { theme, systemTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     setIsNotePage(path.includes("/note"));
@@ -46,8 +52,11 @@ const ArchivesButton = ({
         isOverlay
           ? "bg-[#335CFF] py-3 px-4  rounded-lg text-white"
           : "bg-transparent text-[#0E121B]"
-   
-      }  lg:rounded-lg lg:border lg:border-[#CACFD8] lg:px-4  lg:py-[11.5px] lg:flex lg:items-center lg:justify-start lg:gap-2 cursor-pointer`}
+      }  ${
+        theme === "dark" ? "lg:border-[#52586699]" : "lg:border-[#E0E4EA]"
+      }
+      
+      lg:rounded-lg lg:border lg:px-4  lg:py-[11.5px] lg:flex lg:items-center lg:justify-start lg:gap-2 cursor-pointer`}
     >
       <div className={`${isOverlay && "hidden"}`}>
         {isArchivedPage ? (
@@ -59,7 +68,6 @@ const ArchivesButton = ({
       <p
         className={`${
           isOverlay ? "block text-white" : "hidden lg:flex text-[#0E121B] "
-
         } text-sm font-medium `}
       >
         {/* {isArchivedPage ? "Restore Note" : "Archive Note"} */}

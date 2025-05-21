@@ -10,7 +10,8 @@ import {
 import useManageNotes, { NewNoteType } from "@/app/store/notes.store";
 import { usePathname, useRouter } from "next/navigation";
 import { useUtilities } from "@/app/store/utilities.store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 
 export type GoBackPropsType = {
   isNoteDetailsPage?: boolean;
@@ -38,6 +39,12 @@ const GoBack = ({
   const path = usePathname();
   const router = useRouter();
   const { setIsTagsPage, isTagsPage, isSettingsPage } = useUtilities();
+  const { theme, systemTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     setIsTagsPage(path.includes("/tags"));
@@ -58,14 +65,21 @@ const GoBack = ({
   return (
     <div
       className={`${
-        isNoteDetailsPage || isTagsPage || (isSettingsPage && settingsParam) || isArchivedPage
+        isNoteDetailsPage ||
+        isTagsPage ||
+        (isSettingsPage && settingsParam) ||
+        isArchivedPage
           ? "pt-0"
           : "pt-[54px]"
       }
       ${isTagsPage && "px-6 mb-4"}
       ${isTagsPage && noteById && "px-0"}
+      
 
-      w-full pb-3 md:pb-4 flex lg:hidden items-center justify-between border-b border-b-[#E0E4EA] md:pt-0 `}
+      w-full pb-3 md:pb-4 flex lg:hidden items-center justify-between border-b  md:pt-0
+      ${theme === "dark" ? "border-b-[#52586699]" : "border-b-[#E0E4EA]"}
+      
+      `}
     >
       {/* //   <div
   //   className={`${isFontThemePage ? "pt-0" : "pt-[54px]"} 
@@ -105,7 +119,7 @@ const GoBack = ({
           className="flex items-center gap-1"
         >
           <ArrowLeft />
-          <p className="text-sm text-[#525866]">
+          <p className={`${theme ? "text-white" : "text-[#525866]"} text-sm `}>
             {isSettingsPage ? "Settings" : "Go Back"}
           </p>
         </div>

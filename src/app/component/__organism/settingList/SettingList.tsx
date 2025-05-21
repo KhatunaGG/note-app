@@ -6,7 +6,8 @@ import { useSettingsStore } from "@/app/store/settings.store";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useUtilities } from "@/app/store/utilities.store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 
 export type SettingDataType = {
   text: string;
@@ -26,6 +27,12 @@ const SettingList = ({ settingParams }: SettingListPropsType) => {
   const { activeSetting, setActiveSetting } = useSettingsStore();
   const { isSettingsPage } = useUtilities();
   const pathname = usePathname();
+  const { theme, systemTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   let currentSetting = "";
   if (pathname) {
@@ -35,7 +42,7 @@ const SettingList = ({ settingParams }: SettingListPropsType) => {
     }
   }
 
-//bg-white dark:bg-['#232530'] transition-colors duration-700 ease-in-out     
+  //bg-white dark:bg-['#232530'] transition-colors duration-700 ease-in-out
 
   return (
     <div className="   py-[20px] pl-8 pr-4 w-full min-h-[calc(100vh-54px)] md:min-h-[calc(100vh-74px)] lg:min-h-[calc(100vh-81px)] flex flex-col gap-2 border-l border-l-[#CACFD8]">
@@ -57,18 +64,36 @@ const SettingList = ({ settingParams }: SettingListPropsType) => {
             href={`/settings/${settingSlug}`}
             key={item.text}
             onClick={() => setActiveSetting(item.text)}
+            // className={`w-full flex items-center justify-between  px-2 rounded-md transition-colors ${
+            //   isActive ? "bg-[#F3F5F8]" : "hover:bg-[#F3F5F8]"
+            // }
             className={`w-full flex items-center justify-between  px-2 rounded-md transition-colors ${
-              isActive ? "bg-[#F3F5F8]" : "hover:bg-[#F3F5F8]"
+              isActive
+                ? theme === "dark"
+                  ? "bg-[#2B303BB3]"
+                  : "bg-[#F3F5F8]"
+                : ""
             }`}
           >
             <div
-              className={`${isLastItem && " border-t border-t-[#e8eaec]"} ${
+              className={`w-full flex items-center gap-2 text-sm text-primary-light dark:text-primary-dark font-medium border-t ${
+                isLastItem
+                  ? theme === "dark"
+                    ? "border-t-[#52586699]"
+                    : "border-t-[#E0E4EA]"
+                  : "border-none"
+              } ${
                 isLastItem ? "pt-[17.5px] pb-[9.5px]" : "pt-[9.5px] pb-[9.5px]"
-              // }  w-full flex items-center gap-2 text-sm text-[#0E121B] font-medium`}
-              }  w-full flex items-center gap-2 text-sm text-primary-light dark:text-primary-dark font-medium`}
+              }`}
             >
               <Icon name={item.logoName} />
-              <p>{item.text}</p>
+              <p
+                className={`${
+                  theme === "dark" ? "#fff" : "#0E121B"
+                } text-sm font-normal`}
+              >
+                {item.text}
+              </p>
             </div>
             {isActive && <ArrowRight />}
           </Link>
@@ -153,7 +178,7 @@ export default SettingList;
 //             //   isActive ? "bg-[#F3F5F8]" : "hover:bg-[#F3F5F8]"
 //             // }`}
 
-//              className={`w-full flex items-center justify-between px-2 rounded-md transition-colors 
+//              className={`w-full flex items-center justify-between px-2 rounded-md transition-colors
 //     ${isActive ? "bg-[#F3F5F8] dark:bg-gray-700" : "hover:bg-[#F3F5F8] dark:hover:bg-gray-700"}`}
 //           >
 //             <div
@@ -161,7 +186,6 @@ export default SettingList;
 //                 isLastItem ? "pt-[17.5px] pb-[9.5px]" : "pt-[9.5px] pb-[9.5px]"
 //               }  w-full flex items-center gap-2 text-sm text-[#0E121B] dark:text-white font-medium`}
 
-              
 //             >
 //               <Icon name={item.logoName} />
 //               <p>{item.text}</p>
