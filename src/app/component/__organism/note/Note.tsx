@@ -1,8 +1,8 @@
 "use client";
+import { useMountedTheme } from "@/app/hooks/useMountedTheme";
 import { useUtilities } from "@/app/store/utilities.store";
-import { useTheme } from "next-themes";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export type NotePropsType = {
   title: string;
@@ -13,8 +13,6 @@ export type NotePropsType = {
   lastEdited: string;
   isFirstNote: boolean;
   isLastNote: boolean;
-
-  // selectedTags: string | null;
   isSelected: boolean;
 };
 
@@ -30,31 +28,23 @@ const Note = ({
   const { formatDate, isTagsPage, setIsTagsPage } = useUtilities();
   const formatted = formatDate(lastEdited);
   const path = usePathname();
-  const { theme, systemTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  console.log(isSelected, "isSelected");
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const { mounted, theme } = useMountedTheme();
+  const isDark = mounted && theme === "dark";
 
   useEffect(() => {
     setIsTagsPage(path.includes("/tags"));
   }, [path]);
 
-  // isSelected ? (theme === "dark" ? "bg-#232530CC" : "border-t-[#F3F5F8]") : "";
-
   return (
     <div
       className={`w-full p-2 flex flex-col gap-3 ${
         isSelected
-          ? theme === "dark"
+          ? isDark
             ? "lg:bg-[#52586699] lg:rounded-md lg:border-none"
             : "lg:bg-[#F3F5F8] lg:rounded-md lg:border-none"
           : ""
       } ${
-        theme === "dark"
+        isDark
           ? !isFirstNote
             ? "border-t border-t-[#52586699]"
             : "border-none"
@@ -62,7 +52,7 @@ const Note = ({
           ? "border-t border-t-[#E0E4EA]"
           : "border-none"
       } ${
-        theme === "dark"
+        isDark
           ? !isLastNote
             ? "border-b border-b-[#52586699]"
             : "border-none"

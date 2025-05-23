@@ -1,17 +1,17 @@
-"use client"
+"use client";
 import { useTheme } from "next-themes";
 import React, { useEffect, useState } from "react";
 
 export type SettingPropsType = {
   width: string;
   height: string;
-  isActive?: boolean
+  isActive?: boolean;
 };
 
 const Setting = ({ width, height, isActive = false }: SettingPropsType) => {
-      const { theme, systemTheme } = useTheme();
+  const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-    const fill = isActive ? "#335CFF" : "#717784";
+  const fill = isActive ? "#335CFF" : "#717784";
 
   useEffect(() => {
     setMounted(true);

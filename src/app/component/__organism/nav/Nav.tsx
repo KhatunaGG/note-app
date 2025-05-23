@@ -183,7 +183,7 @@ import * as Icons from "../../__atoms";
 import { navItems } from "@/app/data/data";
 import { useMountedTheme } from "@/app/hooks/useMountedTheme";
 
-// Icon component: renders the icon based on name and active state
+
 const Icon = ({
   name,
   isActive,

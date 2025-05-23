@@ -49,12 +49,12 @@
 
 // export default DeleteButton;
 
-
-"use client"
+"use client";
 import useManageNotes from "@/app/store/notes.store";
 import React, { useEffect, useState } from "react";
 import { Delete } from "../../__atoms";
 import { useTheme } from "next-themes";
+import { useMountedTheme } from "@/app/hooks/useMountedTheme";
 
 export type DeleteButtonPropsType = {
   isOverlay?: boolean;
@@ -62,12 +62,8 @@ export type DeleteButtonPropsType = {
 
 const DeleteButton = ({ isOverlay }: DeleteButtonPropsType) => {
   const { showModal, noteById, deleteNote, modal } = useManageNotes();
-  const { theme, systemTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const { mounted, theme } = useMountedTheme();
+  const isDark = mounted && theme === "dark";
 
   const handleNoteClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -97,8 +93,8 @@ const DeleteButton = ({ isOverlay }: DeleteButtonPropsType) => {
       </div>
       {/* <p className="hidden text-sm text-[#0E121B] font-medium lg:block"> */}
       <p
-        className={`${
-          isOverlay ? "block text-white" : "hidden lg:flex text-[#0E121B] "
+        className={`${isDark ? "text-white" : "text-[#0E121B]"} ${
+          isOverlay ? "block" : "hidden lg:flex "
         } text-sm font-medium `}
       >
         Delete Note
