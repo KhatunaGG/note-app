@@ -146,6 +146,7 @@ const Header = () => {
   useEffect(() => {
     setMounted(true);
   }, []);
+  
   const isArchivedPage = path.includes("archive");
 
   useEffect(() => {
