@@ -1,3 +1,5 @@
+import { NavItemType } from "../interface";
+
 export const settingsData = [
   {
     text: "Color Theme",
@@ -51,4 +53,16 @@ export const settingsData = [
     text: "Logout",
     logoName: "Logout",
   },
+];
+
+
+
+
+
+export const navItems: NavItemType[] = [
+  { href: "/note", iconName: "Home", label: "Home" },
+  { href: "/search", iconName: "Search", label: "Search" },
+  { href: "/archive", iconName: "Archives", label: "Archives" },
+  { href: "/tags", iconName: "Tag", label: "Tag" },
+  { href: "/settings", iconName: "Setting", label: "Settings" },
 ];
