@@ -75,11 +75,10 @@ const ResetButton = ({
 }: ResetButtonPropsType) => {
   const { closeModal, resetNewNote, createNote, noteById } = useManageNotes();
   const { setArchiveModal } = useArchivedNotes();
-  const { isArchivedPage } = useUtilities();
+  const { isArchivedPage, isNotePage } = useUtilities();
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
   const { theme, systemTheme } = useTheme();
-  
 
   useEffect(() => {
     setMounted(true);
@@ -105,14 +104,22 @@ const ResetButton = ({
 
   const baseClass = "text-sm text-[#525866]";
   // const layoutStyle = "bg-[#F3F5F8] py-3 px-4 rounded-lg";
-  const layoutStyle = `${theme === "dark" ?  "bg-[#717784] text-[#E0E4EA]" : "bg-[#F3F5F8] text-[#525866]"}  py-3 px-4 rounded-lg`;
+  const layoutStyle = `${
+    theme === "dark"
+      ? "bg-[#2A2D34] text-[#E0E4EA]"
+      : "bg-[#F3F5F8] text-[#525866]"
+  }  py-3 px-4 rounded-lg`;
   const noteDetailStyle =
     "bg-transparent py-0 px-0 rounded-none lg:bg-[#F3F5F8] lg:py-3 lg:px-4 lg:rounded-lg";
 
   return (
     <button
       onClick={handleNoteClick}
-      className={`${baseClass} ${isOverlay ? layoutStyle : noteDetailStyle}`}
+      className={`${baseClass} ${
+        isOverlay || isNotePage || isArchivedPage
+          ? layoutStyle
+          : noteDetailStyle
+      }`}
     >
       Cancel
     </button>

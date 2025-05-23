@@ -12,6 +12,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useUtilities } from "@/app/store/utilities.store";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+import { useSettingsStore } from "@/app/store/settings.store";
 
 export type GoBackPropsType = {
   isNoteDetailsPage?: boolean;
@@ -23,6 +24,7 @@ export type GoBackPropsType = {
   createNote?: boolean;
   selectedTags?: string | null;
   settingsParam?: string;
+  isActive?: boolean
 };
 
 const GoBack = ({
@@ -34,6 +36,7 @@ const GoBack = ({
   createNote,
   selectedTags,
   settingsParam,
+  isActive
 }: GoBackPropsType) => {
   const { resetNewNote } = useManageNotes();
   const path = usePathname();
@@ -41,6 +44,7 @@ const GoBack = ({
   const { setIsTagsPage, isTagsPage, isSettingsPage } = useUtilities();
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const { selectedButton} = useSettingsStore()
 
   useEffect(() => {
     setMounted(true);
@@ -118,7 +122,7 @@ const GoBack = ({
           }}
           className="flex items-center gap-1"
         >
-          <ArrowLeft />
+          <ArrowLeft selectedButton={selectedButton} />
           <p className={`${theme ? "text-white" : "text-[#525866]"} text-sm `}>
             {isSettingsPage ? "Settings" : "Go Back"}
           </p>

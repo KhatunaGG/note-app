@@ -1,6 +1,15 @@
-import React from "react";
+"use client";
+import { useMountedTheme } from "@/app/hooks/useMountedTheme";
 
-const ArrowRight = () => {
+export type ArrowRightPropsType = {
+  isActive?: boolean;
+};
+
+const ArrowRight = ({ isActive }: ArrowRightPropsType) => {
+  const { mounted, theme } = useMountedTheme();
+  const isDark = mounted && theme === "dark";
+  const fill = isActive ? (isDark ? "#fff" : "#525866") : "";
+
   return (
     <svg
       width="6"
@@ -12,7 +21,8 @@ const ArrowRight = () => {
       <g clipPath="url(#clip0_2749_9322)">
         <path
           d="M1 1L5 5L1 9"
-          stroke="#0E121B"
+          // stroke="#0E121B"
+          stroke={fill}
           strokeWidth="1.5"
           strokeLinecap="round"
           strokeLinejoin="round"

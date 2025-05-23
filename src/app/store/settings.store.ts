@@ -151,14 +151,11 @@
 
 
 "use client";
-
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { settingsData } from "../data/data";
 
-// Add default theme detection based on system preference
 const getDefaultTheme = () => {
-  // This only works client-side
   if (typeof window !== "undefined") {
     if (
       window.matchMedia &&
@@ -168,7 +165,7 @@ const getDefaultTheme = () => {
     }
     return "light mode";
   }
-  return "system"; // Default fallback for server-side
+  return "system";
 };
 
 export interface SettingThemeItem {
@@ -187,19 +184,22 @@ export interface SettingItem {
 export interface IUseSettingsStore {
   activeSetting: string | null;
   filteredSettings: SettingThemeItem[];
-  
-  // Currently applied theme (persisted)
+
   currentTheme: string;
-  
-  // Temporarily selected theme (not applied yet)
+
   selectedTheme: string;
-  
+
   filteredData: SettingItem | null;
 
-  // Apply the selected theme (update currentTheme to match selectedTheme)
+
+    selectedButton: string | null;
+  setSelectedButton: (button: string | null) => void;
+
+
+
+
   applySelectedTheme: () => void;
-  
-  // Reset selectedTheme to match currentTheme (cancel selection)
+
   resetSelectedTheme: () => void;
 
   setFilteredData: (filteredData: SettingItem | null) => void;
@@ -213,19 +213,28 @@ export const useSettingsStore = create<IUseSettingsStore>()(
     (set, get) => ({
       activeSetting: null,
       filteredSettings: [],
-      currentTheme: getDefaultTheme(), // The actually applied theme (persisted)
-      selectedTheme: getDefaultTheme(), // Initialize selected theme to match current theme
+      currentTheme: getDefaultTheme(),
+      selectedTheme: getDefaultTheme(),
       filteredData: null,
-      
-      // Apply the selected theme (save it as current)
+
+
+
+
+
+      selectedButton: null,
+      setSelectedButton: (button) => set({ selectedButton: button }),
+
+
+
+
+
+
       applySelectedTheme: () => {
         const state = get();
         if (state.selectedTheme) {
           set({ currentTheme: state.selectedTheme });
         }
       },
-      
-      // Reset selected theme to match current (cancel selection)
       resetSelectedTheme: () => {
         const state = get();
         set({ selectedTheme: state.currentTheme });
@@ -244,8 +253,8 @@ export const useSettingsStore = create<IUseSettingsStore>()(
       name: "settings-storage",
       partialize: (state) => ({
         activeSetting: state.activeSetting,
-        currentTheme: state.currentTheme, // Persist the applied theme
-        selectedTheme: state.currentTheme, // Initialize selectedTheme from currentTheme
+        currentTheme: state.currentTheme,
+        selectedTheme: state.currentTheme,
         filteredData: state.filteredData,
         filteredSettings: state.filteredSettings,
       }),

@@ -63,18 +63,15 @@ import { useArchivedNotes } from "@/app/store/archives.store";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+import { useMountedTheme } from "@/app/hooks/useMountedTheme";
 
 const Overlay = () => {
   const path = usePathname();
   const isOverlay = path === "/overlay";
   const { modal } = useManageNotes();
   const { archiveModal } = useArchivedNotes();
-  const [mounted, setMounted] = useState(false);
-  const { theme, systemTheme } = useTheme();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const { mounted, theme } = useMountedTheme();
+  const isDark = mounted && theme === "dark";
 
   return (
     <>
@@ -83,15 +80,16 @@ const Overlay = () => {
           {/* <div className="bg-white dark:bg-[#525866] rounded-lg shadow-lg w-[72.21%] md:w-[57.29%] lg:w-[30.55%]"> */}
           <div
             className={`${
-              theme === "dark" ? "bg-[#525866]" : "bg-white"
+              isDark ? "bg-[#23252B]" : "bg-white"
             }   rounded-lg shadow-lg w-[72.21%] md:w-[57.29%] lg:w-[30.55%]`}
           >
             <div
               className={`${
-                theme === "dark" ? "border-b-[#232530CC]" : "border-b-[#E0E4EA]"
+                isDark ? "border-b-[#363a42]" : "border-b-[#E0E4EA]"
               } p-5 border-b border-b-lines-light  flex items-start justify-between gap-4`}
             >
-              <div className="w-10 h-10 rounded-lg bg-primary-light dark:bg-primary-dark flex items-center justify-center">
+              {/* <div className="w-10 h-10 rounded-lg bg-primary-light dark:bg-primary-dark flex items-center justify-center"> */}
+              <div className={`${isDark ? "bg-[#2A2D34]" : "bg-[#F3F5F8]"} w-10 h-10 rounded-lg  flex items-center justify-center`}>
                 {archiveModal ? (
                   <Archives width="24px" height="25px" />
                 ) : (

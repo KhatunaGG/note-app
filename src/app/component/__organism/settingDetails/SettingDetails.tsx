@@ -152,6 +152,8 @@
 
 // export default SettingDetails;
 
+
+
 "use client";
 import { useSettingsStore } from "@/app/store/settings.store";
 import {
@@ -196,12 +198,13 @@ const SettingDetails = ({ settingsParam }: SettingDetailsPropsType) => {
     applySelectedTheme,
     setFilteredData,
     filteredData,
+    selectedButton
   } = useSettingsStore();
   const { setCurrentPath, setIsSettingsDetailsPage, isSettingsPage } =
     useUtilities();
   const { getAllNotes } = useManageNotes();
   const { theme, setTheme } = useTheme();
-  console.log(theme, "theme");
+
 
   const mapThemeValue = (themeValue: string): string => {
     const value = themeValue.toLowerCase();
@@ -214,14 +217,11 @@ const SettingDetails = ({ settingsParam }: SettingDetailsPropsType) => {
     }
   };
 
-  // This effect initializes the UI state when component mounts
   useEffect(() => {
-    // Initialize selectedTheme with currentTheme if not already set
     if (!selectedTheme && currentTheme) {
       setSelectedTheme(currentTheme);
     }
 
-    // Apply any persisted theme from the store
     if (currentTheme) {
       setTheme(mapThemeValue(currentTheme));
     }
@@ -256,11 +256,8 @@ const SettingDetails = ({ settingsParam }: SettingDetailsPropsType) => {
   }
 
   const applyTheme = () => {
-    // Apply the theme in the UI
     const mappedTheme = mapThemeValue(selectedTheme);
     setTheme(mappedTheme);
-
-    // Save the selection to persistent store
     applySelectedTheme();
   };
 
@@ -301,7 +298,7 @@ const SettingDetails = ({ settingsParam }: SettingDetailsPropsType) => {
                     theme === "dark" ? "border-[#52586699]" : "border-[#E0E4EA]"
                   }
                     w-full p-4 rounded-xl flex flex-row justify-between items-center
-                    border               transition-colors
+                    border transition-colors duration-300 ease-in-out
                   `}
                 >
                   <div className="flex flex-row gap-4">
@@ -312,7 +309,7 @@ const SettingDetails = ({ settingsParam }: SettingDetailsPropsType) => {
                             ? "bg-[#0E121B]"
                             : "border-t-[#E0E4EA]"
                           : ""
-                      } w-10 h-10 rounded-xl border  ${
+                      } w-10 h-10 rounded-xl border  transition-colors duration-300 ease-in-out ${
                         theme === "dark"
                           ? "border-[#52586699]"
                           : "border-[#E0E4EA]"
