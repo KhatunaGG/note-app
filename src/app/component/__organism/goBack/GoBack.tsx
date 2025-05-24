@@ -13,6 +13,7 @@ import { useUtilities } from "@/app/store/utilities.store";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { useSettingsStore } from "@/app/store/settings.store";
+import { useMountedTheme } from "@/app/hooks/useMountedTheme";
 
 export type GoBackPropsType = {
   isNoteDetailsPage?: boolean;
@@ -24,7 +25,7 @@ export type GoBackPropsType = {
   createNote?: boolean;
   selectedTags?: string | null;
   settingsParam?: string;
-  isActive?: boolean
+  isActive?: boolean;
 };
 
 const GoBack = ({
@@ -36,19 +37,15 @@ const GoBack = ({
   createNote,
   selectedTags,
   settingsParam,
-  isActive
+  isActive,
 }: GoBackPropsType) => {
   const { resetNewNote } = useManageNotes();
   const path = usePathname();
   const router = useRouter();
   const { setIsTagsPage, isTagsPage, isSettingsPage } = useUtilities();
-  const { theme, systemTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  const { selectedButton} = useSettingsStore()
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const { selectedButton } = useSettingsStore();
+  const { mounted, theme } = useMountedTheme();
+  const isDark = mounted && theme === "dark";
 
   useEffect(() => {
     setIsTagsPage(path.includes("/tags"));
@@ -81,28 +78,11 @@ const GoBack = ({
       
 
       w-full pb-3 md:pb-4 flex lg:hidden items-center justify-between border-b  md:pt-0
-      ${theme === "dark" ? "border-b-[#52586699]" : "border-b-[#E0E4EA]"}
+      ${isDark ? "border-b-[#52586699]" : "border-b-[#E0E4EA]"}
       
       `}
     >
-      {/* //   <div
-  //   className={`${isFontThemePage ? "pt-0" : "pt-[54px]"} 
-  //     ${isTagsPage && "px-6 mb-4"} 
-  //     ${isTagsPage && noteById && "px-0"} 
-  //     w-full pb-3 md:pb-4 flex lg:hidden items-center justify-between border-b border-b-[#E0E4EA] md:pt-0`}
-  // > */}
-
       <Link
-        // href={
-        //   isNotePage
-        //     ? "/note"
-        //     : isTagsPage
-        //     ? noteById && selectedTags
-        //       ? `/tags/${selectedTags}`
-        //       : "/tags"
-        //     : "/archive"
-        // }
-
         href={
           isNotePage
             ? "/note"
@@ -122,8 +102,10 @@ const GoBack = ({
           }}
           className="flex items-center gap-1"
         >
-          <ArrowLeft selectedButton={selectedButton} />
-          <p className={`${theme ? "text-white" : "text-[#525866]"} text-sm `}>
+          <ArrowLeft selectedButton={selectedButton} isFontThemePage={isFontThemePage} />
+          <p
+          className={`${isDark ? "text-white" : "text-[#525866]"} text-sm `}
+          >
             {isSettingsPage ? "Settings" : "Go Back"}
           </p>
         </div>

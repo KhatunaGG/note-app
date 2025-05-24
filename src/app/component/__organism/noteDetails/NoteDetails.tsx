@@ -15,9 +15,9 @@ import { useTheme } from "next-themes";
 
 const createNoteSchema = z.object({
   title: z.string().min(1, "Title cannot be empty"),
-  content: z.string().min(1, "Title cannot be empty"),
+  content: z.string().min(1, "Content cannot be empty"),
   isArchived: z.boolean(),
-  tags: z.string(),
+  tags: z.string().min(1, "Tags cannot be empty"),
   lastEdited: z.string().optional(),
 });
 

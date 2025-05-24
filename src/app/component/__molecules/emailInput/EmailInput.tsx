@@ -29,7 +29,7 @@ const EmailInput = <T extends FieldValues>({
       />
 
       {errors[fieldName] && (
-        <span className="text-red-500 text-sm">
+        <span className="text-red-500 text-xs absolute -bottom-4 right-0">
           {errors[fieldName]?.message?.toString()}
         </span>
       )}
