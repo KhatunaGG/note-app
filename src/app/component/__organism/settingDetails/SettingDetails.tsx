@@ -152,8 +152,6 @@
 
 // export default SettingDetails;
 
-
-
 "use client";
 import { useSettingsStore } from "@/app/store/settings.store";
 import {
@@ -166,7 +164,7 @@ import {
   Mono,
 } from "../../__atoms";
 import { useSignInStore } from "@/app/store/sign-in.store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useUtilities } from "@/app/store/utilities.store";
 import useManageNotes from "@/app/store/notes.store";
@@ -198,13 +196,17 @@ const SettingDetails = ({ settingsParam }: SettingDetailsPropsType) => {
     applySelectedTheme,
     setFilteredData,
     filteredData,
-    selectedButton
+    selectedButton,
   } = useSettingsStore();
   const { setCurrentPath, setIsSettingsDetailsPage, isSettingsPage } =
     useUtilities();
   const { getAllNotes } = useManageNotes();
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const mapThemeValue = (themeValue: string): string => {
     const value = themeValue.toLowerCase();
@@ -292,7 +294,7 @@ const SettingDetails = ({ settingsParam }: SettingDetailsPropsType) => {
                       isSelected
                         ? theme === "dark"
                           ? "bg-[#2B303BB3]"
-                          : "border-t-[#E0E4EA]"
+                          : "bg-[#E0E4EA]"
                         : ""
                     } ${
                     theme === "dark" ? "border-[#52586699]" : "border-[#E0E4EA]"
@@ -307,13 +309,13 @@ const SettingDetails = ({ settingsParam }: SettingDetailsPropsType) => {
                         isSelected
                           ? theme === "dark"
                             ? "bg-[#0E121B]"
-                            : "border-t-[#E0E4EA]"
+                            : "bg-white"
                           : ""
-                      } w-10 h-10 rounded-xl border  transition-colors duration-300 ease-in-out ${
+                      } w-10 h-10 rounded-xl border  transition-colors duration-300 ease-in-out  ${
                         theme === "dark"
                           ? "border-[#52586699]"
                           : "border-[#E0E4EA]"
-                      } flex items-center justify-center`}
+                      } flex items-center justify-center border`}
                     >
                       {Icons[item.icon] ?? <Sun />}
                     </div>

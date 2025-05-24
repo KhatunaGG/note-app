@@ -3,12 +3,13 @@ import { useMountedTheme } from "@/app/hooks/useMountedTheme";
 
 export type ArrowLeftPropsType = {
   selectedButton?: string | null;
+  isFontThemePage?: boolean
 };
 
-const ArrowLeft = ({ selectedButton }: ArrowLeftPropsType) => {
+const ArrowLeft = ({ selectedButton, isFontThemePage }: ArrowLeftPropsType) => {
   const { mounted, theme } = useMountedTheme();
   const isDark = mounted && theme === "dark";
-  const fill = selectedButton ? (isDark ? "#fff" : "#525866") : "";
+  const fill = selectedButton || isFontThemePage ? (isDark ? "#fff" : "#525866") : "";
 
   return (
     <svg

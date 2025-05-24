@@ -22,11 +22,22 @@ const PasswordInput = <T extends FieldValues>({
   fieldName,
   isSignInPage,
 }: PasswordInputPropsType<T>) => {
+  const label =
+  fieldName === "oldPassword"
+    ? "Old Password"
+    : fieldName === "passwordNew"
+    ? "New Password"
+    : fieldName === "confirmPassword"
+    ? "Confirm Password"
+    : "Password";
+
 
   return (
     <div className="w-full flex flex-col gap-[6px]">
       <div className="w-full flex items-center justify-between">
-        <label className="text-sm font-medium text-[#0E121B]">Password</label>
+        <label className="text-sm font-medium text-[#0E121B]">
+          {label}
+          </label>
         {isSignInPage && (
           <Link href={"/forgot-password"}>
             <button
@@ -48,13 +59,13 @@ const PasswordInput = <T extends FieldValues>({
         />
         <Eye />
         {errors[fieldName] && (
-          <span className="text-red-500 text-sm">
+          <span className="text-red-500 text-xs absolute -bottom-4 right-0">
             {errors[fieldName]?.message?.toString()}
           </span>
         )}
       </div>
       {(fieldName === "password" ||
-       fieldName === "newPassword") && (
+       fieldName === "newPassword" || fieldName === "passwordNew") && (
           <div className="flex items-center gap-2">
             <InfoCircle />
             <p className="text-[#525866] font-normal text-xs">
@@ -62,12 +73,7 @@ const PasswordInput = <T extends FieldValues>({
             </p>
           </div>
         )}
-      {/* <div className="flex items-center gap-2">
-        <InfoCircle />
-        <p className="text-[#525866] font-normal text-xs">
-          At least 8 characters
-        </p>
-      </div> */}
+
     </div>
   );
 };

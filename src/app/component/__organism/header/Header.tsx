@@ -126,7 +126,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 
-const Header = () => {
+const Header = ({ activeSetting }: { activeSetting?: string }) => {
   const { accessToken } = useSignInStore();
   const {
     selectedTags,
@@ -146,7 +146,7 @@ const Header = () => {
   useEffect(() => {
     setMounted(true);
   }, []);
-  
+
   const isArchivedPage = path.includes("archive");
 
   useEffect(() => {
@@ -170,9 +170,13 @@ const Header = () => {
         // !isSearchPage
         //   ? "bg-[#F3F5F81A] lg:bg-secondary-light dark:bg-primary-dark   w-full"
         //   : "bg-transparent relative "
-      !isSearchPage
-    ? (theme === "dark" ? "bg-[#232530CC] lg:bg-transparent" : "bg-[#F3F5F81A] lg:bg-transparent")
-    : (theme === "dark" ? "bg-[#232530CC] relative lg:bg-transparent" : "bg-[#F3F5F81A] relative lg:bg-transparent")
+        !isSearchPage || activeSetting
+          ? theme === "dark"
+            ? "bg-[#232530CC] lg:bg-transparent"
+            : "bg-[#F3F5F81A] lg:bg-transparent"
+          : theme === "dark"
+          ? "bg-[#232530CC] relative lg:bg-transparent"
+          : "bg-[#F3F5F81A] relative lg:bg-transparent"
       }
       ${
         theme === "dark"
@@ -243,9 +247,7 @@ const Header = () => {
               readOnly={isSettingsPage}
               placeholder="Search by title, content, or tags…"
               className={`
-                ${
-        theme === "dark" ? "border-[#52586699]" : "border-[#E0E4EA]"
-      }
+                ${theme === "dark" ? "border-[#52586699]" : "border-[#E0E4EA]"}
                 py-3 border rounded-lg  w-full outline-none pl-10 pr-2 text-[#717784] text-sm font-normal`}
             />
             <div className="absolute left-4 top-1/2 transform -translate-y-1/2 w-[20px] h-[21px] ">
