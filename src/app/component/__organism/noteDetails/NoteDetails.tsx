@@ -78,6 +78,7 @@ const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
   });
 
   const onSubmit = async (formData: NoteType) => {
+    if (Object.keys(errors).length > 0) return;
     let result;
     if (createNote) {
       result = await createNewNote(formData);
@@ -134,7 +135,7 @@ const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
               ? "flex"
               : "hidden"
             // } flex-grow w-full bg-white flex-col gap-4`}
-          } flex-grow w-full bg-primary-light dark:bg-primary-dark   flex-col gap-4`}
+          } flex-grow w-full bg-primary-light dark:bg-primary-dark flex-col gap-4`}
         >
           <GoBack
             isNoteDetailsPage={isNoteDetailsPage}

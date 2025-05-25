@@ -54,11 +54,6 @@
 // }
 // tailwind.config.js
 
-
-
-
-
-
 // module.exports = {
 //   content: [
 //     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -84,8 +79,6 @@
 //   },
 //   plugins: [],
 // };
-
-
 
 // module.exports = {
 //   content: [
@@ -135,70 +128,65 @@
 //           dark: '#525866', // Solid color without alpha
 //         }
 //       },
-      
-      
+
 //     },
 //   },
 //   plugins: [],
 // };
 
-
-
 module.exports = {
   content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  darkMode: 'class', // This is crucial for next-themes to work
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
-        // Define custom colors for both light and dark themes
-        dark: '#232530',
-        light: '#F3F5F8',
-    
+        dark: "#232530",
+        light: "#F3F5F8",
+
         lines: {
-          light: '#E0E4EA',
-          dark: '#525866', // Solid color without alpha
-        }
+          light: "#E0E4EA",
+          dark: "#525866",
+        },
       },
       backgroundColor: {
-               overlayDark: '#525866',
+        overlayDark: "#525866",
         primary: {
-          light: '#F3F5F8',
-          dark: '#232530',
+          light: "#F3F5F8",
+          dark: "#232530",
         },
         secondary: {
-          light: '#ffffff',
-          dark: '#3a3f47',
-        }
+          light: "#ffffff",
+          dark: "#3a3f47",
+        },
       },
       textColor: {
-        // Define text colors consistently
         primary: {
-          light: '#0E121B',
-          dark: '#ffffff',
+          light: "#0E121B",
+          dark: "#ffffff",
         },
         secondary: {
-          light: '#2B303B',
-          dark: '#e1e1e1',
+          light: "#2B303B",
+          dark: "#e1e1e1",
         },
-        muted: '#717784',
-        subtle: '#99A0AE'
+        muted: "#717784",
+        subtle: "#99A0AE",
       },
       borderColor: {
         lines: {
-          light: '#E0E4EA',
-          dark: '#525866', // Solid color without alpha
-        }
+          light: "#E0E4EA",
+          dark: "#525866",
+        },
       },
       fill: {
         primary: {
-          light: '#0E121B',
-          dark: '#ffffff',
-        }
-      }
+          light: "#0E121B",
+          dark: "#ffffff",
+        },
+      },
     },
   },
   plugins: [],

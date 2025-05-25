@@ -125,6 +125,7 @@ import { useUtilities } from "@/app/store/utilities.store";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useTheme } from "next-themes";
+import { useSettingsStore } from "@/app/store/settings.store";
 
 const Header = ({ activeSetting }: { activeSetting?: string }) => {
   const { accessToken } = useSignInStore();
@@ -140,6 +141,7 @@ const Header = ({ activeSetting }: { activeSetting?: string }) => {
     setSelectedTag,
   } = useUtilities();
   const path = usePathname();
+  const {setActiveSetting} = useSettingsStore()
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -257,7 +259,14 @@ const Header = ({ activeSetting }: { activeSetting?: string }) => {
 
           <Link href={"/settings"} className="w-[11.73%] ">
             <div
-              onClick={() => setSelectedTag(null)}
+              // onClick={() => setSelectedTag(null)}
+              onClick={() => {
+                setActiveSetting(null)
+
+                setSelectedTag(null)}
+              }
+                
+                
               className={`${
                 isSearchPage && "hidden"
               } flex items-center justify-center w-full`}

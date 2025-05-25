@@ -8,6 +8,7 @@ import {
 import { InfoCircle } from "../../__atoms";
 import Link from "next/link";
 import Eye from "../../__atoms/eye/Eye";
+import { useMountedTheme } from "@/app/hooks/useMountedTheme";
 
 export type PasswordInputPropsType<T extends FieldValues> = {
   register: UseFormRegister<T>;
@@ -22,22 +23,29 @@ const PasswordInput = <T extends FieldValues>({
   fieldName,
   isSignInPage,
 }: PasswordInputPropsType<T>) => {
+  const { mounted, theme } = useMountedTheme();
+  const isDark = mounted && theme === "dark";
   const label =
-  fieldName === "oldPassword"
-    ? "Old Password"
-    : fieldName === "passwordNew"
-    ? "New Password"
-    : fieldName === "confirmPassword"
-    ? "Confirm Password"
-    : "Password";
-
+    fieldName === "oldPassword"
+      ? "Old Password"
+      : fieldName === "passwordNew"
+      ? "New Password"
+      : fieldName === "confirmPassword"
+      ? "Confirm Password"
+      : fieldName === "passwordConfirm"
+      ? "Confirm Password"
+      : "Password";
 
   return (
     <div className="w-full flex flex-col gap-[6px]">
       <div className="w-full flex items-center justify-between">
-        <label className="text-sm font-medium text-[#0E121B]">
+        <label
+          className={`${
+            isDark ? "text-white" : "text-[#0E121B]"
+          } text-sm font-medium  `}
+        >
           {label}
-          </label>
+        </label>
         {isSignInPage && (
           <Link href={"/forgot-password"}>
             <button
@@ -53,7 +61,9 @@ const PasswordInput = <T extends FieldValues>({
       <div className="w-full relative">
         <input
           type="text"
-          className="w-full border border-[#CACFD8] rounded-lg p-3 outline-none text-neutral"
+          className={`
+          text-[#717784]
+          w-full border border-[#CACFD8] rounded-lg p-3 outline-none text-neutral`}
           placeholder=""
           {...register(fieldName)}
         />
@@ -65,15 +75,15 @@ const PasswordInput = <T extends FieldValues>({
         )}
       </div>
       {(fieldName === "password" ||
-       fieldName === "newPassword" || fieldName === "passwordNew") && (
-          <div className="flex items-center gap-2">
-            <InfoCircle />
-            <p className="text-[#525866] font-normal text-xs">
-              At least 4 characters
-            </p>
-          </div>
-        )}
-
+        fieldName === "newPassword" ||
+        fieldName === "passwordNew") && (
+        <div className="flex items-center gap-2">
+          <InfoCircle />
+          <p className="text-[#525866] font-normal text-xs">
+            At least 4 characters
+          </p>
+        </div>
+      )}
     </div>
   );
 };
