@@ -19,9 +19,6 @@ export type ForgotPasswordType = z.infer<typeof forgotPasswordSchema>;
 const ForgotPasswordForm = () => {
   const { sendVerificationLink, success, resendEmail } =
     useChangePasswordStore();
-  // const router = useRouter();
-
-  console.log(resendEmail, "resendEmail from component");
 
   const {
     register,

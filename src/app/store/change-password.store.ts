@@ -25,7 +25,7 @@ export interface IChangePassword {
   newPassword: string;
 
   sendVerificationLink: (formData: ForgotPasswordType) => void;
-  changePassword: (FormData: ResetPasswordType) => void;
+  // changePassword: (FormData: ResetPasswordType) => void;
 }
 
 export const useChangePasswordStore = create<IChangePassword>((set) => ({
@@ -44,8 +44,6 @@ export const useChangePasswordStore = create<IChangePassword>((set) => ({
       });
       if (res.status >= 200 && res.status <= 204) {
         set({ success: true, resendEmail: "" });
-
-        console.log(resendEmail, "resendEmail from store")
       }
     } catch (e) {
       const errorMessage = handleApiError(e as AxiosError<ErrorResponse>);
@@ -55,16 +53,16 @@ export const useChangePasswordStore = create<IChangePassword>((set) => ({
     }
   },
 
-  changePassword: async (formData: ResetPasswordType) => {
+  // changePassword: async (formData: ResetPasswordType) => {
 
-    try {
-      set({isLoading: true, axiosError: ""})
+  //   try {
+  //     set({isLoading: true, axiosError: ""})
       
 
-    } catch(e){
-      const errorMessage = handleApiError(e as AxiosError<ErrorResponse>);
-      set({ axiosError: errorMessage });
-    }
+  //   } catch(e){
+  //     const errorMessage = handleApiError(e as AxiosError<ErrorResponse>);
+  //     set({ axiosError: errorMessage });
+  //   }
 
-  }
+  // }
 }));

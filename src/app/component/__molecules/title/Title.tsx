@@ -1,4 +1,5 @@
 "use client";
+import { useMountedTheme } from "@/app/hooks/useMountedTheme";
 import { Logo } from "../../__atoms";
 
 export type TitlePropsType = {
@@ -12,6 +13,10 @@ const Title = ({
   isForgotPassword,
   isResetPassword,
 }: TitlePropsType) => {
+  const { mounted, theme } = useMountedTheme();
+  const isDark = mounted && theme === "dark";
+
+  
   return (
     <>
       <div className="w-full flex items-center justify-center">
@@ -22,7 +27,7 @@ const Title = ({
       </div>
 
       <div className="flex flex-col items-center justify-center gap-2">
-        <h1 className="text-[#0E121B] font-bold text-2xl">
+        <h1 className={`${isDark ? "text-white" : "text-[#0E121B]"}   font-bold text-2xl`}>
           {isSignInPage
             ? "Welcome to Note"
             : isForgotPassword

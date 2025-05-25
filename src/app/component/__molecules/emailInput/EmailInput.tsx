@@ -1,4 +1,5 @@
 "use client";
+import { useMountedTheme } from "@/app/hooks/useMountedTheme";
 import {
   FieldErrors,
   FieldValues,
@@ -16,14 +17,19 @@ const EmailInput = <T extends FieldValues>({
   register,
   errors,
   fieldName,
-
 }: EmailInputPropsType<T>) => {
+  const { mounted, theme } = useMountedTheme();
+  const isDark = mounted && theme === "dark";
   return (
     <div className="w-full flex flex-col gap-[6px]">
-      <label className="text-sm font-medium text-[#0E121B]">Email Address</label>
+      <label className={`${
+            isDark ? "text-white" : "text-[#0E121B]"
+          } text-sm font-medium `}>
+        Email Address
+      </label>
       <input
         type="text"
-        className="border border-[#CACFD8] rounded-lg p-3 outline-none text-[#717784]"
+        className={` border border-[#CACFD8] rounded-lg p-3 outline-none text-[#717784]`}
         placeholder="email@example.com"
         {...register(fieldName)}
       />

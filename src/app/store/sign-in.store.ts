@@ -85,16 +85,6 @@ export const useSignInStore = create<ISignInStore>((set) => ({
     }
   },
 
-  // initialize: async () => {
-  //   const token = await getCookie("accessToken");
-  //   await useSignInStore.getState().getCurrentUser(token);
-  //   if (token) {
-  //     set({ accessToken: token });
-  //   } else {
-  //     window.location.href = "/sign-up";
-  //   }
-  // },
-
   initialize: async () => {
     const token = getCookie("accessToken");
   
@@ -128,6 +118,8 @@ export const useSignInStore = create<ISignInStore>((set) => ({
     set({ currentUser: null, accessToken: "" });
     window.location.href = "/sign-up";
   },
+
+
 }));
 
 

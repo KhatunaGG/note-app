@@ -8,6 +8,7 @@
 // import { useUtilities } from "@/app/store/utilities.store";
 // import { useEffect, useState } from "react";
 // import { useTheme } from "next-themes";
+// import { useSignInStore } from "@/app/store/sign-in.store";
 
 // export type SettingDataType = {
 //   text: string;
@@ -24,13 +25,13 @@
 // };
 
 // const SettingList = ({ settingParams }: SettingListPropsType) => {
-//   const { activeSetting, setActiveSetting } = useSettingsStore();
+//   const { activeSetting, setActiveSetting, selectedButton, setSelectedButton } =
+//     useSettingsStore();
 //   const { isSettingsPage } = useUtilities();
+//   const { logout } = useSignInStore();
 //   const pathname = usePathname();
-//   const { theme, systemTheme } = useTheme();
+//   const { theme } = useTheme();
 //   const [mounted, setMounted] = useState(false);
-
-//   console.log(activeSetting, "activeSetting")
 
 //   useEffect(() => {
 //     setMounted(true);
@@ -44,15 +45,16 @@
 //     }
 //   }
 
-//   console.log(currentSetting, "currentSetting")
-
-//   //bg-white dark:bg-['#232530'] transition-colors duration-700 ease-in-out
-
 //   return (
-//     <div className={`${theme === "dark" ? "border-l-[#52586699] border-r-[#52586699]" : " border-l-[#CACFD8] border-r-[#CACFD8]"}  border-l border-r py-[20px] pl-8 pr-4 w-full min-h-[calc(100vh-54px)] md:min-h-[calc(100vh-74px)] lg:min-h-[calc(100vh-81px)] flex flex-col gap-2 `}>
+//     <div
+//       className={`${
+//         theme === "dark"
+//           ? "border-l-[#52586699] border-r-[#52586699]"
+//           : "border-l-[#CACFD8] border-r-[#CACFD8]"
+//       } border-l border-r py-[20px] pl-8 pr-4 w-full min-h-[calc(100vh-54px)] md:min-h-[calc(100vh-74px)] lg:min-h-[calc(100vh-81px)] flex flex-col gap-2`}
+//     >
 //       {isSettingsPage && (
-//         // <h1 className="flex lg:hidden text-2xl font-bold text-[#0E121B]   ">
-//         <h1 className="flex lg:hidden text-2xl font-bold text-primary-light dark:text-primary-dark  ">
+//         <h1 className="flex lg:hidden text-2xl font-bold text-primary-light dark:text-primary-dark">
 //           Settings
 //         </h1>
 //       )}
@@ -62,20 +64,35 @@
 //         const isActive =
 //           (currentSetting && currentSetting === settingSlug) ||
 //           activeSetting === item.text;
+//         const isSelected = selectedButton === item.text;
 //         const isLastItem = i === settingsData.length - 1;
+//         const isLogout = item.text === "Logout";
+
 //         return (
 //           <Link
-//             href={`/settings/${settingSlug}`}
+//             href={isLogout ? "#" : `/settings/${settingSlug}`}
 //             key={item.text}
-//             onClick={() => setActiveSetting(item.text)}
-//             // className={`w-full flex items-center justify-between  px-2 rounded-md transition-colors ${
-//             //   isActive ? "bg-[#F3F5F8]" : "hover:bg-[#F3F5F8]"
-//             // }
-//             className={`w-full flex items-center justify-between  px-2 rounded-md transition-colors ${
+//             // onClick={() => {
+//             //   setActiveSetting(item.text);
+//             //   setSelectedButton(item.text);
+//             // }}
+
+//             onClick={() => {
+//               if (isLogout) {
+//                 // e.preventDefault();
+//                 logout();
+//               } else {
+//                 setActiveSetting(item.text);
+//                 setSelectedButton(item.text);
+//               }
+//             }}
+//             className={`w-full flex items-center justify-between px-2 rounded-md transition-colors ${
 //               isActive
 //                 ? theme === "dark"
 //                   ? "bg-[#2B303BB3]"
 //                   : "bg-[#F3F5F8]"
+//                 : isSelected
+//                 ? "ring-2 ring-blue-400" 
 //                 : ""
 //             }`}
 //           >
@@ -99,7 +116,7 @@
 //                 {item.text}
 //               </p>
 //             </div>
-//             {isActive && <ArrowRight />}
+//             {isActive && <ArrowRight isActive={isActive} />}
 //           </Link>
 //         );
 //       })}
@@ -108,6 +125,14 @@
 // };
 
 // export default SettingList;
+
+
+
+
+
+
+
+
 
 "use client";
 import { settingsData } from "@/app/data/data";
@@ -119,6 +144,7 @@ import { usePathname } from "next/navigation";
 import { useUtilities } from "@/app/store/utilities.store";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+import { useSignInStore } from "@/app/store/sign-in.store";
 
 export type SettingDataType = {
   text: string;
@@ -138,6 +164,7 @@ const SettingList = ({ settingParams }: SettingListPropsType) => {
   const { activeSetting, setActiveSetting, selectedButton, setSelectedButton } =
     useSettingsStore();
   const { isSettingsPage } = useUtilities();
+  const { logout } = useSignInStore();
   const pathname = usePathname();
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -175,14 +202,25 @@ const SettingList = ({ settingParams }: SettingListPropsType) => {
           activeSetting === item.text;
         const isSelected = selectedButton === item.text;
         const isLastItem = i === settingsData.length - 1;
+        const isLogout = item.text === "Logout";
 
         return (
           <Link
-            href={`/settings/${settingSlug}`}
+            href={isLogout ? "#" : `/settings/${settingSlug}`}
             key={item.text}
+            // onClick={() => {
+            //   setActiveSetting(item.text);
+            //   setSelectedButton(item.text);
+            // }}
+
             onClick={() => {
-              setActiveSetting(item.text);
-              setSelectedButton(item.text);
+              if (isLogout) {
+                // e.preventDefault();
+                logout();
+              } else {
+                setActiveSetting(item.text);
+                setSelectedButton(item.text);
+              }
             }}
             className={`w-full flex items-center justify-between px-2 rounded-md transition-colors ${
               isActive
@@ -190,7 +228,7 @@ const SettingList = ({ settingParams }: SettingListPropsType) => {
                   ? "bg-[#2B303BB3]"
                   : "bg-[#F3F5F8]"
                 : isSelected
-                ? "ring-2 ring-blue-400" // Optional highlight
+                ? "ring-2 ring-blue-400" 
                 : ""
             }`}
           >
