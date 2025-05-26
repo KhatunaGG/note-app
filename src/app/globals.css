@@ -21,3 +21,19 @@
 .dark .sidebar-border {
   border-right: 1px solid rgba(82, 88, 102, 0.6);
 } */
+
+
+
+/* globals.css */
+
+.font-inter {
+  font-family: var(--font-inter), sans-serif;
+}
+
+.font-lora {
+  font-family: var(--font-lora), serif;
+}
+
+.font-geist-mono {
+  font-family: var(--font-geist-mono), monospace;
+}

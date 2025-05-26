@@ -200,6 +200,19 @@ export interface IUseSettingsStore {
   newPassword: string;
   passwordNew: string;
 
+
+
+
+  currentFont: string;
+  selectedFont: string;
+
+  setSelectedFont: (font: string) => void;
+  applySelectedFont: () => void;
+
+
+
+
+
   setAxiosError: (msg: string | null) => void;
   setSelectedButton: (button: string | null) => void;
   setIsLoading: (isLoading: boolean) => void;
@@ -233,6 +246,17 @@ export const useSettingsStore = create<IUseSettingsStore>()(
       newPassword: "",
       passwordNew: "",
       passwordConfirm: "",
+
+           currentFont: "Inter",    
+      selectedFont: "Inter",
+
+
+ setSelectedFont: (font) => set({ selectedFont: font }),
+
+ applySelectedFont: () => {
+  const { selectedFont } = get();
+  set({ currentFont: selectedFont });
+},
 
       setAxiosError: (axiosError) => set({ axiosError }),
       setSelectedButton: (button) => set({ selectedButton: button }),
@@ -292,6 +316,8 @@ export const useSettingsStore = create<IUseSettingsStore>()(
         selectedTheme: state.currentTheme,
         filteredData: state.filteredData,
         filteredSettings: state.filteredSettings,
+              currentFont: state.currentFont,
+        selectedFont: state.selectedFont,
       }),
       storage:
         typeof window !== "undefined"
