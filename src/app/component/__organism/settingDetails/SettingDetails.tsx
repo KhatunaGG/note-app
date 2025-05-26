@@ -162,6 +162,9 @@ import {
   SansSerif,
   Serif,
   Mono,
+  Inter,
+  GeistMono,
+  Lora,
 } from "../../__atoms";
 import { useSignInStore } from "@/app/store/sign-in.store";
 import { useEffect, useState } from "react";
@@ -177,13 +180,22 @@ export type SettingDetailsPropsType = {
   settingsParam?: string;
 };
 
+// const Icons: Record<string, React.ReactNode> = {
+//   Sun: <Sun />,
+//   Moon: <Moon />,
+//   System: <System />,
+//   SansSerif: <SansSerif />,
+//   Serif: <Serif />,
+//   Mono: <Mono />,
+// };
+
 const Icons: Record<string, React.ReactNode> = {
   Sun: <Sun />,
   Moon: <Moon />,
   System: <System />,
-  SansSerif: <SansSerif />,
-  Serif: <Serif />,
-  Mono: <Mono />,
+  Inter: <Inter />,
+  GeistMono: <GeistMono />,
+  Lora: <Lora />,
 };
 
 const SettingDetails = ({ settingsParam }: SettingDetailsPropsType) => {
@@ -197,6 +209,9 @@ const SettingDetails = ({ settingsParam }: SettingDetailsPropsType) => {
     setFilteredData,
     filteredData,
     selectedButton,
+    applySelectedFont,
+    setSelectedFont,
+    selectedFont,
   } = useSettingsStore();
   const { setCurrentPath, setIsSettingsDetailsPage, isSettingsPage } =
     useUtilities();
@@ -261,9 +276,13 @@ const SettingDetails = ({ settingsParam }: SettingDetailsPropsType) => {
     const mappedTheme = mapThemeValue(selectedTheme);
     setTheme(mappedTheme);
     applySelectedTheme();
+
+    applySelectedFont();
   };
 
   if (!accessToken) return null;
+
+  console.log(getComputedStyle(document.body).fontFamily, "FONT");
 
   return (
     <section className="w-full  md:pt-0 bg-light dark:bg-dark text-primary-light dark:text-primary-dark transition-colors duration-300">
@@ -283,18 +302,26 @@ const SettingDetails = ({ settingsParam }: SettingDetailsPropsType) => {
           {filteredData?.settingTheme &&
             filteredData?.settingTheme?.length > 0 &&
             filteredData.settingTheme.map((item, i) => {
+              // const isSelected =
+              //   selectedTheme.toLowerCase() === item.mode.toLowerCase();
               const isSelected =
-                selectedTheme.toLowerCase() === item.mode.toLowerCase();
+                filteredData?.text === "Color Theme"
+                  ? selectedTheme.toLowerCase() === item.mode.toLowerCase()
+                  : selectedFont.toLowerCase() === item.mode.toLowerCase();
               return (
                 <button
-                  onClick={() => setSelectedTheme(item.mode)}
+                  onClick={() =>
+                    filteredData?.text === "Color Theme"
+                      ? setSelectedTheme(item.mode)
+                      : setSelectedFont(item.mode)
+                  }
                   key={i}
                   className={`
                     ${
                       isSelected
                         ? theme === "dark"
                           ? "bg-[#2B303BB3]"
-                          : "bg-[#E0E4EA]"
+                          : "bg-[#E0E4EA] "
                         : ""
                     } ${
                     theme === "dark" ? "border-[#52586699]" : "border-[#E0E4EA]"

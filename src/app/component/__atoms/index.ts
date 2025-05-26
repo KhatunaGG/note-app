@@ -24,3 +24,8 @@ export { default as Moon } from "./moon/Moon";
 export { default as SansSerif } from "./sansSerif/SansSerif";
 export { default as Serif } from "./serif/Serif";
 export { default as Mono} from "./mono/Mono";
+
+
+export { default as Inter} from "./inter/Inter";
+export { default as GeistMono} from "./geistMono/GeistMono";
+export { default as Lora} from "./lora/Lora";

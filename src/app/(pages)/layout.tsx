@@ -32,6 +32,7 @@ import Sidebar from "../component/__organism/sidebar/Sidebar";
 import Overlay from "../component/__organism/overlay/Overlay";
 import { Providers } from "../theme/ThemeProvider ";
 import ThemeSwitch from "../component/__organism/themeSwitch/ThemeSwitch";
+import FontSwitch from "../component/__organism/fontSwitch/FontSwitch ";
 
 
 
@@ -45,6 +46,7 @@ export default function MainLayout({
   return (
     <Providers>
       <ThemeSwitch />
+        {/* <FontSwitch /> */}
       <div className="w-full min-h-screen flex bg-secondary-light dark:bg-secondary-dark text-primary-light dark:text-primary-dark transition-colors duration-300 ">
       {/* <div className="w-full min-h-screen flex bg-white dark:bg-[#232530] transition-colors duration-300"> */}
         <Overlay />

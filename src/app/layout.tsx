@@ -54,6 +54,7 @@ import { Geist_Mono, Inter, Lora } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./theme/ThemeProvider ";
 import ThemeSwitch from "./component/__organism/themeSwitch/ThemeSwitch";
+import FontSwitch from "./component/__organism/fontSwitch/FontSwitch ";
 
 
 const inter = Inter({
@@ -90,6 +91,7 @@ export default function RootLayout({
       >
         <Providers>
           <ThemeSwitch /> 
+          <FontSwitch />
           {children}
         </Providers>
       </body>

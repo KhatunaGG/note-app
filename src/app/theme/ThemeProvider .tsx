@@ -25,7 +25,7 @@
 
 
 
-// app/theme/Providers.tsx
+
 "use client";
 
 import { ThemeProvider } from "next-themes";
@@ -34,10 +34,10 @@ import React from "react";
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider
-      attribute="class"         // Applies theme class (e.g., "dark") to the <body> or <html>
-      defaultTheme="system"     // Use system theme by default
-      enableSystem={true}       // Enable system preference detection
-      disableTransitionOnChange={true} // Prevents layout shift on theme change
+      attribute="class"         
+      defaultTheme="system"    
+      enableSystem={true}  
+      disableTransitionOnChange={true} 
     >
       {children}
     </ThemeProvider>

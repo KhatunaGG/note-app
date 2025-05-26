@@ -29,18 +29,18 @@ export const settingsData = [
     pText: "Choose your font theme:",
     settingTheme: [
       {
-        icon: "SansSerif",
-        mode: "Sans-serif",
+        icon: "Inter",
+        mode: "Inter",
         pText: "Clean and modern, easy to read.",
       },
       {
-        icon: "Serif",
-        mode: "Serif",
+        icon: "GeistMono",
+        mode: "GeistMono",
         pText: "Classic and elegant for a timeless feel.",
       },
       {
-        icon: "Mono",
-        mode: "Monospace",
+        icon: "Lora",
+        mode: "Lora",
         pText: "Code-like, great for a technical vibe.",
       },
     ],
@@ -54,10 +54,6 @@ export const settingsData = [
     logoName: "Logout",
   },
 ];
-
-
-
-
 
 export const navItems: NavItemType[] = [
   { href: "/note", iconName: "Home", label: "Home" },
