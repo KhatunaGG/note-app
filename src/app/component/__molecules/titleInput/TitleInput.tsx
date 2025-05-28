@@ -1,4 +1,3 @@
-import React from "react";
 import {
   UseFormRegister,
   FieldErrors,
@@ -24,11 +23,14 @@ const TitleInput = <T extends FieldValues>({
       <input
         type="text"
         {...register(fieldName)}
-        // className="w-full outline-none font-bold text-2xl text-[#0E121B]"
         className="w-full outline-none font-bold text-2xl text-primary-light dark:text-primary-dark"
         placeholder="Enter a title…"
       />
-      {errors.title?.message && <p className="text-red-500 text-xs absolute -bottom-4 right-0">{error}</p>}
+      {errors.title?.message && (
+        <p className="text-red-500 text-xs absolute -bottom-4 right-0">
+          {error}
+        </p>
+      )}
     </div>
   );
 };

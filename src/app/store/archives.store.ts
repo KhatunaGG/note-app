@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import useManageNotes, { NewNoteType } from "./notes.store";
 
 export interface IArchivedNotes {
   archiveModal: boolean;

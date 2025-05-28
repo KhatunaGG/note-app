@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { PasswordInput } from "../../__molecules";
-import { useSearchParams } from "next/navigation"; 
+import { useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { axiosInstance } from "@/app/libs/axiosInstance";
 import axios from "axios";

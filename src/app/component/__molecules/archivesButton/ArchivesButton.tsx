@@ -4,8 +4,7 @@ import { Archives, Restore } from "../../__atoms";
 import useManageNotes from "@/app/store/notes.store";
 import { usePathname } from "next/navigation";
 import { useUtilities } from "@/app/store/utilities.store";
-import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
+import { useEffect } from "react";
 import { useMountedTheme } from "@/app/hooks/useMountedTheme";
 
 export type ArchiveButtonPropsType = {
@@ -18,7 +17,6 @@ const ArchivesButton = ({
   isArchivedPage,
 }: ArchiveButtonPropsType) => {
   const path = usePathname();
-  // const isArchiePage = path === "/archive";
   const { noteById, updateNote } = useManageNotes();
   const { setArchiveModal } = useArchivedNotes();
   const { isNotePage, setIsNotePage, setIsSearchPage } = useUtilities();
@@ -40,6 +38,7 @@ const ArchivesButton = ({
       await updateNote(noteById);
     }
   };
+
 
   return (
     <button
@@ -65,8 +64,6 @@ const ArchivesButton = ({
           isOverlay ? "block" : "hidden lg:flex "
         } text-sm font-medium `}
       >
-        {/* {isArchivedPage ? "Restore Note" : "Archive Note"} */}
-
         {isArchivedPage
           ? "Restore Note"
           : isNotePage

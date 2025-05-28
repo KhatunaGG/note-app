@@ -1,5 +1,3 @@
-import React from "react";
-
 export type DeletePropsType = {
   width: string;
   height: string;

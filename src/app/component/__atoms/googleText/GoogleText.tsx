@@ -1,5 +1,4 @@
 "use client";
-
 import { useMountedTheme } from "@/app/hooks/useMountedTheme";
 
 const GoogleText = () => {

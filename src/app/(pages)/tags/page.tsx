@@ -1,5 +1,4 @@
 import { Header, Nav, TagNav } from "@/app/component/__organism";
-import React from "react";
 
 export default function page() {
   return (
@@ -12,7 +11,3 @@ export default function page() {
     </section>
   );
 }
-
-
-
-

@@ -10,8 +10,7 @@ import {
 import useManageNotes, { NewNoteType } from "@/app/store/notes.store";
 import { usePathname, useRouter } from "next/navigation";
 import { useUtilities } from "@/app/store/utilities.store";
-import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
+import { useEffect } from "react";
 import { useSettingsStore } from "@/app/store/settings.store";
 import { useMountedTheme } from "@/app/hooks/useMountedTheme";
 
@@ -37,7 +36,6 @@ const GoBack = ({
   createNote,
   selectedTags,
   settingsParam,
-  isActive,
 }: GoBackPropsType) => {
   const { resetNewNote } = useManageNotes();
   const path = usePathname();
@@ -61,7 +59,7 @@ const GoBack = ({
   };
 
   const isFontThemePage = path === `/settings/${settingsParam}`;
-  const isSettingsRootPage = path === "/settings";
+  // const isSettingsRootPage = path === "/settings";
 
   return (
     <div
@@ -102,10 +100,11 @@ const GoBack = ({
           }}
           className="flex items-center gap-1"
         >
-          <ArrowLeft selectedButton={selectedButton} isFontThemePage={isFontThemePage} />
-          <p
-          className={`${isDark ? "text-white" : "text-[#525866]"} text-sm `}
-          >
+          <ArrowLeft
+            selectedButton={selectedButton}
+            isFontThemePage={isFontThemePage}
+          />
+          <p className={`${isDark ? "text-white" : "text-[#525866]"} text-sm `}>
             {isSettingsPage ? "Settings" : "Go Back"}
           </p>
         </div>

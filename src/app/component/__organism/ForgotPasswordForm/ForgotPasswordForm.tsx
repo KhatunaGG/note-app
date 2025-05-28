@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { useChangePasswordStore } from "@/app/store/change-password.store";
-// import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export const forgotPasswordSchema = z.object({
