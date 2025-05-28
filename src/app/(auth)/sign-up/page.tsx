@@ -1,11 +1,9 @@
-
-import { SignUp } from '@/app/component/__organism'
-import React from 'react'
+import { SignUp } from "@/app/component/__organism";
 
 export default function page() {
   return (
-    <div className='w-full min-h-screen'>
+    <div className="w-full min-h-screen">
       <SignUp />
     </div>
-  )
+  );
 }

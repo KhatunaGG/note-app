@@ -1,31 +1,6 @@
 @import "tailwindcss";
 
 
-
-
-/* body {
-  background-color: #ffffff;
-  border-color: #E0E4EA;
-}
-
-.dark body {
-  background-color: #232530;
-  border-color: rgba(82, 88, 102, 0.6);
-}
-
-
-.sidebar-border {
-  border-right: 1px solid #E0E4EA;
-}
-
-.dark .sidebar-border {
-  border-right: 1px solid rgba(82, 88, 102, 0.6);
-} */
-
-
-
-/* globals.css */
-
 .font-inter {
   font-family: var(--font-inter), sans-serif;
 }

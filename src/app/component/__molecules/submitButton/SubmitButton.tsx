@@ -15,18 +15,11 @@ function SubmitButton({
   return (
     <button
       type="submit"
-      // disabled={!createNote || isSubmitting}
       disabled={isDisabled}
-      // className={`text-[#335CFF] lg:bg-[#335CFF] text-sm lg:text-white lg:py-3 lg:px-4 lg:rounded-lg lg:transition-opacity ${
-      //   !createNote || isSubmitting
-      //     ? "opacity-50 cursor-not-allowed"
-      //     : "hover:opacity-90"
-      // }`}
       className={`text-[#335CFF] lg:bg-[#335CFF] text-sm lg:text-white lg:py-3 lg:px-4 lg:rounded-lg lg:transition-opacity ${
         isDisabled ? "opacity-50 cursor-not-allowed" : "hover:opacity-90"
       }`}
     >
-      {/* {isSubmitting ? "Saving..." : "Save Note"} */}
       {isSubmitting
         ? "Saving..."
         : settingsParam

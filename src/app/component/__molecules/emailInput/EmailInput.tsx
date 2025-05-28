@@ -20,11 +20,14 @@ const EmailInput = <T extends FieldValues>({
 }: EmailInputPropsType<T>) => {
   const { mounted, theme } = useMountedTheme();
   const isDark = mounted && theme === "dark";
+  
   return (
     <div className="w-full flex flex-col gap-[6px]">
-      <label className={`${
-            isDark ? "text-white" : "text-[#0E121B]"
-          } text-sm font-medium `}>
+      <label
+        className={`${
+          isDark ? "text-white" : "text-[#0E121B]"
+        } text-sm font-medium `}
+      >
         Email Address
       </label>
       <input

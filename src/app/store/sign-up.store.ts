@@ -16,8 +16,6 @@ const handleApiError = (error: AxiosError<ErrorResponse>): string => {
   return unexpectedError;
 };
 
-
-
 export interface ISignUpStore {
   isLoading: boolean;
   axiosError: string;
@@ -44,7 +42,6 @@ export const useSignUpStore = create<ISignUpStore>((set) => ({
 
   signUp: async (formData) => {
     set({ isLoading: true, axiosError: "" });
-
     try {
       set({ email: formData.email, password: formData.password });
       const res = await axiosInstance.post(`/auth/sign-up`, formData);
@@ -58,7 +55,7 @@ export const useSignUpStore = create<ISignUpStore>((set) => ({
       const errorMessage = handleApiError(e as AxiosError<ErrorResponse>);
       set({ axiosError: errorMessage });
     } finally {
-      set({ isLoading: false, axiosError: ""});
+      set({ isLoading: false, axiosError: "" });
     }
   },
 }));

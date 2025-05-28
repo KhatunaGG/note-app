@@ -21,7 +21,7 @@ export interface IUser {
   _id: string;
   email: string;
   createdAt: Date;
-  avatar: string
+  avatar: string;
 }
 
 export interface ISignInStore {
@@ -32,7 +32,6 @@ export interface ISignInStore {
   success: boolean;
   accessToken: string | null;
   currentUser: IUser | null;
-
   setCurrentUser: (currentUser: IUser | null) => void;
   setAccessToken: (token: string) => void;
   setSuccess: (success: boolean) => void;
@@ -53,7 +52,6 @@ export const useSignInStore = create<ISignInStore>((set) => ({
   success: false,
   accessToken: null,
   currentUser: null,
-
   setAccessToken: (token: string) => set({ accessToken: token }),
   setSuccess: (success) => set({ success }),
   setFormData: (signInEmail, signInPassword) =>
@@ -87,7 +85,6 @@ export const useSignInStore = create<ISignInStore>((set) => ({
 
   initialize: async () => {
     const token = getCookie("accessToken");
-  
     if (token && typeof token === "string") {
       set({ accessToken: token });
       await useSignInStore.getState().getCurrentUser(token);
@@ -95,7 +92,6 @@ export const useSignInStore = create<ISignInStore>((set) => ({
       window.location.href = "/sign-up";
     }
   },
-  
 
   getCurrentUser: async (accessToken: string | undefined) => {
     if (!accessToken) return;
@@ -118,8 +114,4 @@ export const useSignInStore = create<ISignInStore>((set) => ({
     set({ currentUser: null, accessToken: "" });
     window.location.href = "/sign-up";
   },
-
-
 }));
-
-

@@ -21,7 +21,6 @@ const ArrowRight = ({ isActive }: ArrowRightPropsType) => {
       <g clipPath="url(#clip0_2749_9322)">
         <path
           d="M1 1L5 5L1 9"
-          // stroke="#0E121B"
           stroke={fill}
           strokeWidth="1.5"
           strokeLinecap="round"

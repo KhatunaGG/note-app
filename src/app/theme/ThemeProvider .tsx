@@ -1,31 +1,3 @@
-// "use client"
-// import { ThemeProvider } from "next-themes"
-// export function Providers({children}: {children: React.ReactNode}) {
-//     return <ThemeProvider attribute="class" defaultTheme="System" enableSystem>{children} </ThemeProvider>
-// }
-
-
-
-// "use client";
-// import { ThemeProvider } from "next-themes";
-
-// export function Providers({ children }: { children: React.ReactNode } ) {
-//   return (
-//     <ThemeProvider 
-//       attribute="class" 
-//       defaultTheme="system" 
-//       enableSystem 
-//       disableTransitionOnChange={false}
-//     >
-//       {children}
-//     </ThemeProvider>
-//   );
-// }
-
-
-
-
-
 "use client";
 
 import { ThemeProvider } from "next-themes";
@@ -34,10 +6,10 @@ import React from "react";
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider
-      attribute="class"         
-      defaultTheme="system"    
-      enableSystem={true}  
-      disableTransitionOnChange={true} 
+      attribute="class"
+      defaultTheme="system"
+      enableSystem={true}
+      disableTransitionOnChange={true}
     >
       {children}
     </ThemeProvider>

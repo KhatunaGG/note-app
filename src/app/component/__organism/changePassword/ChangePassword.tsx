@@ -3,7 +3,6 @@ import { PasswordInput, SubmitButton } from "../../__molecules";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { usePathname } from "next/navigation";
 import { useSettingsStore } from "@/app/store/settings.store";
 import { useMountedTheme } from "@/app/hooks/useMountedTheme";
 
@@ -15,7 +14,6 @@ const passwordField = z
   .string()
   .min(4, "Password must be at least 4 characters")
   .nonempty("Password is required");
-
 export const ChangePasswordSchema = z
   .object({
     oldPassword: passwordField,
@@ -35,7 +33,6 @@ export const ChangePasswordSchema = z
 export type ChangePasswordFormData = z.infer<typeof ChangePasswordSchema>;
 
 const ChangePassword = ({ settingsParam }: changePasswordPropsType) => {
-  const path = usePathname();
   const { changePassword } = useSettingsStore();
   const { mounted, theme } = useMountedTheme();
   const isDark = mounted && theme === "dark";
@@ -94,7 +91,6 @@ const ChangePassword = ({ settingsParam }: changePasswordPropsType) => {
         />
 
         <div className="w-full flex justify-end">
-          {/* <button className="">Save Password</button> */}
           <SubmitButton
             settingsParam={settingsParam}
             isSubmitting={isSubmitting}

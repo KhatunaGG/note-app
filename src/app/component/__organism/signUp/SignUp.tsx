@@ -22,7 +22,6 @@ const SignUp = () => {
         <Title />
         <Form />
         <div className="w-full flex items-center justify-center gap-2">
-          {/* <p className="text-sm font-normal text-[#525866]"> */}
           <p className="text-sm font-normal text-[#525866] dark:text-primary-dark">
             Already have an account?
           </p>

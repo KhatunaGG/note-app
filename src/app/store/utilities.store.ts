@@ -24,36 +24,25 @@ interface IUseUtilities {
   routeToTags: boolean;
   axiosError: string;
   isLoading: boolean;
-
   filterAllByTag: boolean;
-  setFilterAllByTag: (val: boolean) => void;
-
   isAllNotesPage: boolean;
-  setIsAllNotesPage: (val: boolean) => void;
-
   isTagsPage: boolean;
-  setIsTagsPage: (val: boolean) => void;
-
   isSearchPage: boolean;
-  setIsSearchPage: (val: boolean) => void;
-
   searchValue: string;
-  setSearchValue: (value: string) => void;
-
   isNotePage: boolean;
-  setIsNotePage: (val: boolean) => void;
-
-  isNoteDetailsPage: boolean;
-  setIsNoteDetailsPage: (val: boolean) => void;
-
-
-
   isSettingsDetailsPage: boolean;
-  setIsSettingsDetailsPage: (val: boolean) => void;
-
+  isNoteDetailsPage: boolean;
   isSettingsPage: boolean;
-setIsSettingsPage: (val: boolean) => void;
-
+  previousPath: string;
+  setFilterAllByTag: (val: boolean) => void;
+  setIsAllNotesPage: (val: boolean) => void;
+  setIsTagsPage: (val: boolean) => void;
+  setIsSearchPage: (val: boolean) => void;
+  setSearchValue: (value: string) => void;
+  setIsNotePage: (val: boolean) => void;
+  setIsNoteDetailsPage: (val: boolean) => void;
+  setIsSettingsDetailsPage: (val: boolean) => void;
+  setIsSettingsPage: (val: boolean) => void;
   setIsLoading: (isLoading: boolean) => void;
   setAxiosError: (axiosError: string) => void;
   setSelectedTag: (tag: string | null) => void;
@@ -63,20 +52,10 @@ setIsSettingsPage: (val: boolean) => void;
   formatDate: (dateString: string | Date) => string;
   getUniqueTags: (notes: NewNoteType[]) => string[];
   handleRoutes: () => void;
-  // getFilteredNotes: (allNotes: NewNoteType[]) => NewNoteType[];
   setIsArchivedPage: (isArchived: boolean) => void;
   capitalize: (v: string) => void;
-
-  // handleRoutes: () => void;
-
   getFilteredNotesByTag: (tag: string) => void;
-
-  previousPath: string;
   setPreviousPath: (path: string) => void;
-
-
-
-
 }
 
 export const useUtilities = create<IUseUtilities>((set, get) => ({
@@ -86,38 +65,26 @@ export const useUtilities = create<IUseUtilities>((set, get) => ({
   routeToTags: false,
   axiosError: "",
   isLoading: false,
-
   filterAllByTag: false,
-  setFilterAllByTag: (val) => set({ filterAllByTag: val }),
-
   isAllNotesPage: false,
-  setIsAllNotesPage: (val) => set({ isAllNotesPage: val }),
-
   isTagsPage: false,
-  setIsTagsPage: (val) => set({ isTagsPage: val }),
-
   isSearchPage: false,
-  setIsSearchPage: (val) => set({ isSearchPage: val }),
-
   searchValue: "",
-  setSearchValue: (val) => set({ searchValue: val }),
-
   isNotePage: false,
-  setIsNotePage: (val) => set({ isNotePage: val }),
-
   isNoteDetailsPage: false,
-  setIsNoteDetailsPage: (val) => set({ isNoteDetailsPage: val }),
-
   previousPath: "",
-  setPreviousPath: (path: string) => set({ previousPath: path }),
-
   isSettingsPage: false,
-  setIsSettingsPage: (val) => set({isSettingsPage: val}),
-
-
   isSettingsDetailsPage: false,
-  setIsSettingsDetailsPage: (val) => ({isSettingsDetailsPage: val}),
-
+  setFilterAllByTag: (val) => set({ filterAllByTag: val }),
+  setIsAllNotesPage: (val) => set({ isAllNotesPage: val }),
+  setIsTagsPage: (val) => set({ isTagsPage: val }),
+  setIsSearchPage: (val) => set({ isSearchPage: val }),
+  setSearchValue: (val) => set({ searchValue: val }),
+  setIsNotePage: (val) => set({ isNotePage: val }),
+  setIsNoteDetailsPage: (val) => set({ isNoteDetailsPage: val }),
+  setPreviousPath: (path: string) => set({ previousPath: path }),
+  setIsSettingsPage: (val) => set({ isSettingsPage: val }),
+  setIsSettingsDetailsPage: (val) => ({ isSettingsDetailsPage: val }),
   setIsLoading: (isLoading: boolean) => set({ isLoading }),
   setAxiosError: (axiosError) => set({ axiosError }),
   setCurrentPath: (path) => set({ currentPath: path }),
@@ -125,33 +92,18 @@ export const useUtilities = create<IUseUtilities>((set, get) => ({
   setSelectedTag: (tag) => set({ selectedTags: tag }),
   setIsArchivedPage: (isArchived) => set({ isArchivedPage: isArchived }),
 
-  // activeLink: (path) => {
-  //   const currentPath = get().currentPath;
-  //   return currentPath.includes(path) ? "bg-[#F3F5F8]" : "hover:bg-[#F3F5F8]";
-  // },
-
-
-activeLink: (path) => {
+  activeLink: (path) => {
     const currentPath = get().currentPath;
-    const isDarkMode = document.documentElement.classList.contains('dark');
-    
+    const isDarkMode = document.documentElement.classList.contains("dark");
+
     if (currentPath.includes(path)) {
-      return isDarkMode 
-        ? "bg-selectedForDark" 
-        : "bg-selectedForLight";
+      return isDarkMode ? "bg-selectedForDark" : "bg-selectedForLight";
     } else {
-      return isDarkMode 
-        ? "hover:bg-selectedForDark" 
+      return isDarkMode
+        ? "hover:bg-selectedForDark"
         : "hover:bg-selectedForLight";
     }
   },
-
-
-
-
-
-
-
 
   formatDate: (dateString) => {
     const date = new Date(dateString);
@@ -183,16 +135,11 @@ activeLink: (path) => {
     const path = get().currentPath;
     const isTags = path.includes("/tags");
     const isArchive = path.includes("/archive");
-
-
-    // const isSettings = path.includes("/settings");
-
     set({
       isTagsPage: isTags,
       isArchivedPage: isArchive,
       filterAllByTag: isTags,
     });
-
     if (isTags) {
       const parts = path.split("/");
       const tagFromURL = parts[2] || null;
@@ -204,7 +151,6 @@ activeLink: (path) => {
 
   getFilteredNotesByTag: async (tag: string) => {
     const accessToken = useSignInStore.getState().accessToken;
-
     const setAllNotes = useManageNotes.getState().setAllNotes;
     set({ isLoading: true, axiosError: "" });
     try {

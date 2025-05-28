@@ -18,11 +18,10 @@ const Dashboard = () => {
     }
   }, [accessToken, router]);
 
-
   if (isLoading || !accessToken) {
     return <AnimateSpin />;
   }
-  if(!accessToken) return null
+  if (!accessToken) return null;
 
   return null;
 };
