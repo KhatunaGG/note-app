@@ -16,7 +16,7 @@ export const forgotPasswordSchema = z.object({
 export type ForgotPasswordType = z.infer<typeof forgotPasswordSchema>;
 
 const ForgotPasswordForm = () => {
-  const { sendVerificationLink, success, resendEmail } =
+  const { sendVerificationLink, success } =
     useChangePasswordStore();
 
   const {

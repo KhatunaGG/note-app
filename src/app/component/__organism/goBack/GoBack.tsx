@@ -25,6 +25,9 @@ export type GoBackPropsType = {
   selectedTags?: string | null;
   settingsParam?: string;
   isActive?: boolean;
+
+
+  noteParam?: string;
 };
 
 const GoBack = ({
@@ -36,11 +39,15 @@ const GoBack = ({
   createNote,
   selectedTags,
   settingsParam,
+isTagsPage,
+
+  noteParam
 }: GoBackPropsType) => {
   const { resetNewNote } = useManageNotes();
   const path = usePathname();
   const router = useRouter();
-  const { setIsTagsPage, isTagsPage, isSettingsPage } = useUtilities();
+  // const { setIsTagsPage, isTagsPage, isSettingsPage } = useUtilities();
+  const { setIsTagsPage,  isSettingsPage } = useUtilities();
   const { selectedButton } = useSettingsStore();
   const { mounted, theme } = useMountedTheme();
   const isDark = mounted && theme === "dark";
@@ -57,6 +64,8 @@ const GoBack = ({
       router.back();
     }
   };
+
+
 
   const isFontThemePage = path === `/settings/${settingsParam}`;
   // const isSettingsRootPage = path === "/settings";
@@ -103,6 +112,9 @@ const GoBack = ({
           <ArrowLeft
             selectedButton={selectedButton}
             isFontThemePage={isFontThemePage}
+
+            noteParam={noteParam}
+            isTagsPage={isTagsPage}
           />
           <p className={`${isDark ? "text-white" : "text-[#525866]"} text-sm `}>
             {isSettingsPage ? "Settings" : "Go Back"}
@@ -122,6 +134,9 @@ const GoBack = ({
         <ResetButton
           isNoteDetailsPage={isNoteDetailsPage}
           noteById={noteById}
+
+
+          noteParam={noteParam}
         />
         <SubmitButton
           isSubmitting={isSubmitting ?? false}

@@ -18,7 +18,7 @@ export default function page() {
           <Notes />
         </div>
         <div className="w-full lg:w-[50.34%] lg:flex hidden  ">
-          {/* <NoteDetails /> */}
+          <NoteDetails />
         </div>
         <div className="w-full lg:w-[22.07%] hidden lg:flex ">
           <Aside />

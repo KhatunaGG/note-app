@@ -240,7 +240,6 @@
 
 
 
-
 "use client";
 import Footer from "../footer/Footer";
 import { Clock } from "../../__atoms";
@@ -338,46 +337,58 @@ const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
     }
   };
 
-  useEffect(() => {
-    if (noteById) {
-      setValue("title", noteById.title || "");
-      setValue("content", noteById.content || "");
-      setValue(
-        "tags",
-        Array.isArray(noteById.tags)
-          ? noteById.tags.join(", ")
-          : noteById.tags || ""
-      );
-      setValue("isArchived", !!noteById.isArchived);
-      setValue("lastEdited", noteById.lastEdited || "");
-    } else if (createNote) {
-      reset({
-        title: "",
-        content: "",
-        tags: "",
-        isArchived: false,
-        lastEdited: "",
-      });
-    }
-  }, [noteById, setValue, createNote, reset]);
+  // useEffect(() => {
+  //   if (noteById) {
+  //     setValue("title", noteById.title || "");
+  //     setValue("content", noteById.content || "");
+  //     setValue(
+  //       "tags",
+  //       Array.isArray(noteById.tags)
+  //         ? noteById.tags.join(", ")
+  //         : noteById.tags || ""
+  //     );
+  //     setValue("isArchived", !!noteById.isArchived);
+  //     setValue("lastEdited", noteById.lastEdited || "");
+  //   } else if (createNote) {
+  //     reset({
+  //       title: "",
+  //       content: "",
+  //       tags: "",
+  //       isArchived: false,
+  //       lastEdited: "",
+  //     });
+  //   }
+  // }, [noteById, setValue, createNote, reset]);
 
 
 
-// useEffect(() => {
-//   if (!createNote && noteById) {
-//     setValue("title", noteById.title || "");
-//     setValue("content", noteById.content || "");
-//     setValue(
-//       "tags",
-//       Array.isArray(noteById.tags)
-//         ? noteById.tags.join(", ")
-//         : noteById.tags || ""
-//     );
-//     setValue("isArchived", !!noteById.isArchived);
-//     setValue("lastEdited", noteById.lastEdited || "");
-//   }
-// }, [noteById, setValue, createNote]);
+useEffect(() => {
+  if (!createNote && noteById) {
+    setValue("title", noteById.title || "");
+    setValue("content", noteById.content || "");
+    setValue(
+      "tags",
+      Array.isArray(noteById.tags)
+        ? noteById.tags.join(", ")
+        : noteById.tags || ""
+    );
+    setValue("isArchived", !!noteById.isArchived);
+    setValue("lastEdited", noteById.lastEdited || "");
+  }
+}, [noteById, setValue, createNote]);
 
+
+useEffect(() => {
+  if (createNote) {
+    reset({
+      title: "",
+      content: "",
+      tags: "",
+      isArchived: false,
+      lastEdited: "",
+    });
+  }
+}, [createNote, reset]);
 
 
 
@@ -387,8 +398,16 @@ const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
     ? formatDate(noteById.lastEdited)
     : "Not yet saved";
 
-
+if (isLoading) {
+  return (
+    <div className="w-full flex justify-center items-center min-h-screen">
+      <AnimateSpin />
+    </div>
+  );
+}
   if (!accessToken) return null;
+
+  console.log(noteParam, "noteParam form NOTE DETAIL")
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full relative ">
@@ -405,7 +424,6 @@ const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
             isNoteDetailsPage
               ? "flex"
               : "hidden"
-              
           } flex-grow w-full bg-primary-light dark:bg-primary-dark flex-col gap-4`}
         >
           <GoBack
@@ -416,6 +434,10 @@ const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
             isSubmitting={isSubmitting}
             createNote={createNote}
             selectedTags={selectedTags}
+
+
+
+            noteParam={noteParam}
           />
           <div className="w-ful flex flex-col gap-4">
             <TitleInput
@@ -463,3 +485,6 @@ const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
 };
 
 export default NoteDetails;
+
+
+

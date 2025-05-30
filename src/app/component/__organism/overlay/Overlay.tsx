@@ -8,7 +8,7 @@ import { useMountedTheme } from "@/app/hooks/useMountedTheme";
 
 const Overlay = () => {
   const path = usePathname();
-  const isOverlay = path === "/overlay";
+  // const isOverlay = path === "/overlay";
   const { modal } = useManageNotes();
   const { archiveModal } = useArchivedNotes();
   const { mounted, theme } = useMountedTheme();
