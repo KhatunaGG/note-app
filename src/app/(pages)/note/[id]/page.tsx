@@ -22,7 +22,7 @@ export default async function NoteParamPage({
 
       <div className="w-full t-[54px] md:pt-[74px] lg:pt-[81px] min-h-screen flex">
         <div className="w-full lg:w-[24.82%] hidden lg:block">
-          <Notes />
+          <Notes noteParam={id}/>
         </div>
         <div className="w-full lg:w-[50.34%]  lg:flex ">
           {id && <NoteDetails noteParam={id} />}
@@ -31,7 +31,7 @@ export default async function NoteParamPage({
           <Aside />
         </div>
       </div>
-      <Nav />
+      <Nav noteParam={id} />
     </div>
   );
 }
