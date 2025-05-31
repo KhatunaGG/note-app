@@ -24,3 +24,4 @@ export { default as Moon } from "./moon/Moon";
 export { default as Inter} from "./inter/Inter";
 export { default as GeistMono} from "./geistMono/GeistMono";
 export { default as Lora} from "./lora/Lora";
+export { default as Hide} from "./hide/Hide";

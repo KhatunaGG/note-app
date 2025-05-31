@@ -5,10 +5,11 @@ import {
   Path,
   UseFormRegister,
 } from "react-hook-form";
-import { InfoCircle } from "../../__atoms";
+import { Hide, InfoCircle } from "../../__atoms";
 import Link from "next/link";
 import Eye from "../../__atoms/eye/Eye";
 import { useMountedTheme } from "@/app/hooks/useMountedTheme";
+import { useUtilities } from "@/app/store/utilities.store";
 
 export type PasswordInputPropsType<T extends FieldValues> = {
   register: UseFormRegister<T>;
@@ -25,6 +26,9 @@ const PasswordInput = <T extends FieldValues>({
 }: PasswordInputPropsType<T>) => {
   const { mounted, theme } = useMountedTheme();
   const isDark = mounted && theme === "dark";
+  // const { showPassword, handleShowPassword } = useUtilities();
+    const { showPasswordFields, togglePasswordField } = useUtilities();
+const isVisible = showPasswordFields[fieldName as keyof typeof showPasswordFields];
   const label =
     fieldName === "oldPassword"
       ? "Old Password"
@@ -60,14 +64,25 @@ const PasswordInput = <T extends FieldValues>({
 
       <div className="w-full relative">
         <input
-          type="text"
+             type={isVisible ? "text" : "password"}
           className={`
           text-[#717784]
           w-full border border-[#CACFD8] rounded-lg p-3 outline-none text-neutral`}
           placeholder=""
           {...register(fieldName)}
         />
-        <Eye />
+        {/* <Eye /> */}
+        <div
+          // onClick={handleShowPassword}
+            onClick={() =>
+            togglePasswordField(fieldName as keyof typeof showPasswordFields)
+          }
+          className="absolute top-1/2 right-[10px] transform -translate-y-1/2 cursor-pointer"
+        >
+           {isVisible ? <Hide /> : <Eye />}
+          {/* {showPassword ? <Hide /> : <Eye />} */}
+        </div>
+
         {errors[fieldName] && (
           <span className="text-red-500 text-xs absolute -bottom-4 right-0">
             {errors[fieldName]?.message?.toString()}
