@@ -1,6 +1,5 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { EmailInput, PasswordInput } from "../../__molecules";
 import { GoogleIcon, GoogleText } from "../../__atoms";
@@ -8,24 +7,8 @@ import { useSignInStore } from "@/app/store/sign-in.store";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { setCookie } from "cookies-next";
-
-export const signInSchema = z.object({
-  signInEmail: z
-    .string()
-    .min(1, "Email is requeued")
-    .nonempty("Email password is required"),
-  signInPassword: z
-    .string()
-    .min(4, "Password must be at least 4 characters")
-    .max(15, "Password must be less then 15 characters")
-    .nonempty("Password is required"),
-});
-
-export type SignInType = z.infer<typeof signInSchema>;
-
-export type SignInFormPropsType = {
-  isSignInPage: boolean;
-};
+import { SignInFormPropsType, SignInType } from "@/app/interface";
+import { signInSchema } from "@/schema/schema";
 
 const SignInForm = ({ isSignInPage }: SignInFormPropsType) => {
   const queryParams = useSearchParams();

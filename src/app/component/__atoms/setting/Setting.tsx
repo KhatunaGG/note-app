@@ -1,8 +1,4 @@
-export type SettingPropsType = {
-  width: string;
-  height: string;
-  isActive?: boolean;
-};
+import { SettingPropsType } from "@/app/interface";
 
 const Setting = ({ width, height, isActive = false }: SettingPropsType) => {
   const fill = isActive ? "#335CFF" : "#717784";

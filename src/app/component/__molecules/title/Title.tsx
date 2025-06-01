@@ -1,12 +1,7 @@
 "use client";
 import { useMountedTheme } from "@/app/hooks/useMountedTheme";
 import { Logo } from "../../__atoms";
-
-export type TitlePropsType = {
-  isSignInPage?: boolean;
-  isForgotPassword?: boolean;
-  isResetPassword?: boolean;
-};
+import { TitlePropsType } from "@/app/interface";
 
 const Title = ({
   isSignInPage,

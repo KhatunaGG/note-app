@@ -1,15 +1,5 @@
-import {
-  FieldErrors,
-  FieldValues,
-  Path,
-  UseFormRegister,
-} from "react-hook-form";
-
-export type TextareaPropsType<T extends FieldValues> = {
-  register: UseFormRegister<T>;
-  errors: FieldErrors<T>;
-  fieldName: Path<T>;
-};
+import { TextareaPropsType } from "@/app/interface";
+import { FieldValues } from "react-hook-form";
 
 const Textarea = <T extends FieldValues>({
   register,

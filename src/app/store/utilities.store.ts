@@ -1,8 +1,8 @@
 import { create } from "zustand";
-import useManageNotes, { NewNoteType } from "./notes.store";
+import useManageNotes from "./notes.store";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
-import { ErrorResponse } from "../interface";
+import { ErrorResponse, IUseUtilities } from "../interface";
 
 const handleApiError = (error: AxiosError<ErrorResponse>): string => {
   if (axios.isAxiosError(error)) {
@@ -14,60 +14,6 @@ const handleApiError = (error: AxiosError<ErrorResponse>): string => {
   toast.error(unexpectedError);
   return unexpectedError;
 };
-
-interface IUseUtilities {
-  currentPath: string;
-  isArchivedPage: boolean;
-  selectedTags: string | null;
-  routeToTags: boolean;
-  axiosError: string;
-  isLoading: boolean;
-  filterAllByTag: boolean;
-  isAllNotesPage: boolean;
-  isTagsPage: boolean;
-  isSearchPage: boolean;
-  searchValue: string;
-  isNotePage: boolean;
-  isSettingsDetailsPage: boolean;
-  isNoteDetailsPage: boolean;
-  isSettingsPage: boolean;
-  previousPath: string;
-  // showPassword: boolean;
-  // setShowPassword: (val: boolean) => void;
-  setFilterAllByTag: (val: boolean) => void;
-  setIsAllNotesPage: (val: boolean) => void;
-  setIsTagsPage: (val: boolean) => void;
-  setIsSearchPage: (val: boolean) => void;
-  setSearchValue: (value: string) => void;
-  setIsNotePage: (val: boolean) => void;
-  setIsNoteDetailsPage: (val: boolean) => void;
-  setIsSettingsDetailsPage: (val: boolean) => void;
-  setIsSettingsPage: (val: boolean) => void;
-  setIsLoading: (isLoading: boolean) => void;
-  setAxiosError: (axiosError: string) => void;
-  setSelectedTag: (tag: string | null) => void;
-  setCurrentPath: (path: string) => void;
-  setRouteToTags: (value: boolean) => void;
-  activeLink: (path: string) => string;
-  formatDate: (dateString: string | Date) => string;
-  getUniqueTags: (notes: NewNoteType[]) => string[];
-  handleRoutes: () => void;
-  setIsArchivedPage: (isArchived: boolean) => void;
-  capitalize: (v: string) => void;
-  getFilteredNotesByTag: (tag: string) => void;
-  setPreviousPath: (path: string) => void;
-
-  // handleShowPassword: () => void;
-
-
-
-    showPasswordFields: {
-    oldPassword: false,
-    passwordNew: false,
-    passwordConfirm: false,
-  },
-  togglePasswordField: (field: keyof IUseUtilities["showPasswordFields"]) => void;
-}
 
 export const useUtilities = create<IUseUtilities>((set, get) => ({
   currentPath: "",
@@ -86,17 +32,11 @@ export const useUtilities = create<IUseUtilities>((set, get) => ({
   previousPath: "",
   isSettingsPage: false,
   isSettingsDetailsPage: false,
-  // showPassword: false,
-  // setShowPassword: (showPassword) => set({ showPassword: !showPassword }),
-
-    showPasswordFields: {
+  showPasswordFields: {
     oldPassword: false,
     passwordNew: false,
     passwordConfirm: false,
   },
-
-
-
   togglePasswordField: (field) => {
     const current = get().showPasswordFields[field];
     set((state) => ({
@@ -106,11 +46,6 @@ export const useUtilities = create<IUseUtilities>((set, get) => ({
       },
     }));
   },
-
-
-
-
-
   setFilterAllByTag: (val) => set({ filterAllByTag: val }),
   setIsAllNotesPage: (val) => set({ isAllNotesPage: val }),
   setIsTagsPage: (val) => set({ isTagsPage: val }),
@@ -127,8 +62,6 @@ export const useUtilities = create<IUseUtilities>((set, get) => ({
   setRouteToTags: (value) => set({ routeToTags: value }),
   setSelectedTag: (tag) => set({ selectedTags: tag }),
   setIsArchivedPage: (isArchived) => set({ isArchivedPage: isArchived }),
-  // handleShowPassword: () => set({ showPassword: !get().showPassword }),
-
   activeLink: (path) => {
     const currentPath = get().currentPath;
     const isDarkMode = document.documentElement.classList.contains("dark");

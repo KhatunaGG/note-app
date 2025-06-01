@@ -1,7 +1,4 @@
-export type DeletePropsType = {
-  width: string;
-  height: string;
-};
+import { DeletePropsType } from "@/app/interface";
 
 const Delete = ({ width, height }: DeletePropsType) => {
   return (

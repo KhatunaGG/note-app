@@ -1,8 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { create } from "zustand";
-import { ErrorResponse } from "../interface";
+import { ErrorResponse, ISignUpStore } from "../interface";
 import { toast } from "react-toastify";
-import { SignUpType } from "../component/__organism/form/Form";
 import { axiosInstance } from "../libs/axiosInstance";
 
 const handleApiError = (error: AxiosError<ErrorResponse>): string => {
@@ -16,19 +15,6 @@ const handleApiError = (error: AxiosError<ErrorResponse>): string => {
   return unexpectedError;
 };
 
-export interface ISignUpStore {
-  isLoading: boolean;
-  axiosError: string;
-  email: string;
-  password: string;
-  success: boolean;
-  setFormData: (email: string, password: string) => void;
-  setSuccess: (success: boolean) => void;
-  setIsLoading: (isLoading: boolean) => void;
-  setAxiosError: (axiosError: string) => void;
-  signUp: (formData: SignUpType) => Promise<void>;
-}
-
 export const useSignUpStore = create<ISignUpStore>((set) => ({
   isLoading: false,
   axiosError: "",
@@ -39,7 +25,6 @@ export const useSignUpStore = create<ISignUpStore>((set) => ({
   setFormData: (email, password) => set({ email, password }),
   setIsLoading: (isLoading) => set({ isLoading }),
   setAxiosError: (axiosError) => set({ axiosError }),
-
   signUp: async (formData) => {
     set({ isLoading: true, axiosError: "" });
     try {

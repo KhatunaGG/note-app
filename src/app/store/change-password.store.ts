@@ -1,7 +1,10 @@
 import { create } from "zustand";
-import { ForgotPasswordType } from "../component/__organism/ForgotPasswordForm/ForgotPasswordForm";
 import axios, { AxiosError } from "axios";
-import { ErrorResponse } from "../interface";
+import {
+  ErrorResponse,
+  ForgotPasswordType,
+  IChangePassword,
+} from "../interface";
 import { toast } from "react-toastify";
 import { axiosInstance } from "../libs/axiosInstance";
 
@@ -16,22 +19,12 @@ const handleApiError = (error: AxiosError<ErrorResponse>): string => {
   return unexpectedError;
 };
 
-export interface IChangePassword {
-  isLoading: boolean;
-  axiosError: string;
-  resendEmail: string;
-  success: boolean;
-  newPassword: string;
-  sendVerificationLink: (formData: ForgotPasswordType) => void;
-}
-
 export const useChangePasswordStore = create<IChangePassword>((set) => ({
   isLoading: false,
   axiosError: "",
   resendEmail: "",
   success: false,
   newPassword: "",
-
   sendVerificationLink: async (formData: ForgotPasswordType) => {
     const { resendEmail } = formData;
     try {

@@ -5,8 +5,6 @@ import ResetPasswordForm from "../resetPasswordForm/ResetPasswordForm";
 import { useMountedTheme } from "@/app/hooks/useMountedTheme";
 
 const ResetPassword = () => {
-  const path = usePathname();
-  // const isResetPassword = path === "/reset-password";
   const { mounted, theme } = useMountedTheme();
   const isDark = mounted && theme === "dark";
 

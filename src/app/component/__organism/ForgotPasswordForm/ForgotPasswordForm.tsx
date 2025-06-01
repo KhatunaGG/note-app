@@ -1,23 +1,14 @@
 "use client";
 import { EmailInput } from "../../__molecules";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { useChangePasswordStore } from "@/app/store/change-password.store";
 import { useEffect } from "react";
-
-export const forgotPasswordSchema = z.object({
-  resendEmail: z
-    .string()
-    .min(1, "Email is requeued")
-    .nonempty("Email is required"),
-});
-
-export type ForgotPasswordType = z.infer<typeof forgotPasswordSchema>;
+import { ForgotPasswordType } from "@/app/interface";
+import { forgotPasswordSchema } from "@/schema/schema";
 
 const ForgotPasswordForm = () => {
-  const { sendVerificationLink, success } =
-    useChangePasswordStore();
+  const { sendVerificationLink, success } = useChangePasswordStore();
 
   const {
     register,

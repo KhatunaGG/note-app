@@ -2,9 +2,8 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { settingsData } from "../data/data";
-import { ChangePasswordFormData } from "../component/__organism/changePassword/ChangePassword";
 import axios, { AxiosError } from "axios";
-import { ErrorResponse } from "../interface";
+import { ErrorResponse, IUseSettingsStore } from "../interface";
 import { toast } from "react-toastify";
 import { useSignInStore } from "./sign-in.store";
 import { axiosInstance } from "../libs/axiosInstance";
@@ -32,46 +31,6 @@ const getDefaultTheme = () => {
   }
   return "system";
 };
-
-export interface SettingThemeItem {
-  icon: string;
-  mode: string;
-  pText: string;
-}
-
-export interface SettingItem {
-  text: string;
-  logoName: string;
-  pText?: string;
-  settingTheme?: SettingThemeItem[];
-}
-
-export interface IUseSettingsStore {
-  activeSetting: string | null;
-  filteredSettings: SettingThemeItem[];
-  isLoading: boolean;
-  currentTheme: string;
-  selectedTheme: string;
-  filteredData: SettingItem | null;
-  selectedButton: string | null;
-  axiosError: string | null;
-  newPassword: string;
-  passwordNew: string;
-  currentFont: string;
-  selectedFont: string;
-  setSelectedFont: (font: string) => void;
-  applySelectedFont: () => void;
-  setAxiosError: (msg: string | null) => void;
-  setSelectedButton: (button: string | null) => void;
-  setIsLoading: (isLoading: boolean) => void;
-  applySelectedTheme: () => void;
-  resetSelectedTheme: () => void;
-  setFilteredData: (filteredData: SettingItem | null) => void;
-  setSelectedTheme: (selectedTheme: string) => void;
-  setActiveSetting: (val: string | null) => void;
-  setFilteredSettings: (title: string) => void;
-  changePassword: (formData: ChangePasswordFormData) => Promise<boolean>;
-}
 
 export const useSettingsStore = create<IUseSettingsStore>()(
   persist(

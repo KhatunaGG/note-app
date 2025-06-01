@@ -1,9 +1,5 @@
 "use client";
-export type SubmitButtonPropsType = {
-  isSubmitting: boolean;
-  createNote?: boolean;
-  settingsParam?: string;
-};
+import { SubmitButtonPropsType } from "@/app/interface";
 
 function SubmitButton({
   isSubmitting,

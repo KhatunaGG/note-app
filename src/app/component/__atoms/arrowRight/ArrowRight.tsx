@@ -1,9 +1,6 @@
 "use client";
 import { useMountedTheme } from "@/app/hooks/useMountedTheme";
-
-export type ArrowRightPropsType = {
-  isActive?: boolean;
-};
+import { ArrowRightPropsType } from "@/app/interface";
 
 const ArrowRight = ({ isActive }: ArrowRightPropsType) => {
   const { mounted, theme } = useMountedTheme();

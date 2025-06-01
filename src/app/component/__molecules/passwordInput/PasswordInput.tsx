@@ -1,22 +1,11 @@
 "use client";
-import {
-  FieldErrors,
-  FieldValues,
-  Path,
-  UseFormRegister,
-} from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 import { Hide, InfoCircle } from "../../__atoms";
 import Link from "next/link";
 import Eye from "../../__atoms/eye/Eye";
 import { useMountedTheme } from "@/app/hooks/useMountedTheme";
 import { useUtilities } from "@/app/store/utilities.store";
-
-export type PasswordInputPropsType<T extends FieldValues> = {
-  register: UseFormRegister<T>;
-  errors: FieldErrors<T>;
-  fieldName: Path<T>;
-  isSignInPage?: boolean;
-};
+import { PasswordInputPropsType } from "@/app/interface";
 
 const PasswordInput = <T extends FieldValues>({
   register,
@@ -26,9 +15,9 @@ const PasswordInput = <T extends FieldValues>({
 }: PasswordInputPropsType<T>) => {
   const { mounted, theme } = useMountedTheme();
   const isDark = mounted && theme === "dark";
-  // const { showPassword, handleShowPassword } = useUtilities();
-    const { showPasswordFields, togglePasswordField } = useUtilities();
-const isVisible = showPasswordFields[fieldName as keyof typeof showPasswordFields];
+  const { showPasswordFields, togglePasswordField } = useUtilities();
+  const isVisible =
+    showPasswordFields[fieldName as keyof typeof showPasswordFields];
   const label =
     fieldName === "oldPassword"
       ? "Old Password"
@@ -64,23 +53,20 @@ const isVisible = showPasswordFields[fieldName as keyof typeof showPasswordField
 
       <div className="w-full relative">
         <input
-             type={isVisible ? "text" : "password"}
+          type={isVisible ? "text" : "password"}
           className={`
           text-[#717784]
           w-full border border-[#CACFD8] rounded-lg p-3 outline-none text-neutral`}
           placeholder=""
           {...register(fieldName)}
         />
-        {/* <Eye /> */}
         <div
-          // onClick={handleShowPassword}
-            onClick={() =>
+          onClick={() =>
             togglePasswordField(fieldName as keyof typeof showPasswordFields)
           }
           className="absolute top-1/2 right-[10px] transform -translate-y-1/2 cursor-pointer"
         >
-           {isVisible ? <Hide /> : <Eye />}
-          {/* {showPassword ? <Hide /> : <Eye />} */}
+          {isVisible ? <Hide /> : <Eye />}
         </div>
 
         {errors[fieldName] && (

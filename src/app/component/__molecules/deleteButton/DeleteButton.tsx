@@ -2,10 +2,7 @@
 import useManageNotes from "@/app/store/notes.store";
 import { Delete } from "../../__atoms";
 import { useMountedTheme } from "@/app/hooks/useMountedTheme";
-
-export type DeleteButtonPropsType = {
-  isOverlay?: boolean;
-};
+import { DeleteButtonPropsType } from "@/app/interface";
 
 const DeleteButton = ({ isOverlay }: DeleteButtonPropsType) => {
   const { showModal, noteById, deleteNote, modal } = useManageNotes();

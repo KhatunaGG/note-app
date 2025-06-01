@@ -1,8 +1,4 @@
-export type SearchPropsType = {
-  width: string;
-  height: string;
-  isActive?: boolean;
-};
+import { SearchPropsType } from "@/app/interface";
 
 const Search = ({ width, height, isActive = false }: SearchPropsType) => {
   const fill = isActive ? "#335CFF" : "#717784";

@@ -1,10 +1,5 @@
 "use client";
-
-export type HomePropsType = {
-  width: string;
-  height: string;
-  isActive?: boolean;
-};
+import { HomePropsType } from "@/app/interface";
 
 const Home = ({ width, height, isActive = false }: HomePropsType) => {
   const fill = isActive ? "#335CFF" : "#717784";

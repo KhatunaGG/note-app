@@ -1,20 +1,9 @@
 "use client";
 import { useMountedTheme } from "@/app/hooks/useMountedTheme";
+import { NotePropsType } from "@/app/interface";
 import { useUtilities } from "@/app/store/utilities.store";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
-
-export type NotePropsType = {
-  title: string;
-  content: string;
-  tags: string[];
-  _id: string;
-  isArchived: boolean;
-  lastEdited: string;
-  isFirstNote: boolean;
-  isLastNote: boolean;
-  isSelected: boolean;
-};
 
 const Note = ({
   title,

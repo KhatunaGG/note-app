@@ -2,35 +2,13 @@
 import { PasswordInput, SubmitButton } from "../../__molecules";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { useSettingsStore } from "@/app/store/settings.store";
 import { useMountedTheme } from "@/app/hooks/useMountedTheme";
-
-export type changePasswordPropsType = {
-  settingsParam: string;
-};
-
-const passwordField = z
-  .string()
-  .min(4, "Password must be at least 4 characters")
-  .nonempty("Password is required");
-export const ChangePasswordSchema = z
-  .object({
-    oldPassword: passwordField,
-    passwordNew: passwordField,
-    passwordConfirm: passwordField,
-  })
-  .superRefine((data, ctx) => {
-    if (data.passwordNew !== data.passwordConfirm) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["passwordConfirm"],
-        message: "Passwords don't match",
-      });
-    }
-  });
-
-export type ChangePasswordFormData = z.infer<typeof ChangePasswordSchema>;
+import {
+  ChangePasswordFormData,
+  changePasswordPropsType,
+} from "@/app/interface";
+import { ChangePasswordSchema } from "@/schema/schema";
 
 const ChangePassword = ({ settingsParam }: changePasswordPropsType) => {
   const { changePassword } = useSettingsStore();
