@@ -1,11 +1,7 @@
 "use client";
 import { useMountedTheme } from "@/app/hooks/useMountedTheme";
 import { ResetButton, SubmitButton } from "../../__molecules";
-
-export type FooterPropsType = {
-  isSubmitting: boolean;
-  createNote: boolean;
-};
+import { FooterPropsType } from "@/app/interface";
 
 const Footer = ({ isSubmitting, createNote }: FooterPropsType) => {
   const { mounted, theme } = useMountedTheme();

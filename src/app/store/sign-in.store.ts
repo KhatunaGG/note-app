@@ -1,9 +1,8 @@
 import { create } from "zustand";
-import { SignInType } from "../component/__organism/signInForm/SignInForm";
 import { axiosInstance } from "../libs/axiosInstance";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
-import { ErrorResponse } from "../interface";
+import { ErrorResponse, ISignInStore, IUser } from "../interface";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
 
 const handleApiError = (error: AxiosError<ErrorResponse>): string => {
@@ -16,33 +15,6 @@ const handleApiError = (error: AxiosError<ErrorResponse>): string => {
   toast.error(unexpectedError);
   return unexpectedError;
 };
-
-export interface IUser {
-  _id: string;
-  email: string;
-  createdAt: Date;
-  avatar: string;
-}
-
-export interface ISignInStore {
-  isLoading: boolean;
-  axiosError: string;
-  signInEmail: string;
-  signInPassword: string;
-  success: boolean;
-  accessToken: string | null;
-  currentUser: IUser | null;
-  setCurrentUser: (currentUser: IUser | null) => void;
-  setAccessToken: (token: string) => void;
-  setSuccess: (success: boolean) => void;
-  setFormData: (signInEmail: string, signInPassword: string) => void;
-  setIsLoading: (isLoading: boolean) => void;
-  setAxiosError: (axiosError: string) => void;
-  signIn: (formData: SignInType) => void;
-  initialize: () => Promise<void>;
-  getCurrentUser: (accessToken: string | undefined) => void;
-  logout: () => void;
-}
 
 export const useSignInStore = create<ISignInStore>((set) => ({
   isLoading: false,

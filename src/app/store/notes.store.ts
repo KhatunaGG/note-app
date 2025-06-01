@@ -1,21 +1,17 @@
 import { create } from "zustand";
-import { NoteType } from "../component/__organism/noteDetails/NoteDetails";
+// import { NoteType } from "../component/__organism/noteDetails/NoteDetails";
 import axios, { AxiosError } from "axios";
-import { ErrorResponse } from "../interface";
+import {
+  ErrorResponse,
+  IUseManageNotes,
+  NewNoteType,
+  NoteType,
+} from "../interface";
 import { toast } from "react-toastify";
 import { axiosInstance } from "../libs/axiosInstance";
 import { useSignInStore } from "./sign-in.store";
 import { useArchivedNotes } from "./archives.store";
 import { useUtilities } from "./utilities.store";
-
-export type NewNoteType = {
-  title: string;
-  content: string;
-  tags: string[];
-  isArchived: boolean;
-  lastEdited: string;
-  _id: string;
-};
 
 const handleApiError = (error: AxiosError<ErrorResponse>): string => {
   if (axios.isAxiosError(error)) {
@@ -27,48 +23,6 @@ const handleApiError = (error: AxiosError<ErrorResponse>): string => {
   toast.error(unexpectedError);
   return unexpectedError;
 };
-
-export interface IUseManageNotes {
-  isLoading: boolean;
-  axiosError: string;
-  success: boolean;
-  createNote: boolean;
-  title: string;
-  content: string;
-  tags: string[];
-  isArchived: boolean;
-  lastEdited: Date;
-  allNotes: NewNoteType[] | [];
-  noteById: NewNoteType | null;
-  activeNote: string | null;
-  modal: boolean;
-
-  setModal: (modal: boolean) => void;
-  setActiveNote: (id: string) => void;
-  setNoteById: (noteById: NewNoteType | null) => void;
-  setSuccess: (success: boolean) => void;
-  setIsLoading: (isLoading: boolean) => void;
-  setCreateNote: (createNote: boolean) => void;
-  setAxiosError: (axiosError: string) => void;
-  setFormState: (
-    title: string,
-    content: string,
-    tags: string[],
-    isArchived: boolean,
-    lastEdited: Date
-  ) => void;
-  createNewNote: (formData: NoteType) => Promise<boolean>;
-  getAllNotes: () => void;
-  setAllNotes: (allNotes: NewNoteType[] | []) => void;
-  getNoteById: (id: string) => Promise<void>;
-  toggleCreateNote: () => void;
-  deleteNote: (id: string) => void;
-  showModal: () => void;
-  closeModal: () => void;
-  resetNewNote: () => void;
-  updateNote: (noteById: NewNoteType) => void;
-  getSearchedNotes: () => NewNoteType[];
-}
 
 const useManageNotes = create<IUseManageNotes>((set, get) => ({
   isLoading: false,
@@ -98,7 +52,6 @@ const useManageNotes = create<IUseManageNotes>((set, get) => ({
     set((state) => ({ createNote: !state.createNote, noteById: null })),
 
   createNewNote: async (formData: NoteType) => {
-
     set({ isLoading: true, axiosError: "" });
     const accessToken = useSignInStore.getState().accessToken;
     const tagsArray: string[] = formData.tags
@@ -152,7 +105,6 @@ const useManageNotes = create<IUseManageNotes>((set, get) => ({
       : path.includes("/note")
       ? "/note?isArchived=false"
       : "/note";
-
     try {
       if (!axiosInstance || typeof axiosInstance.get !== "function") {
         set({ isLoading: false });
@@ -172,24 +124,6 @@ const useManageNotes = create<IUseManageNotes>((set, get) => ({
     }
   },
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   getNoteById: async (id: string) => {
     const accessToken = useSignInStore.getState().accessToken;
     set({ isLoading: true, axiosError: "" });
@@ -198,7 +132,6 @@ const useManageNotes = create<IUseManageNotes>((set, get) => ({
       const res = await axiosInstance.get(`/note/${id}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
-
       if (res.status >= 200 && res.status <= 204) {
         set({ noteById: res.data, success: true });
       }
@@ -209,11 +142,6 @@ const useManageNotes = create<IUseManageNotes>((set, get) => ({
       set({ isLoading: false });
     }
   },
-
-
-
-
-  
 
   closeModal: () => {
     set({ modal: false });
@@ -237,7 +165,6 @@ const useManageNotes = create<IUseManageNotes>((set, get) => ({
     const closeModal = get().closeModal;
     const getAllNotes = get().getAllNotes;
     set({ isLoading: true, axiosError: "" });
-
     try {
       const res = await axiosInstance.delete(`note/${id}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -255,7 +182,6 @@ const useManageNotes = create<IUseManageNotes>((set, get) => ({
     } finally {
       set({ isLoading: false });
     }
-
     return false;
   },
 
@@ -325,40 +251,33 @@ const useManageNotes = create<IUseManageNotes>((set, get) => ({
   //   return filtered;
   // },
 
-getSearchedNotes: () => {
-  const { allNotes } = get();
-  const { searchValue, isArchivedPage, selectedTags, isTagsPage } =
-    useUtilities.getState();
-  let filtered = allNotes || [];
-  
-  // Only filter by archive status if we're NOT on the tags page
-  // On tags page, we want to show all notes (archived + non-archived) filtered by tag
-  if (typeof isArchivedPage === "boolean" && !isTagsPage) {
-    filtered = filtered.filter((note) => note.isArchived === isArchivedPage);
-  }
-  
-  if (selectedTags) {
-    filtered = filtered.filter((note) =>
-      note.tags?.some(
-        (tag) => tag.toLowerCase() === selectedTags.toLowerCase()
-      )
-    );
-  }
-  
-  if (searchValue?.trim()) {
-    const lowerSearch = searchValue.toLowerCase();
-    filtered = filtered.filter(
-      (note) =>
-        note.title.toLowerCase().includes(lowerSearch) ||
-        note.content.toLowerCase().includes(lowerSearch) ||
-        note.tags.some((tag) => tag.toLowerCase().includes(lowerSearch))
-    );
-  }
-  
-  return filtered;
-},
+  getSearchedNotes: () => {
+    const { allNotes } = get();
+    const { searchValue, isArchivedPage, selectedTags, isTagsPage } =
+      useUtilities.getState();
+    let filtered = allNotes || [];
+    if (typeof isArchivedPage === "boolean" && !isTagsPage) {
+      filtered = filtered.filter((note) => note.isArchived === isArchivedPage);
+    }
+    if (selectedTags) {
+      filtered = filtered.filter((note) =>
+        note.tags?.some(
+          (tag) => tag.toLowerCase() === selectedTags.toLowerCase()
+        )
+      );
+    }
 
-
+    if (searchValue?.trim()) {
+      const lowerSearch = searchValue.toLowerCase();
+      filtered = filtered.filter(
+        (note) =>
+          note.title.toLowerCase().includes(lowerSearch) ||
+          note.content.toLowerCase().includes(lowerSearch) ||
+          note.tags.some((tag) => tag.toLowerCase().includes(lowerSearch))
+      );
+    }
+    return filtered;
+  },
 }));
 
 export default useManageNotes;

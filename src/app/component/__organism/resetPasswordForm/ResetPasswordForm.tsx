@@ -1,6 +1,5 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { PasswordInput } from "../../__molecules";
 import { useSearchParams } from "next/navigation";
@@ -9,31 +8,8 @@ import { axiosInstance } from "@/app/libs/axiosInstance";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-
-export const newPasswordSchema = z
-  .string()
-  .min(4, "Password must be at least 4 characters")
-  .max(11, "Password must be no more than 11 characters");
-
-export const confirmPasswordSchema = z
-  .object({
-    newPassword: newPasswordSchema,
-    confirmPassword: z
-      .string()
-      .min(4, "Confirm password must be at least 4 characters")
-      .nonempty("Confirm password is required"),
-  })
-  .superRefine((data, ctx) => {
-    if (data.newPassword !== data.confirmPassword) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["confirmPassword"],
-        message: "Passwords don't match",
-      });
-    }
-  });
-
-export type ResetPasswordType = z.infer<typeof confirmPasswordSchema>;
+import { ResetPasswordType } from "@/app/interface";
+import { confirmPasswordSchema } from "@/schema/schema";
 
 const ResetPasswordForm = () => {
   const searchParams = useSearchParams();

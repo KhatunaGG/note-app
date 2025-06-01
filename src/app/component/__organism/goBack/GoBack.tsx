@@ -7,28 +7,13 @@ import {
   ResetButton,
   SubmitButton,
 } from "../../__molecules";
-import useManageNotes, { NewNoteType } from "@/app/store/notes.store";
+import useManageNotes from "@/app/store/notes.store";
 import { usePathname, useRouter } from "next/navigation";
 import { useUtilities } from "@/app/store/utilities.store";
 import { useEffect } from "react";
 import { useSettingsStore } from "@/app/store/settings.store";
 import { useMountedTheme } from "@/app/hooks/useMountedTheme";
-
-export type GoBackPropsType = {
-  isNoteDetailsPage?: boolean;
-  isNotePage?: boolean;
-  noteById?: NewNoteType | null;
-  isArchivedPage?: boolean;
-  isTagsPage?: boolean;
-  isSubmitting?: boolean;
-  createNote?: boolean;
-  selectedTags?: string | null;
-  settingsParam?: string;
-  isActive?: boolean;
-
-
-  noteParam?: string;
-};
+import { GoBackPropsType } from "@/app/interface";
 
 const GoBack = ({
   isNoteDetailsPage,
@@ -39,15 +24,14 @@ const GoBack = ({
   createNote,
   selectedTags,
   settingsParam,
-isTagsPage,
+  isTagsPage,
 
-  noteParam
+  noteParam,
 }: GoBackPropsType) => {
   const { resetNewNote } = useManageNotes();
   const path = usePathname();
   const router = useRouter();
-  // const { setIsTagsPage, isTagsPage, isSettingsPage } = useUtilities();
-  const { setIsTagsPage,  isSettingsPage } = useUtilities();
+  const { setIsTagsPage, isSettingsPage } = useUtilities();
   const { selectedButton } = useSettingsStore();
   const { mounted, theme } = useMountedTheme();
   const isDark = mounted && theme === "dark";
@@ -65,10 +49,7 @@ isTagsPage,
     }
   };
 
-
-
   const isFontThemePage = path === `/settings/${settingsParam}`;
-  // const isSettingsRootPage = path === "/settings";
 
   return (
     <div
@@ -81,13 +62,10 @@ isTagsPage,
           : "pt-[54px]"
       }
       ${isTagsPage && "px-6 mb-4"}
-      ${isTagsPage && noteById && "px-0"}
-      
-
-      w-full pb-3 md:pb-4 flex lg:hidden items-center justify-between border-b  md:pt-0
-      ${isDark ? "border-b-[#52586699]" : "border-b-[#E0E4EA]"}
-      
-      `}
+      ${
+        isTagsPage && noteById && "px-0"
+      } w-full pb-3 md:pb-4 flex lg:hidden items-center justify-between border-b  md:pt-0
+      ${isDark ? "border-b-[#52586699]" : "border-b-[#E0E4EA]"}`}
     >
       <Link
         href={
@@ -112,7 +90,6 @@ isTagsPage,
           <ArrowLeft
             selectedButton={selectedButton}
             isFontThemePage={isFontThemePage}
-
             noteParam={noteParam}
             isTagsPage={isTagsPage}
           />
@@ -134,8 +111,6 @@ isTagsPage,
         <ResetButton
           isNoteDetailsPage={isNoteDetailsPage}
           noteById={noteById}
-
-
           noteParam={noteParam}
         />
         <SubmitButton

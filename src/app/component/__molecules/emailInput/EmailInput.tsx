@@ -1,17 +1,7 @@
 "use client";
 import { useMountedTheme } from "@/app/hooks/useMountedTheme";
-import {
-  FieldErrors,
-  FieldValues,
-  Path,
-  UseFormRegister,
-} from "react-hook-form";
-
-export type EmailInputPropsType<T extends FieldValues> = {
-  register: UseFormRegister<T>;
-  errors: FieldErrors<T>;
-  fieldName: Path<T>;
-};
+import { EmailInputPropsType } from "@/app/interface";
+import { FieldValues } from "react-hook-form";
 
 const EmailInput = <T extends FieldValues>({
   register,
@@ -20,7 +10,7 @@ const EmailInput = <T extends FieldValues>({
 }: EmailInputPropsType<T>) => {
   const { mounted, theme } = useMountedTheme();
   const isDark = mounted && theme === "dark";
-  
+
   return (
     <div className="w-full flex flex-col gap-[6px]">
       <label

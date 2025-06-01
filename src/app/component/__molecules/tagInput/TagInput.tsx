@@ -1,17 +1,7 @@
 import React from "react";
 import { Tag } from "../../__atoms";
-import {
-  FieldErrors,
-  FieldValues,
-  Path,
-  UseFormRegister,
-} from "react-hook-form";
-
-export type TagInputPropsType<T extends FieldValues> = {
-  register: UseFormRegister<T>;
-  errors: FieldErrors<T>;
-  fieldName: Path<T>;
-};
+import { FieldValues } from "react-hook-form";
+import { TagInputPropsType } from "@/app/interface";
 
 const TagInput = <T extends FieldValues>({
   register,

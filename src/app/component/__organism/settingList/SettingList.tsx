@@ -8,15 +8,7 @@ import { usePathname } from "next/navigation";
 import { useUtilities } from "@/app/store/utilities.store";
 import { useSignInStore } from "@/app/store/sign-in.store";
 import { useMountedTheme } from "@/app/hooks/useMountedTheme";
-
-export type SettingDataType = {
-  text: string;
-  logoName: string;
-};
-
-export type SettingListPropsType = {
-  settingParams?: string | undefined;
-};
+import { SettingListPropsType } from "@/app/interface";
 
 const Icon = ({ name }: { name: string }) => {
   const Icon = Icons[name as keyof typeof Icons];
@@ -29,12 +21,6 @@ const SettingList = ({ settingParams }: SettingListPropsType) => {
   const { isSettingsPage } = useUtilities();
   const { logout } = useSignInStore();
   const pathname = usePathname();
-  // const { theme } = useTheme();
-  // const [mounted, setMounted] = useState(false);
-
-  // useEffect(() => {
-  //   setMounted(true);
-  // }, []);
   const { mounted, theme } = useMountedTheme();
   const isDark = mounted && theme === "dark";
 

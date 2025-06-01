@@ -18,10 +18,7 @@ import { settingsData } from "@/app/data/data";
 import GoBack from "../goBack/GoBack";
 import ChangePassword from "../changePassword/ChangePassword";
 import { useTheme } from "next-themes";
-
-export type SettingDetailsPropsType = {
-  settingsParam?: string;
-};
+import { SettingDetailsPropsType } from "@/app/interface";
 
 const Icons: Record<string, React.ReactNode> = {
   Sun: <Sun />,
@@ -109,7 +106,6 @@ const SettingDetails = ({ settingsParam }: SettingDetailsPropsType) => {
     const mappedTheme = mapThemeValue(selectedTheme);
     setTheme(mappedTheme);
     applySelectedTheme();
-
     applySelectedFont();
   };
 

@@ -3,23 +3,10 @@ import { GoogleIcon, GoogleText } from "../../__atoms";
 import { EmailInput, PasswordInput } from "../../__molecules";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { useSignUpStore } from "@/app/store/sign-up.store";
 import { useRouter } from "next/navigation";
-
-export const signUpSchema = z.object({
-  email: z
-    .string()
-    .min(1, "Email is requeued")
-    .nonempty("Email password is required"),
-  password: z
-    .string()
-    .min(4, "Password must be at least 4 characters")
-    .max(15, "Password must be less then 15 characters")
-    .nonempty("Password is required"),
-});
-
-export type SignUpType = z.infer<typeof signUpSchema>;
+import { SignUpType } from "@/app/interface";
+import { signUpSchema } from "@/schema/schema";
 
 const Form = () => {
   const { signUp, success } = useSignUpStore();

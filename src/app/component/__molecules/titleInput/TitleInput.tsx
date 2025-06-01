@@ -1,15 +1,5 @@
-import {
-  UseFormRegister,
-  FieldErrors,
-  Path,
-  FieldValues,
-} from "react-hook-form";
-
-export type TitleInputPropsType<T extends FieldValues> = {
-  register: UseFormRegister<T>;
-  errors: FieldErrors<T>;
-  fieldName: Path<T>;
-};
+import { TitleInputPropsType } from "@/app/interface";
+import { FieldValues } from "react-hook-form";
 
 const TitleInput = <T extends FieldValues>({
   register,

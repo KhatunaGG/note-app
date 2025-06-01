@@ -1,13 +1,6 @@
 "use client";
 import { useMountedTheme } from "@/app/hooks/useMountedTheme";
-
-export type ArrowLeftPropsType = {
-  selectedButton?: string | null;
-  isFontThemePage?: boolean;
-
-  noteParam?: string;
-  isTagsPage?: boolean;
-};
+import { ArrowLeftPropsType } from "@/app/interface";
 
 const ArrowLeft = ({
   isFontThemePage,
@@ -16,10 +9,12 @@ const ArrowLeft = ({
 }: ArrowLeftPropsType) => {
   const { mounted, theme } = useMountedTheme();
   const isDark = mounted && theme === "dark";
-  // const fill =
-  //   selectedButton || isFontThemePage || noteParam ? (isDark ? "#fff" : "#525866") : "";
-  console.log(noteParam, "noteParam");
-  const fill = isTagsPage || noteParam ||isFontThemePage ? (isDark ? "#fff" : "#525866") : "";
+  const fill =
+    isTagsPage || noteParam || isFontThemePage
+      ? isDark
+        ? "#fff"
+        : "#525866"
+      : "";
 
   return (
     <svg

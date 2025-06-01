@@ -1,6 +1,4 @@
-type RadioPropsType = {
-  isSelected?: boolean;
-};
+import { RadioPropsType } from "@/app/interface";
 
 const Radio = ({ isSelected }: RadioPropsType) => {
   return (

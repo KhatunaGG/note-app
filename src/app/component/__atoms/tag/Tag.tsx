@@ -1,8 +1,4 @@
-export type TagPropsType = {
-  width: string;
-  height: string;
-  isActive?: boolean;
-};
+import { TagPropsType } from "@/app/interface";
 
 const Tag = ({ width, height, isActive = false }: TagPropsType) => {
   const fill = isActive ? "#335CFF" : "#717784";

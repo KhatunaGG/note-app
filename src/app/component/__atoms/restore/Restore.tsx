@@ -1,8 +1,4 @@
-
-export type RestorePropsType = {
-  width: string;
-  height: string;
-};
+import { RestorePropsType } from "@/app/interface";
 
 const Restore = ({ width, height }: RestorePropsType) => {
   return (
@@ -29,7 +25,4 @@ const Restore = ({ width, height }: RestorePropsType) => {
   );
 };
 
-
 export default Restore;
-
-

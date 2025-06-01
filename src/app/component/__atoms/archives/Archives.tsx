@@ -1,8 +1,4 @@
-export type ArchivesPropsType = {
-  width: string;
-  height: string;
-  isActive?: boolean;
-};
+import { ArchivesPropsType } from "@/app/interface";
 
 const Archives = ({ width, height, isActive = false }: ArchivesPropsType) => {
   const fill = isActive ? "#335CFF" : "#717784";
