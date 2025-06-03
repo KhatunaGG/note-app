@@ -37,7 +37,8 @@ const Form = () => {
   };
 
   const signInWithGoogle = () => {
-    window.location.href = "http://localhost:3003/auth/google";
+    // window.location.href = "http://localhost:3003/auth/google";
+    window.location.href = "https://note-app-server-x9lx.onrender.com/auth/google";
   };
 
   return (

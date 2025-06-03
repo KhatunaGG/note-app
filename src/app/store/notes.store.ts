@@ -223,34 +223,6 @@ const useManageNotes = create<IUseManageNotes>((set, get) => ({
     set({ modal: true });
   },
 
-  // getSearchedNotes: () => {
-  //   const { allNotes } = get();
-  //   const { searchValue, isArchivedPage, selectedTags } =
-  //     useUtilities.getState();
-  //   let filtered = allNotes || [];
-  //   if (typeof isArchivedPage === "boolean") {
-  //     filtered = filtered.filter((note) => note.isArchived === isArchivedPage);
-  //   }
-  //   if (selectedTags) {
-  //     filtered = filtered.filter((note) =>
-  //       note.tags?.some(
-  //         (tag) => tag.toLowerCase() === selectedTags.toLowerCase()
-  //       )
-  //     );
-  //   }
-  //   if (searchValue?.trim()) {
-  //     const lowerSearch = searchValue.toLowerCase();
-  //     filtered = filtered.filter(
-  //       (note) =>
-  //         note.title.toLowerCase().includes(lowerSearch) ||
-  //         note.content.toLowerCase().includes(lowerSearch) ||
-  //         note.tags.some((tag) => tag.toLowerCase().includes(lowerSearch))
-  //     );
-  //   }
-  //   // console.log(filtered, "filtered")
-  //   return filtered;
-  // },
-
   getSearchedNotes: () => {
     const { allNotes } = get();
     const { searchValue, isArchivedPage, selectedTags, isTagsPage } =
