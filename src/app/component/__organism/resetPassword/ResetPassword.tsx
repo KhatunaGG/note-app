@@ -1,5 +1,4 @@
 "use client";
-import { usePathname } from "next/navigation";
 import { Title } from "../../__molecules";
 import ResetPasswordForm from "../resetPasswordForm/ResetPasswordForm";
 import { useMountedTheme } from "@/app/hooks/useMountedTheme";
