@@ -5,7 +5,7 @@ import {
   forgotPasswordSchema,
   signInSchema,
   signUpSchema,
-} from "@/schema/schema";
+} from "@/app/schema/schema";
 import {
   FieldErrors,
   FieldValues,

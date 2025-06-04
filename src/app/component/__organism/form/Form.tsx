@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useSignUpStore } from "@/app/store/sign-up.store";
 import { useRouter } from "next/navigation";
 import { SignUpType } from "@/app/interface";
-import { signUpSchema } from "@/schema/schema";
+import { signUpSchema } from "@/app/schema/schema";
 
 const Form = () => {
   const { signUp, success } = useSignUpStore();
@@ -37,7 +37,6 @@ const Form = () => {
   };
 
   const signInWithGoogle = () => {
-    // window.location.href = "http://localhost:3003/auth/google";
     window.location.href = "https://note-app-server-x9lx.onrender.com/auth/google";
   };
 

@@ -12,7 +12,7 @@ import GoBack from "../goBack/GoBack";
 import { usePathname } from "next/navigation";
 import { useMountedTheme } from "@/app/hooks/useMountedTheme";
 import { NoteType } from "@/app/interface";
-import { createNoteSchema } from "@/schema/schema";
+import { createNoteSchema } from "@/app/schema/schema";
 
 const NoteDetails = ({ noteParam }: { noteParam?: string }) => {
   const { accessToken } = useSignInStore();

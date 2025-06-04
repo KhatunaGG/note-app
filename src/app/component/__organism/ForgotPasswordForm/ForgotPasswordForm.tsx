@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useChangePasswordStore } from "@/app/store/change-password.store";
 import { useEffect } from "react";
 import { ForgotPasswordType } from "@/app/interface";
-import { forgotPasswordSchema } from "@/schema/schema";
+import { forgotPasswordSchema } from "@/app/schema/schema";
 
 const ForgotPasswordForm = () => {
   const { sendVerificationLink, success } = useChangePasswordStore();
