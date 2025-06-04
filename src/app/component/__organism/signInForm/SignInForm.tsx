@@ -8,7 +8,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { setCookie } from "cookies-next";
 import { SignInFormPropsType, SignInType } from "@/app/interface";
-import { signInSchema } from "@/schema/schema";
+import { signInSchema } from "@/app/schema/schema";
 
 const SignInForm = ({ isSignInPage }: SignInFormPropsType) => {
   const queryParams = useSearchParams();

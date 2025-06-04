@@ -8,7 +8,7 @@ import {
   ChangePasswordFormData,
   changePasswordPropsType,
 } from "@/app/interface";
-import { ChangePasswordSchema } from "@/schema/schema";
+import { ChangePasswordSchema } from "@/app/schema/schema";
 
 const ChangePassword = ({ settingsParam }: changePasswordPropsType) => {
   const { changePassword } = useSettingsStore();

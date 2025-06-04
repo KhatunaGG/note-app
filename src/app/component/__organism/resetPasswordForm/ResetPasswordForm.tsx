@@ -9,7 +9,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { ResetPasswordType } from "@/app/interface";
-import { confirmPasswordSchema } from "@/schema/schema";
+import { confirmPasswordSchema } from "@/app/schema/schema";
 
 const ResetPasswordForm = () => {
   const searchParams = useSearchParams();
