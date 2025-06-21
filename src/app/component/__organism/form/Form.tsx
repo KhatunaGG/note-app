@@ -9,9 +9,8 @@ import { SignUpType } from "@/app/interface";
 import { signUpSchema } from "@/app/schema/schema";
 
 const Form = () => {
-  const { signUp, success } = useSignUpStore();
+  const { signUp } = useSignUpStore();
   const router = useRouter();
-  console.log(success, "success");
 
   const {
     register,

@@ -1,5 +1,4 @@
 import { create } from "zustand";
-// import { NoteType } from "../component/__organism/noteDetails/NoteDetails";
 import axios, { AxiosError } from "axios";
 import {
   ErrorResponse,
