@@ -119,7 +119,7 @@ const Notes = ({ noteParam }: { noteParam?: string }) => {
               <Link href={"/noteDetails"}>
                 <button
                   type="button"
-                  className=" bg-green-600 text-primary-light dark:text-primary-dark text-sm font-normal
+                  className=" bg-[#335CFF] text-primary-light dark:text-primary-dark text-sm font-normal
         fixed right-8 bottom-[90px] h-[48px] w-[48px]
        md:h-[64px] md:w-[64px] rounded-full
        items-center justify-center lg:hidden  "
